@@ -2,7 +2,9 @@ module Bowling where
 
 import Data.Char
 
-data Frame a = Strike | Spare (a, a) | Score (a, a) | Bonus (a, a)
+data BowlingFrame a = Strike | Spare a | Bonus a | Score (a, a)
+
+type Frame = BowlingFrame Int
 
 maxPoints :: Int
 maxPoints = 10
@@ -11,45 +13,42 @@ toInt :: Char -> Int
 toInt 'X' = maxPoints
 toInt x = digitToInt x
 
-strToFrames :: String -> [Frame Int]
-strToFrames "X" = [Strike]
-strToFrames (a:_:[]) = [Spare (x, maxPoints - x)]
-	where
-		x = toInt a
-strToFrames (a:b:c:[])
+-- Last word can transform into several frames.
+wordToFrames :: String -> [Frame]
+wordToFrames "X" = [Strike]
+wordToFrames (a:_:[]) = [Spare (toInt a)]
+wordToFrames (a:b:c:[])
 	| b == '-' = [Score (x, z)]
-	-- Bonuses are considered a new frame either of one ball (coming from a Spare) or of two balls (coming from a Strike). It's a new frame (Bonus) either way.
-	| b == '/' = [Spare (x, maxPoints - x), Bonus (z, 0)]
-	| otherwise = [Strike, Bonus (y, z)]
+	| b == '/' = [Spare x, Bonus z]
+	| otherwise = [Strike, Bonus (toInt b), Bonus z]
 	where
 		x = toInt a
-		y = toInt b
 		z = toInt c
 
-toFrames :: String -> [Frame Int]
-toFrames = concat . map strToFrames . words
+strToFrames :: String -> [Frame]
+strToFrames = concat . map wordToFrames . words
 
-getOneBall :: Frame Int -> Int
-getOneBall Strike = maxPoints
-getOneBall (Spare (x, _)) = x
-getOneBall (Score (x, _)) = x
-getOneBall (Bonus (x, _)) = x
+getPointsOfOneBall :: Frame -> Int
+getPointsOfOneBall Strike = maxPoints
+getPointsOfOneBall (Spare x) = x
+getPointsOfOneBall (Bonus x) = x
+getPointsOfOneBall (Score (x, _)) = x
 
-getTwoBalls :: [Frame Int] -> Int
-getTwoBalls (Strike:x:_) = maxPoints + getOneBall x
-getTwoBalls ((Spare (x, y)):_) = maxPoints
-getTwoBalls ((Score (x, y)):_) = x + y
-getTwoBalls ((Bonus (x, y)):_) = x + y
+getPointsOfTwoBalls :: [Frame] -> Int
+getPointsOfTwoBalls (Strike:x:_) = maxPoints + getPointsOfOneBall x
+getPointsOfTwoBalls (Spare _:_) = maxPoints
+getPointsOfTwoBalls (Bonus x:Bonus y:_) = x + y
+getPointsOfTwoBalls (Score (x, y):_) = x + y
 
-getPoints :: Frame Int -> [Frame Int] -> Int
-getPoints (Bonus (_, _)) _ = 0
-getPoints (Score (x, y)) _ = x + y
-getPoints (Spare (_, _)) (x:_) = maxPoints + getOneBall x
-getPoints Strike xs = maxPoints + getTwoBalls xs
+getPointsOfFrame :: Frame -> [Frame] -> Int
+getPointsOfFrame (Bonus _) _ = 0
+getPointsOfFrame (Score (x, y)) _ = x + y
+getPointsOfFrame (Spare _) (x:_) = maxPoints + getPointsOfOneBall x
+getPointsOfFrame Strike xs = maxPoints + getPointsOfTwoBalls xs
 
-calculatePoints :: [Frame Int] -> Int
-calculatePoints [] = 0
-calculatePoints (x:xs) = getPoints x xs + calculatePoints xs
+getPoints :: [Frame] -> Int
+getPoints [] = 0
+getPoints (x:xs) = getPointsOfFrame x xs + getPoints xs
 
 bowling :: String -> Int
-bowling = calculatePoints . toFrames
+bowling = getPoints . strToFrames
