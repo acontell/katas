@@ -46,9 +46,9 @@ getPointsOfFrame (Score (x, y)) _ = x + y
 getPointsOfFrame (Spare _) (x:_) = maxPoints + getPointsOfOneBall x
 getPointsOfFrame Strike xs = maxPoints + getPointsOfTwoBalls xs
 
-getPoints :: [BowlingFrame] -> Int
-getPoints [] = 0
-getPoints (x:xs) = getPointsOfFrame x xs + getPoints xs
+getPointsOfFrames :: [BowlingFrame] -> Int
+getPointsOfFrames [] = 0
+getPointsOfFrames (x:xs) = getPointsOfFrame x xs + getPointsOfFrames xs
 
 bowling :: String -> Int
-bowling = getPoints . strToFrames
+bowling = getPointsOfFrames . strToFrames
