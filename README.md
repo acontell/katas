@@ -7,3 +7,4 @@ I usually use Java/Javascript on a daily basis so I'll try to make use of other 
 Curently done Katas:
 
  1. WordWrap (Haskell)
+ 2. Bowling (Haskell)

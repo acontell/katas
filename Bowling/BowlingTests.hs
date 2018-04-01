@@ -15,8 +15,6 @@ main = hspec spec
 -- 2. We will not check for correct number of rolls and frames.
 -- 3. We will not provide scores for intermediate frames.
 
--- Input format and some samples extracted from: https://www.bowlingindex.com/instruction/scoring.htm
-
 spec :: Spec
 spec = do
   describe "Bowling" $ do
