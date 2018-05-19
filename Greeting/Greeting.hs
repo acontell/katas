@@ -7,40 +7,50 @@ import Data.Char
 import Data.List
 import Data.List.Split
 
+splitIt :: String -> [String]
+splitIt s
+	| head s == '\'' && last s == '\'' = [(init . tail) s]
+	| otherwise = splitOn "," s
+
+isStrUpperCase :: String -> Bool
+isStrUpperCase = all isUpper
+
 class Greet a where
   greet :: a -> String
 
-isNameUpperCase :: String -> Bool
-isNameUpperCase = all isUpper
+instance Greet String where
+	greet = sayHello . findOutName
 
-greetName :: String -> String
-greetName name
-	| isNameUpperCase name = "HELLO " ++ name ++ "!"
+findOutName :: String -> String
+findOutName str
+	| str == "" = "my friend"
+	| otherwise = str
+
+sayHello :: String -> String
+sayHello name
+	| isStrUpperCase name = "HELLO " ++ name ++ "!"
 	| otherwise = "Hello, " ++ name ++ "."
 
-chooseName :: String -> String
-chooseName "" = "my friend"
-chooseName name = name
-
-chooseNames :: [String] -> String
-chooseNames xs
-	| length xs == 2 = head xs ++ " " ++ lastName
-	| otherwise = intercalate ", " (init xs ++ [lastName])
-	where
-		lastName = "and " ++ last xs
-
-instance Greet String where
-	greet = greetName . chooseName
-
 instance Greet [String] where
-	greet names
-		| hasUpperNames = greetLowerCase ++ " AND " ++ greetUpperCase
-		| otherwise = greetLowerCase
-		where
-			name = map (dropWhile isSpace) (concat (map splitIt names))
-			splitIt s
-				| head s == '\'' && last s == '\'' = [(init . tail) s]
-				| otherwise = splitOn "," s
-			hasUpperNames = (length . filter isNameUpperCase) name > 0
-			greetLowerCase = (greet . chooseNames . (filter (not . isNameUpperCase))) name
-			greetUpperCase = (greet . chooseName . head . (filter isNameUpperCase)) name
+	greet = sayHellos . divide . prepare
+
+prepare :: [String] -> [String]
+prepare = clearSpaces . separate
+	where
+		clearSpaces = map (dropWhile isSpace)
+		separate = concat . map splitIt
+
+divide :: [String] -> ([String], [String])
+divide names = (filter (not . isStrUpperCase) names, filter isStrUpperCase names)
+
+sayHellos :: ([String], [String]) -> String
+sayHellos (lowerNames, upperNames)
+		| length upperNames > 0 = (sayHello . findOutNames) lowerNames ++ " AND " ++ (greet . head) upperNames
+		| otherwise = (sayHello . findOutNames) lowerNames
+
+findOutNames :: [String] -> String
+findOutNames xs
+	| length xs == 2 = head xs ++ " and " ++ lastName
+	| otherwise = intercalate ", " (init xs ++ ["and " ++ lastName])
+	where
+		lastName = last xs
