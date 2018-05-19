@@ -9,3 +9,4 @@ Curently done Katas:
  1. WordWrap (Haskell)
  2. Bowling (Haskell)
  3. Diamond (Haskell)
+ 4. Greeting (Haskell)
