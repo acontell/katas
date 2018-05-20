@@ -39,9 +39,7 @@ splitName s
 	| otherwise = splitOn "," s
 
 sayHellos :: ([String], [String]) -> String
-sayHellos (lowerNames, upperNames)
-		| length upperNames > 0 = (sayHello . findOutNames) lowerNames ++ " AND " ++ (greet . head) upperNames
-		| otherwise = (sayHello . findOutNames) lowerNames
+sayHellos (lowerNames, upperNames) = (sayHello . findOutNames) lowerNames ++ (if length upperNames > 0 then " AND " ++ (greet . head) upperNames else "")
 
 findOutNames :: [String] -> String
 findOutNames xs
