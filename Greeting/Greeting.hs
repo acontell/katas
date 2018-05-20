@@ -37,8 +37,8 @@ instance Greet [String] where
 prepare :: [String] -> [String]
 prepare = clearSpaces . separate
 	where
-		clearSpaces = map (dropWhile isSpace)
 		separate = concat . map splitIt
+		clearSpaces = map (dropWhile isSpace)
 
 divide :: [String] -> ([String], [String])
 divide names = (filter (not . isStrUpperCase) names, filter isStrUpperCase names)
