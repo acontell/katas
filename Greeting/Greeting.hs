@@ -7,8 +7,8 @@ import Data.Char
 import Data.List
 import Data.List.Split
 
-splitIt :: String -> [String]
-splitIt s
+splitName :: String -> [String]
+splitName s
 	| head s == '\'' && last s == '\'' = [(init . tail) s]
 	| otherwise = splitOn "," s
 
@@ -32,17 +32,12 @@ sayHello name
 	| otherwise = "Hello, " ++ name ++ "."
 
 instance Greet [String] where
-	greet = sayHellos . divide . prepare
-
-prepare :: [String] -> [String]
-prepare = clearSpaces . separate
-	where
-		separate = concat . map splitIt
-		clearSpaces = map (dropWhile isSpace)
-
-divide :: [String] -> ([String], [String])
-divide names = (filter (not . isStrUpperCase) names, filter isStrUpperCase names)
-
+	greet = sayHellos . separateUpperLower . trim . splitNames
+		where
+			splitNames = concat . map splitName
+			trim = map (dropWhile isSpace)
+			separateUpperLower names = (filter (not . isStrUpperCase) names, filter isStrUpperCase names)
+	
 sayHellos :: ([String], [String]) -> String
 sayHellos (lowerNames, upperNames)
 		| length upperNames > 0 = (sayHello . findOutNames) lowerNames ++ " AND " ++ (greet . head) upperNames
