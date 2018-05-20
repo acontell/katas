@@ -39,11 +39,14 @@ splitName s
 	| otherwise = splitOn "," s
 
 sayHellos :: ([String], [String]) -> String
-sayHellos (lowerNames, upperNames) = (sayHello . findOutNames) lowerNames ++ (if length upperNames > 0 then " AND " ++ (greet . head) upperNames else "")
+sayHellos (lowerNames, upperNames) = (sayHello . findOutNames) lowerNames ++ sayHelloToUpperName upperNames
+
+sayHelloToUpperName :: [String] -> String
+sayHelloToUpperName upperNames
+	| length upperNames > 0 = " AND " ++ (greet . head) upperNames
+	| otherwise = ""
 
 findOutNames :: [String] -> String
 findOutNames xs
-	| length xs == 2 = head xs ++ " and " ++ lastName
-	| otherwise = intercalate ", " (init xs ++ ["and " ++ lastName])
-	where
-		lastName = last xs
+	| length xs == 2 = head xs ++ " and " ++ last xs
+	| otherwise = intercalate ", " (init xs ++ ["and " ++ last xs])
