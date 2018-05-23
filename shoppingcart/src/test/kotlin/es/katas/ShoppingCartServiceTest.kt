@@ -2,7 +2,7 @@ package es.katas
 
 import es.katas.builders.TicketBuilder
 import es.katas.domain.Item
-import es.katas.domain.Ticket
+import es.katas.domain.Ticket.Ticket
 import es.katas.printers.ShoppingCartPrinter
 import es.katas.repositories.ShoppingCartRepository
 import es.katas.resources.Clock
@@ -10,7 +10,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mockito.MockitoAnnotations
 import java.time.LocalDateTime
 
 class ShoppingCartServiceTest {
@@ -20,31 +19,30 @@ class ShoppingCartServiceTest {
         private const val PRODUCT_QUANTITY = 1
     }
 
-    private val now: LocalDateTime = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
-    private val item: Item = Item(PRODUCT_ID, PRODUCT_QUANTITY)
-    private val ticket: Ticket = Ticket()
+    private val now = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
+    private val item = Item(PRODUCT_ID, PRODUCT_QUANTITY)
 
     @Mock
-    private lateinit var shoppingCartRepository: ShoppingCartRepository
+    private val shoppingCartRepository = mock(ShoppingCartRepository::class.java)
     @Mock
-    private lateinit var clock: Clock
+    private val clock = mock(Clock::class.java)
     @Mock
-    private lateinit var shoppingCartPrinter: ShoppingCartPrinter
+    private val shoppingCartPrinter = mock(ShoppingCartPrinter::class.java)
     @Mock
-    private lateinit var ticketBuilder: TicketBuilder
+    private val ticketBuilder = mock(TicketBuilder::class.java)
+    @Mock
+    private val ticket = mock(Ticket::class.java)
 
-    private lateinit var shoppingCartService: ShoppingCartService
+    private val shoppingCartService = ShoppingCartService(shoppingCartRepository, clock, shoppingCartPrinter, ticketBuilder)
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
         `when`(clock.now()).thenReturn(now)
         `when`(shoppingCartRepository.items).thenReturn(mutableListOf())
         `when`(shoppingCartRepository.localDateTime).thenReturn(now)
         `when`(ticketBuilder.withDate(now)).thenReturn(ticketBuilder)
         `when`(ticketBuilder.withItems(shoppingCartRepository.items)).thenReturn(ticketBuilder)
         `when`(ticketBuilder.build()).thenReturn(ticket)
-        shoppingCartService = ShoppingCartService(shoppingCartRepository, clock, shoppingCartPrinter, ticketBuilder)
     }
 
     @Test

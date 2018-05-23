@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 
 class ShoppingCartRepositoryTest {
 
-    private val now: LocalDateTime = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
+    private val now = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
     private val item = Item(1, 1)
     private val shoppingCartRepository = ShoppingCartRepository()
 
