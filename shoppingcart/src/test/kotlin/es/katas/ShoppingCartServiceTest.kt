@@ -1,5 +1,6 @@
 package es.katas
 
+import es.katas.builders.TicketBuilder
 import es.katas.domain.Item
 import es.katas.domain.Ticket
 import es.katas.printers.ShoppingCartPrinter
@@ -38,7 +39,7 @@ class ShoppingCartServiceTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         `when`(clock.now()).thenReturn(now)
-        `when`(shoppingCartRepository.items).thenReturn(mutableListOf())
+        `when`(shoppingCartRepository.items).thenReturn(mutableMapOf())
         `when`(shoppingCartRepository.localDateTime).thenReturn(now)
         `when`(ticketBuilder.withDate(now)).thenReturn(ticketBuilder)
         `when`(ticketBuilder.withItems(shoppingCartRepository.items)).thenReturn(ticketBuilder)
@@ -76,7 +77,7 @@ class ShoppingCartServiceTest {
     fun `printTicket should create ticket`() {
         shoppingCartService.printTicket()
         verify(ticketBuilder).withDate(now)
-        verify(ticketBuilder).withItems(emptyList())
+        verify(ticketBuilder).withItems(mutableMapOf())
         verify(ticketBuilder).build()
     }
 

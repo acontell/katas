@@ -1,5 +1,6 @@
 package es.katas
 
+import es.katas.builders.TicketBuilder
 import es.katas.domain.Item
 import es.katas.repositories.ShoppingCartRepository
 import es.katas.resources.Clock

@@ -1,4 +1,4 @@
-package es.katas
+package es.katas.builders
 
 import es.katas.calculators.Calculator
 import es.katas.domain.Item
@@ -8,6 +8,6 @@ import java.time.LocalDateTime
 
 class TicketBuilder(val productRepository: ProductRepository, val calculator: Calculator) {
     fun withDate(now: LocalDateTime) = this
-    fun withItems(list: List<Item>) = this
+    fun withItems(list: MutableMap<Int, Item>) = this
     fun build() = Ticket()
 }

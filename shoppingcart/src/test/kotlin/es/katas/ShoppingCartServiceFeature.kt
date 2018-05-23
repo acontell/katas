@@ -1,5 +1,6 @@
 package es.katas
 
+import es.katas.builders.TicketBuilder
 import es.katas.calculators.Calculator
 import es.katas.domain.Discount
 import es.katas.domain.Product
