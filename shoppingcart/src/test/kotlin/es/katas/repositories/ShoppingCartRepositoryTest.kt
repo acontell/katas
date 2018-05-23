@@ -27,7 +27,7 @@ class ShoppingCartRepositoryTest {
     @Test
     fun `addItem should add item to list of items`() {
         shoppingCartRepository.addItem(item)
-        assertThat(shoppingCartRepository.items[item.id], `is`(item))
+        assertThat(shoppingCartRepository.items[0], `is`(item))
     }
 
     @Test

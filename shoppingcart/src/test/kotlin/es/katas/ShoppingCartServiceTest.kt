@@ -39,7 +39,7 @@ class ShoppingCartServiceTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         `when`(clock.now()).thenReturn(now)
-        `when`(shoppingCartRepository.items).thenReturn(mutableMapOf())
+        `when`(shoppingCartRepository.items).thenReturn(mutableListOf())
         `when`(shoppingCartRepository.localDateTime).thenReturn(now)
         `when`(ticketBuilder.withDate(now)).thenReturn(ticketBuilder)
         `when`(ticketBuilder.withItems(shoppingCartRepository.items)).thenReturn(ticketBuilder)
@@ -77,7 +77,7 @@ class ShoppingCartServiceTest {
     fun `printTicket should create ticket`() {
         shoppingCartService.printTicket()
         verify(ticketBuilder).withDate(now)
-        verify(ticketBuilder).withItems(mutableMapOf())
+        verify(ticketBuilder).withItems(mutableListOf())
         verify(ticketBuilder).build()
     }
 

@@ -8,6 +8,6 @@ import java.time.LocalDateTime
 
 class TicketBuilder(val productRepository: ProductRepository, val calculator: Calculator) {
     fun withDate(now: LocalDateTime) = this
-    fun withItems(list: MutableMap<Int, Item>) = this
+    fun withItems(list: MutableList<Item>) = this
     fun build() = Ticket()
 }
