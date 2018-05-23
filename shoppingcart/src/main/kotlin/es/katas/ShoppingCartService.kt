@@ -21,6 +21,6 @@ class ShoppingCartService(private val shoppingCartRepository: ShoppingCartReposi
 
     private fun buildTicket() = ticketBuilder
             .withDate(shoppingCartRepository.localDateTime)
-            .withItems(shoppingCartRepository.items)
+            .withItems(shoppingCartRepository.items.toList())
             .build()
 }

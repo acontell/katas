@@ -1,7 +1,7 @@
 package es.katas.domain
 
-class Discount(private val quantity: Int, private val percentage: Int) {
-    constructor() : this(0, 0)
+class Discount(val quantity: Int, val percentage: Double) {
+    constructor() : this(1, 0.0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -17,7 +17,7 @@ class Discount(private val quantity: Int, private val percentage: Int) {
 
     override fun hashCode(): Int {
         var result = quantity
-        result = 31 * result + percentage
+        result = (31 * result + percentage).toInt()
         return result
     }
 }

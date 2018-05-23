@@ -18,6 +18,7 @@ import org.mockito.InOrder
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
+import java.math.BigDecimal
 import java.time.LocalDateTime.of
 
 
@@ -39,8 +40,8 @@ class ShoppingCartServiceFeature {
     private val shoppingCartPrinter: ShoppingCartPrinter = ShoppingCartPrinter(console)
     private val ticketBuilder: TicketBuilder = TicketBuilder(buildProductsRepository(), Calculator())
     private fun buildProductsRepository() = ProductRepository()
-            .addProduct(CHOCOLATE_BAR_ID, Product(CHOCOLATE_BAR, 2.0, Discount()))
-            .addProduct(BAGUETTE_ID, Product(BAGUETTE, 0.8, Discount(3, 20)))
+            .addProduct(CHOCOLATE_BAR_ID, Product(CHOCOLATE_BAR, BigDecimal(2.0), Discount()))
+            .addProduct(BAGUETTE_ID, Product(BAGUETTE, BigDecimal(0.8), Discount(3, 20.0)))
 
     private lateinit var shoppingCartService: ShoppingCartService
 

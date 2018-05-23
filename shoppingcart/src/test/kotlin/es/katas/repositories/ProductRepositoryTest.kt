@@ -5,9 +5,10 @@ import es.katas.domain.Product
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.*
 import org.junit.Test
+import java.math.BigDecimal
 
 class ProductRepositoryTest {
-    private val product = Product("Example", 5.0, Discount())
+    private val product = Product("Example", BigDecimal(5.0), Discount())
     private val productId = 1
     private val productRepository = ProductRepository()
 

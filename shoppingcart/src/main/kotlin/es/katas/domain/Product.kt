@@ -1,6 +1,8 @@
 package es.katas.domain
 
-class Product(private val productName: String, private val price: Double, private val discount: Discount) {
+import java.math.BigDecimal
+
+class Product(val productName: String, val price: BigDecimal, val discount: Discount) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
