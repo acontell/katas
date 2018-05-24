@@ -8,10 +8,11 @@ class ShoppingCartRepository {
     val items: MutableList<Item> = mutableListOf()
 
     fun isEmpty() = items.isEmpty()
+
     fun addItem(item: Item) = items.add(item)
+
     fun initShoppingCart(now: LocalDateTime) {
         localDateTime = now
         items.clear()
     }
-
 }

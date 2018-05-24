@@ -8,8 +8,7 @@ class Amount(private val amount_: BigDecimal) {
     constructor(amount_: Int) : this(BigDecimal(amount_))
     constructor(amount_: Double) : this(BigDecimal(amount_))
 
-    val amount: BigDecimal
-        get() = amount_.setScale(2, RoundingMode.HALF_EVEN)
+    private val amount = amount_.setScale(2, RoundingMode.HALF_EVEN)
 
     fun subs(p: Amount) = Amount(amount_.subtract(p.amount_))
 
@@ -24,6 +23,8 @@ class Amount(private val amount_: BigDecimal) {
     fun isBiggerThanZero() = amount_ > BigDecimal.ZERO
 
     fun floor() = Amount(amount_.setScale(0, RoundingMode.DOWN))
+
+    fun toInt() = amount.toBigInteger()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
