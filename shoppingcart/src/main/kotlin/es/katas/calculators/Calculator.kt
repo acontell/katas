@@ -2,8 +2,8 @@ package es.katas.calculators
 
 import es.katas.domain.Item
 import es.katas.domain.Product
-import es.katas.domain.Ticket.TicketDiscount
-import es.katas.domain.Ticket.TicketLine
+import es.katas.domain.ticket.TicketDiscount
+import es.katas.domain.ticket.TicketLine
 import java.math.BigDecimal
 import java.math.RoundingMode
 

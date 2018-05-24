@@ -1,8 +1,8 @@
 package es.katas.printers
 
-import es.katas.domain.Ticket.Ticket
-import es.katas.domain.Ticket.TicketDiscount
-import es.katas.domain.Ticket.TicketLine
+import es.katas.domain.ticket.Ticket
+import es.katas.domain.ticket.TicketDiscount
+import es.katas.domain.ticket.TicketLine
 import es.katas.resources.Console
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter.ofPattern

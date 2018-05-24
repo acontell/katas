@@ -4,9 +4,9 @@ import es.katas.calculators.Calculator
 import es.katas.domain.Discount
 import es.katas.domain.Item
 import es.katas.domain.Product
-import es.katas.domain.Ticket.Ticket
-import es.katas.domain.Ticket.TicketDiscount
-import es.katas.domain.Ticket.TicketLine
+import es.katas.domain.ticket.Ticket
+import es.katas.domain.ticket.TicketDiscount
+import es.katas.domain.ticket.TicketLine
 import es.katas.repositories.ProductRepository
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat

@@ -1,9 +1,9 @@
 package es.katas.printers
 
 import es.katas.calculators.Calculator
-import es.katas.domain.Ticket.Ticket
-import es.katas.domain.Ticket.TicketDiscount
-import es.katas.domain.Ticket.TicketLine
+import es.katas.domain.ticket.Ticket
+import es.katas.domain.ticket.TicketDiscount
+import es.katas.domain.ticket.TicketLine
 import es.katas.resources.Console
 import org.junit.Test
 import org.mockito.InOrder

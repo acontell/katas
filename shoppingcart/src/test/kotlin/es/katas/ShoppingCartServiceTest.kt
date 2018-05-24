@@ -2,7 +2,7 @@ package es.katas
 
 import es.katas.builders.TicketBuilder
 import es.katas.domain.Item
-import es.katas.domain.Ticket.Ticket
+import es.katas.domain.ticket.Ticket
 import es.katas.printers.ShoppingCartPrinter
 import es.katas.repositories.ShoppingCartRepository
 import es.katas.resources.Clock

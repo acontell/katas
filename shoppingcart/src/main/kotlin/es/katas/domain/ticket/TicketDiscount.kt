@@ -1,4 +1,4 @@
-package es.katas.domain.Ticket
+package es.katas.domain.ticket
 
 import java.math.BigDecimal
 
