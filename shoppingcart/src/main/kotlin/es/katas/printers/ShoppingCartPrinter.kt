@@ -1,5 +1,6 @@
 package es.katas.printers
 
+import es.katas.domain.Amount
 import es.katas.domain.ticket.Ticket
 import es.katas.domain.ticket.TicketDiscount
 import es.katas.domain.ticket.TicketLine
@@ -10,10 +11,18 @@ import java.time.format.DateTimeFormatter.ofPattern
 class ShoppingCartPrinter(private val console: Console) {
     fun print(ticket: Ticket) {
         printDate(ticket.localDateTime)
-        console.print("PRODUCTS:")
+        printProductsHeader("PRODUCTS:")
         printTicketLines(ticket.lines)
         printTicketDiscounts(ticket.discounts)
-        console.print("TOTAL: ${ticket.total}")
+        printTotal(ticket.total)
+    }
+
+    private fun printProductsHeader(header: String) {
+        console.print(header)
+    }
+
+    private fun printTotal(total: Amount) {
+        console.print("TOTAL: $total")
     }
 
     private fun printDate(date: LocalDateTime) {
@@ -30,7 +39,11 @@ class ShoppingCartPrinter(private val console: Console) {
 
     private fun printTicketLine(ticketLine: TicketLine) {
         console.print(" ${ticketLine.productName.padEnd(19)} ${ticketLine.totalPrice}")
-        if (ticketLine.quantity > 1) {
+        printTicketLineBreakdown(ticketLine)
+    }
+
+    private fun printTicketLineBreakdown(ticketLine: TicketLine) {
+        if (ticketLine.quantity.isBiggerThan(Amount(1))) {
             console.print(" ${ticketLine.quantity} x ${ticketLine.unitPrice}")
         }
     }

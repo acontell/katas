@@ -1,6 +1,6 @@
 package es.katas.domain
 
-class Item(val id: Int, val quantity: Int) {
+class Item(val id: Long, val quantity: Amount) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -14,8 +14,8 @@ class Item(val id: Int, val quantity: Int) {
     }
 
     override fun hashCode(): Int {
-        var result = id
-        result = 31 * result + quantity
+        var result = id.hashCode()
+        result = 31 * result + quantity.hashCode()
         return result
     }
 }

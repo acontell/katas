@@ -1,6 +1,7 @@
 package es.katas
 
 import es.katas.builders.TicketBuilder
+import es.katas.domain.Amount
 import es.katas.domain.Item
 import es.katas.repositories.ShoppingCartRepository
 import es.katas.resources.Clock
@@ -10,11 +11,11 @@ class ShoppingCartService(private val shoppingCartRepository: ShoppingCartReposi
                           private val clock: Clock,
                           private val shoppingCartPrinter: ShoppingCartPrinter,
                           private val ticketBuilder: TicketBuilder) {
-    fun addItem(id: Int, quantity: Int) {
+    fun addItem(id: Long, quantity: Int) {
         if (shoppingCartRepository.isEmpty()) {
             shoppingCartRepository.initShoppingCart(clock.now())
         }
-        shoppingCartRepository.addItem(Item(id, quantity))
+        shoppingCartRepository.addItem(Item(id, Amount(quantity)))
     }
 
     fun printTicket() = shoppingCartPrinter.print(buildTicket())

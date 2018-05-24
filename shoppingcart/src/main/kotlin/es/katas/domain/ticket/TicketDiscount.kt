@@ -1,8 +1,8 @@
 package es.katas.domain.ticket
 
-import java.math.BigDecimal
+import es.katas.domain.Amount
 
-class TicketDiscount(val productName: String, val totalDiscount: BigDecimal) {
+class TicketDiscount(val productName: String, val totalDiscount: Amount) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
