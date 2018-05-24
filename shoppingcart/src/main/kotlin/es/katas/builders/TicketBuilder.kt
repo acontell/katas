@@ -38,7 +38,7 @@ class TicketBuilder(private val productRepository: ProductRepository, private va
             TicketDiscount(product.productName, calculator.getDiscount(item, product))
 
     private fun buildTicketLine(product: Product, item: Item) =
-            TicketLine(product.productName, item.quantity, product.price, calculator.getProductTotalPrice(item, product))
+            TicketLine(product.productName, item.quantity, calculator.scale(product.price), calculator.getProductTotalPrice(item, product))
 
     private fun getProduct(id: Int) = productRepository.getProduct(id)!!
 
