@@ -1,31 +1,21 @@
 package es.katas.printers
 
-import es.katas.calculators.Calculator
+import es.katas.*
 import es.katas.domain.Amount
 import es.katas.domain.ticket.Ticket
 import es.katas.domain.ticket.TicketDiscount
 import es.katas.domain.ticket.TicketLine
-import es.katas.resources.Console
+import org.junit.Before
 import org.junit.Test
-import org.mockito.InOrder
-import org.mockito.Mock
-import org.mockito.Mockito
-import java.time.LocalDateTime
+import org.mockito.Mockito.reset
 
 class ShoppingCartPrinterTest {
-    companion object {
-        private const val CHOCOLATE_BAR = "Chocolate bar"
-        private const val BAGUETTE = "Baguette"
-    }
-
-    private val now = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
-
-    @Mock
-    private val console = Mockito.mock(Console::class.java)
-
-    private val inOrder: InOrder = Mockito.inOrder(console)
-
     private val shoppingCartPrinter = ShoppingCartPrinter(console)
+
+    @Before
+    fun setUp() {
+        reset(console)
+    }
 
     @Test
     fun `should print a ticket without multiple items and without discount`() {

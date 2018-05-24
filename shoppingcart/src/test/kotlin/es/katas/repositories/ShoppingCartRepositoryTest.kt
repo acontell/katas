@@ -1,17 +1,13 @@
 package es.katas.repositories
 
-import es.katas.domain.Amount
-import es.katas.domain.Item
+import es.katas.item
+import es.katas.now
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Test
 
 import org.junit.Assert.*
-import java.time.LocalDateTime
 
 class ShoppingCartRepositoryTest {
-
-    private val now = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
-    private val item = Item(1, Amount(1))
     private val shoppingCartRepository = ShoppingCartRepository()
 
     @Test

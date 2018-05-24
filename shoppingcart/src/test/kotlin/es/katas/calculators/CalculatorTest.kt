@@ -1,5 +1,6 @@
 package es.katas.calculators
 
+import es.katas.BAGUETTE
 import es.katas.domain.Amount
 import es.katas.domain.Discount
 import es.katas.domain.Item
@@ -9,18 +10,16 @@ import es.katas.domain.ticket.TicketLine
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
-import java.math.BigDecimal
 
 class CalculatorTest {
-    private val productName = "chocolate"
     private val item = Item(1, Amount(5))
-    private val product = Product(productName, Amount(0.8), Discount(Amount(3), Amount(20.0)))
-    private val calculator = Calculator()
+    private val product = Product(BAGUETTE, Amount(0.8), Discount(Amount(3), Amount(20.0)))
     private val totalPrice = Amount(4)
     private val discountPrice = Amount(0.48)
-    private val lines = listOf(TicketLine(productName, Amount(3), Amount(5), Amount(15)))
-    private val discounts = listOf(TicketDiscount(productName, Amount(2)))
+    private val lines = listOf(TicketLine(BAGUETTE, Amount(3), Amount(5), Amount(15)))
+    private val discounts = listOf(TicketDiscount(BAGUETTE, Amount(2)))
     private val total = Amount(13)
+    private val calculator = Calculator()
 
     @Test
     fun `getProductTotalPrice should return the total price of the product according to the quantity`() {

@@ -1,32 +1,17 @@
 package es.katas
 
 import es.katas.builders.TicketBuilder
-import es.katas.domain.Amount
-import es.katas.domain.Item
 import es.katas.domain.ticket.Ticket
 import es.katas.printers.ShoppingCartPrinter
 import es.katas.repositories.ShoppingCartRepository
-import es.katas.resources.Clock
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import java.time.LocalDateTime
 
 class ShoppingCartServiceTest {
-
-    companion object {
-        private const val PRODUCT_ID = 1L
-        private const val PRODUCT_QUANTITY = 1
-    }
-
-    private val now = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
-    private val item = Item(PRODUCT_ID, Amount(PRODUCT_QUANTITY))
-
     @Mock
     private val shoppingCartRepository = mock(ShoppingCartRepository::class.java)
-    @Mock
-    private val clock = mock(Clock::class.java)
     @Mock
     private val shoppingCartPrinter = mock(ShoppingCartPrinter::class.java)
     @Mock
@@ -49,26 +34,26 @@ class ShoppingCartServiceTest {
     @Test
     fun `addItem should initialize Shopping Cart when empty`() {
         `when`(shoppingCartRepository.isEmpty()).thenReturn(true)
-        shoppingCartService.addItem(PRODUCT_ID, PRODUCT_QUANTITY)
+        shoppingCartService.addItem(CHOCOLATE_BAR_ID, PRODUCT_QUANTITY)
         verify(shoppingCartRepository).initShoppingCart(now)
     }
 
     @Test
     fun `addItem should add to Shopping Cart when empty`() {
         `when`(shoppingCartRepository.isEmpty()).thenReturn(true)
-        shoppingCartService.addItem(PRODUCT_ID, PRODUCT_QUANTITY)
+        shoppingCartService.addItem(CHOCOLATE_BAR_ID, PRODUCT_QUANTITY)
         verify(shoppingCartRepository).addItem(item)
     }
 
     @Test
     fun `addItem should not initialize Shopping Cart when not empty`() {
-        shoppingCartService.addItem(PRODUCT_ID, PRODUCT_QUANTITY)
+        shoppingCartService.addItem(CHOCOLATE_BAR_ID, PRODUCT_QUANTITY)
         verify(shoppingCartRepository, times(0)).initShoppingCart(now)
     }
 
     @Test
     fun `addItem should add to Shopping Cart when not empty`() {
-        shoppingCartService.addItem(PRODUCT_ID, PRODUCT_QUANTITY)
+        shoppingCartService.addItem(CHOCOLATE_BAR_ID, PRODUCT_QUANTITY)
         verify(shoppingCartRepository).addItem(item)
     }
 
