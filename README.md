@@ -10,3 +10,4 @@ Curently done Katas:
  2. Bowling (Haskell)
  3. Diamond (Haskell)
  4. Greeting (Haskell)
+ 5. Shopping cart (Kotlin) - my first Kotlin application

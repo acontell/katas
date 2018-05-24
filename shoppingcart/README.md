@@ -1,3 +1,7 @@
+Based on Rachel Carmena CRC cards and some ideas "stolen" from her repository. Thanks Rachel so much for this interesting and entertaining Kata!
+
+https://github.com/rachelcarmena/code-katas/tree/master/katas/java/shopping-cart
+
 # Shopping cart
 
 Create a simple shopping cart application with the following features:
