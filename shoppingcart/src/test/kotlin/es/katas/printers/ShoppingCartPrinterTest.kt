@@ -1,6 +1,7 @@
 package es.katas.printers
 
 import es.katas.calculators.Calculator
+import es.katas.domain.Amount
 import es.katas.domain.ticket.Ticket
 import es.katas.domain.ticket.TicketDiscount
 import es.katas.domain.ticket.TicketLine
@@ -9,7 +10,6 @@ import org.junit.Test
 import org.mockito.InOrder
 import org.mockito.Mock
 import org.mockito.Mockito
-import java.math.BigDecimal
 import java.time.LocalDateTime
 
 class ShoppingCartPrinterTest {
@@ -18,7 +18,6 @@ class ShoppingCartPrinterTest {
         private const val BAGUETTE = "Baguette"
     }
 
-    private val calculator = Calculator()
     private val now = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
 
     @Mock
@@ -30,11 +29,11 @@ class ShoppingCartPrinterTest {
 
     @Test
     fun `should print a ticket without multiple items and without discount`() {
-        val chocolateLine = TicketLine(CHOCOLATE_BAR, 1, calculator.scale(BigDecimal(2)), calculator.scale(BigDecimal(2)))
-        val baguetteLine = TicketLine(BAGUETTE, 1, calculator.scale(BigDecimal(0.8)), calculator.scale(BigDecimal(0.80)))
+        val chocolateLine = TicketLine(CHOCOLATE_BAR, Amount(1), Amount(2), Amount(2))
+        val baguetteLine = TicketLine(BAGUETTE, Amount(1), Amount(0.8), Amount(0.80))
         val lines = listOf(chocolateLine, baguetteLine)
 
-        shoppingCartPrinter.print(Ticket(now, lines, listOf(), calculator.scale(BigDecimal(2.80))))
+        shoppingCartPrinter.print(Ticket(now, lines, listOf(), Amount(2.80)))
 
         inOrder.verify(console).print("10/01/2018 14:00:00")
         inOrder.verify(console).print("PRODUCTS:")
@@ -45,11 +44,11 @@ class ShoppingCartPrinterTest {
 
     @Test
     fun `should print a ticket with multiple items and without discount`() {
-        val chocolateLine = TicketLine(CHOCOLATE_BAR, 2, calculator.scale(BigDecimal(2)), calculator.scale(BigDecimal(4)))
-        val baguetteLine = TicketLine(BAGUETTE, 1, calculator.scale(BigDecimal(0.8)), calculator.scale(BigDecimal(0.8)))
+        val chocolateLine = TicketLine(CHOCOLATE_BAR, Amount(2), Amount(2), Amount(4))
+        val baguetteLine = TicketLine(BAGUETTE, Amount(1), Amount(0.8), Amount(0.8))
         val lines = listOf(chocolateLine, baguetteLine)
 
-        shoppingCartPrinter.print(Ticket(now, lines, listOf(), calculator.scale(BigDecimal(4.80))))
+        shoppingCartPrinter.print(Ticket(now, lines, listOf(), Amount(4.80)))
 
         inOrder.verify(console).print("10/01/2018 14:00:00")
         inOrder.verify(console).print("PRODUCTS:")
@@ -61,12 +60,12 @@ class ShoppingCartPrinterTest {
 
     @Test
     fun `should print a ticket with multiple items and discount`() {
-        val chocolateLine = TicketLine(CHOCOLATE_BAR, 1, calculator.scale(BigDecimal(2)), calculator.scale(BigDecimal(2)))
-        val baguetteLine = TicketLine(BAGUETTE, 5, calculator.scale(BigDecimal(0.8)), calculator.scale(BigDecimal(4)))
+        val chocolateLine = TicketLine(CHOCOLATE_BAR, Amount(1), Amount(2), Amount(2))
+        val baguetteLine = TicketLine(BAGUETTE, Amount(5), Amount(0.8), Amount(4))
         val lines = listOf(chocolateLine, baguetteLine)
-        val discounts = listOf(TicketDiscount(BAGUETTE, calculator.scale(BigDecimal(0.48))))
+        val discounts = listOf(TicketDiscount(BAGUETTE, Amount(0.48)))
 
-        shoppingCartPrinter.print(Ticket(now, lines, discounts, calculator.scale(BigDecimal(5.52))))
+        shoppingCartPrinter.print(Ticket(now, lines, discounts, Amount(5.52)))
 
         inOrder.verify(console).print("10/01/2018 14:00:00")
         inOrder.verify(console).print("PRODUCTS:")

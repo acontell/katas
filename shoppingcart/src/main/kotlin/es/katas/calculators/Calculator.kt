@@ -16,7 +16,7 @@ class Calculator {
         val packPrice = product.price.mult(product.discount.quantity)
         val percent = product.discount.percentage.div(Amount(100))
         val discountedPricePerPack = packPrice.mult(percent)
-        val numberOfDiscounts = item.quantity.div(product.discount.quantity)
+        val numberOfDiscounts = item.quantity.div(product.discount.quantity).floor()
         return discountedPricePerPack.mult(numberOfDiscounts)
     }
 

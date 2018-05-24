@@ -1,5 +1,6 @@
 package es.katas.repositories
 
+import es.katas.domain.Amount
 import es.katas.domain.Item
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Test
@@ -10,7 +11,7 @@ import java.time.LocalDateTime
 class ShoppingCartRepositoryTest {
 
     private val now = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
-    private val item = Item(1, 1)
+    private val item = Item(1, Amount(1))
     private val shoppingCartRepository = ShoppingCartRepository()
 
     @Test

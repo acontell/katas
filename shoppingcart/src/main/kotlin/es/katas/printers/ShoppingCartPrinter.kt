@@ -44,7 +44,7 @@ class ShoppingCartPrinter(private val console: Console) {
 
     private fun printTicketLineBreakdown(ticketLine: TicketLine) {
         if (ticketLine.quantity.isBiggerThan(Amount(1))) {
-            console.print(" ${ticketLine.quantity} x ${ticketLine.unitPrice}")
+            console.print(" ${ticketLine.quantity.amount.toBigInteger()} x ${ticketLine.unitPrice}")
         }
     }
 

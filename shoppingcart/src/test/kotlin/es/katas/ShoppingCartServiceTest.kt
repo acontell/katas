@@ -1,6 +1,7 @@
 package es.katas
 
 import es.katas.builders.TicketBuilder
+import es.katas.domain.Amount
 import es.katas.domain.Item
 import es.katas.domain.ticket.Ticket
 import es.katas.printers.ShoppingCartPrinter
@@ -15,12 +16,12 @@ import java.time.LocalDateTime
 class ShoppingCartServiceTest {
 
     companion object {
-        private const val PRODUCT_ID = 1
+        private const val PRODUCT_ID = 1L
         private const val PRODUCT_QUANTITY = 1
     }
 
     private val now = LocalDateTime.of(2018, 1, 10, 14, 0, 0)
-    private val item = Item(PRODUCT_ID, PRODUCT_QUANTITY)
+    private val item = Item(PRODUCT_ID, Amount(PRODUCT_QUANTITY))
 
     @Mock
     private val shoppingCartRepository = mock(ShoppingCartRepository::class.java)

@@ -9,19 +9,21 @@ class Amount(private val amount_: BigDecimal) {
     constructor(amount_: Double) : this(BigDecimal(amount_))
 
     val amount: BigDecimal
-        get() = amount_.setScale(2, RoundingMode.HALF_UP)
+        get() = amount_.setScale(2, RoundingMode.HALF_EVEN)
 
-    fun subs(p: Amount) = Amount(amount.subtract(p.amount))
+    fun subs(p: Amount) = Amount(amount_.subtract(p.amount_))
 
-    fun add(p: Amount) = Amount(amount.add(p.amount))
+    fun add(p: Amount) = Amount(amount_.add(p.amount_))
 
-    fun mult(p: Amount) = Amount(amount.multiply(p.amount))
+    fun mult(p: Amount) = Amount(amount_.multiply(p.amount_))
 
-    fun div(p: Amount) = Amount(amount.divide(p.amount))
+    fun div(p: Amount) = Amount(amount_.divide(p.amount_, 2, RoundingMode.HALF_EVEN))
 
-    fun isBiggerThan(p: Amount) = amount > p.amount
+    fun isBiggerThan(p: Amount) = amount_ > p.amount_
 
-    fun isBiggerThanZero() = amount > BigDecimal.ZERO
+    fun isBiggerThanZero() = amount_ > BigDecimal.ZERO
+
+    fun floor() = Amount(amount_.setScale(0, RoundingMode.DOWN))
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -29,13 +31,13 @@ class Amount(private val amount_: BigDecimal) {
 
         other as Amount
 
-        if (amount_ != other.amount_) return false
+        if (amount != other.amount) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return amount_.hashCode()
+        return amount.hashCode()
     }
 
     override fun toString(): String {

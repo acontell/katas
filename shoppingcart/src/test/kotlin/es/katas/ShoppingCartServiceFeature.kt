@@ -2,6 +2,7 @@ package es.katas
 
 import es.katas.builders.TicketBuilder
 import es.katas.calculators.Calculator
+import es.katas.domain.Amount
 import es.katas.domain.Discount
 import es.katas.domain.Product
 import es.katas.printers.ShoppingCartPrinter
@@ -26,8 +27,8 @@ class ShoppingCartServiceFeature {
     companion object {
         private const val CHOCOLATE_BAR = "Chocolate bar"
         private const val BAGUETTE = "Baguette"
-        private const val CHOCOLATE_BAR_ID = 1
-        private const val BAGUETTE_ID = 2
+        private const val CHOCOLATE_BAR_ID = 1L
+        private const val BAGUETTE_ID = 2L
     }
 
     @Mock
@@ -40,8 +41,8 @@ class ShoppingCartServiceFeature {
     private val shoppingCartPrinter: ShoppingCartPrinter = ShoppingCartPrinter(console)
     private val ticketBuilder: TicketBuilder = TicketBuilder(buildProductsRepository(), Calculator())
     private fun buildProductsRepository() = ProductRepository()
-            .addProduct(CHOCOLATE_BAR_ID, Product(CHOCOLATE_BAR, BigDecimal(2.0), Discount()))
-            .addProduct(BAGUETTE_ID, Product(BAGUETTE, BigDecimal(0.8), Discount(3, 20.0)))
+            .addProduct(CHOCOLATE_BAR_ID, Product(CHOCOLATE_BAR, Amount(2.0), Discount()))
+            .addProduct(BAGUETTE_ID, Product(BAGUETTE, Amount(0.8), Discount(Amount(3), Amount(20.0))))
 
     private lateinit var shoppingCartService: ShoppingCartService
 
