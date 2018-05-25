@@ -3,8 +3,7 @@ package es.katas.domain
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class Amount(private val amount_: BigDecimal) {
-    constructor() : this(BigDecimal.ZERO)
+class Amount(private val amount_: BigDecimal = BigDecimal.ZERO) {
     constructor(amount_: Int) : this(BigDecimal(amount_))
     constructor(amount_: Double) : this(BigDecimal(amount_))
 
