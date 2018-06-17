@@ -8,7 +8,7 @@ from tests_fixture import TestsFixture
 class CoinManagerTests(unittest.TestCase):
 
     def setUp(self):
-        self.coin_validator = CoinManager(TestsFixture.VALID_COINS, TestsFixture.COIN_VALUES)
+        self.coin_validator = CoinManager(TestsFixture.MONEY_MAP)
 
     def test_should_return_true_when_coin_is_valid(self):
         for valid_coin in TestsFixture.VALID_COINS:
@@ -20,7 +20,8 @@ class CoinManagerTests(unittest.TestCase):
 
     def test_should_return_coin_value(self):
         for valid_coin in TestsFixture.VALID_COINS:
-            self.assertEqual(self.coin_validator.get_value(valid_coin), TestsFixture.COIN_VALUES[valid_coin])
+            value = TestsFixture.MONEY_MAP[valid_coin.get_measure()].get_value()
+            self.assertEqual(self.coin_validator.get_value(valid_coin), value)
 
     def test_should_return_zero_when_get_value_of_invalid_coin(self):
         for invalid_coin in TestsFixture.INVALID_COINS:

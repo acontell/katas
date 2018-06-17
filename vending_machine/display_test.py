@@ -2,7 +2,6 @@
 
 import unittest
 from display import Display
-from coin import Coin
 from tests_fixture import TestsFixture
 
 
@@ -18,7 +17,7 @@ class DisplayTests(unittest.TestCase):
         self.assertEqual(self.display.display_amount(0), TestsFixture.NO_COINS_MSG)
 
     def test_should_display_return_coins_msg(self):
-        self.assertEqual(self.display.display_return({Coin("PENNY", 1, 1): 2}), "PENNY:\t2")
+        self.assertEqual(self.display.display_return({"PENNY": 2}), "PENNY:\t2")
 
     def test_should_display_empty_string_when_return_coins_map_is_empty(self):
         self.assertEqual(self.display.display_return({}), "")

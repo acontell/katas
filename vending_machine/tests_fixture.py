@@ -3,21 +3,42 @@
 from coin import Coin
 from display import Display
 from coin_manager import CoinManager
+from money import Money
+from measure import Measure
 
 
 class TestsFixture(object):
-    COIN_1 = Coin('NICKEL', 1, 1)
-    COIN_2 = Coin('DIME', 1, 2)
-    COIN_3 = Coin('QUARTER', 2, 1)
-    COIN_VALUE_1 = 0.05
-    COIN_VALUE_2 = 0.1
-    COIN_VALUE_3 = 0.25
+    MEASURE_1 = Measure(1, 1)
+    MEASURE_2 = Measure(1, 2)
+    MEASURE_3 = Measure(2, 1)
+    INVALID_COIN_MEASURE = Measure(1, 4)
+
+    COIN_1 = Coin(MEASURE_1)
+    COIN_2 = Coin(MEASURE_2)
+    COIN_3 = Coin(MEASURE_3)
+    INVALID_COIN = Coin(INVALID_COIN_MEASURE)
+
+    MONEY_VALUE_1 = 0.05
+    MONEY_VALUE_2 = 0.1
+    MONEY_VALUE_3 = 0.25
+
+    MONEY_NAME_1 = "NICKEL"
+    MONEY_NAME_2 = "DIME"
+    MONEY_NAME_3 = "QUARTER"
+    INVALID_MONEY_NAME = "PENNY"
+
+    MONEY_1 = Money(MONEY_NAME_1, MONEY_VALUE_1, MEASURE_1)
+    MONEY_2 = Money(MONEY_NAME_2, MONEY_VALUE_2, MEASURE_2)
+    MONEY_3 = Money(MONEY_NAME_3, MONEY_VALUE_3, MEASURE_3)
+    INVALID_MONEY = Money(INVALID_MONEY_NAME, 0, INVALID_COIN_MEASURE)
+
+    MONEY_MAP = {MEASURE_1: MONEY_1, MEASURE_2: MONEY_2, MEASURE_3: MONEY_3, INVALID_COIN_MEASURE: INVALID_MONEY}
     VALID_COINS = [COIN_1, COIN_2, COIN_3]
-    INVALID_COIN = Coin('PENNY', 15, 20)
     INVALID_COINS = [INVALID_COIN]
-    COIN_VALUES = {COIN_1: COIN_VALUE_1, COIN_2: COIN_VALUE_2, COIN_3: COIN_VALUE_3}
+
     NO_COINS_MSG = 'INSERT_COIN'
     AMOUNT_TPL = 'Current amount: %.2f$'
     RETURN_TPL = '{}:\t{}'
+
     DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, RETURN_TPL)
-    COIN_MANAGER = CoinManager(VALID_COINS, COIN_VALUES)
+    COIN_MANAGER = CoinManager(MONEY_MAP)

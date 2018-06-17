@@ -9,7 +9,7 @@ from tests_fixture import TestsFixture
 class AmountManagerTests(unittest.TestCase):
 
     def setUp(self):
-        self.coin_manager = CoinManager(TestsFixture.VALID_COINS, TestsFixture.COIN_VALUES)
+        self.coin_manager = CoinManager(TestsFixture.MONEY_MAP)
         self.amount_manager = AmountManager(self.coin_manager)
         self.expected_amount_of_money = 0
 
@@ -35,14 +35,14 @@ class AmountManagerTests(unittest.TestCase):
         self.amount_manager.insert_coin(TestsFixture.COIN_2)
         self.amount_manager.insert_coin(TestsFixture.COIN_3)
         self.amount_manager.insert_coin(TestsFixture.COIN_3)
-        self.expected_amount_of_money = 2 * TestsFixture.COIN_VALUE_1 + TestsFixture.COIN_VALUE_2 + 2 * TestsFixture.COIN_VALUE_3
+        self.expected_amount_of_money = 2 * TestsFixture.MONEY_VALUE_1 + TestsFixture.MONEY_VALUE_2 + 2 * TestsFixture.MONEY_VALUE_3
         pass
 
     def test_should_return_map_with_coins_to_return(self):
         self.given_amount_manager_with_coins()
         self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
         self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
-        self.assertEqual(self.amount_manager.get_return_map(), {TestsFixture.INVALID_COIN: 2})
+        self.assertEqual(self.amount_manager.get_return_map(), {TestsFixture.INVALID_MONEY_NAME: 2})
 
         if __name__ == '__main__':
             unittest.main()

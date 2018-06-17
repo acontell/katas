@@ -1,14 +1,20 @@
 #!/usr/bin/env python
+from coin import Coin
 
 
 class CoinManager(object):
 
-    def __init__(self, valid_coins, coin_values):
-        self.__valid_coins = valid_coins
-        self.__coin_values = coin_values
+    def __init__(self, money_map):
+        self.__money_map = money_map
 
-    def is_valid(self, coin_type):
-        return coin_type in self.__valid_coins
+    def is_valid(self, coin: Coin):
+        return self.__coin_to_money(coin).is_valid()
 
-    def get_value(self, coin_type):
-        return self.__coin_values.get(coin_type, 0)
+    def __coin_to_money(self, coin: Coin):
+        return self.__money_map[coin.get_measure()]
+
+    def get_value(self, coin: Coin):
+        return self.__coin_to_money(coin).get_value()
+
+    def get_name(self, coin: Coin):
+        return self.__coin_to_money(coin).get_name()
