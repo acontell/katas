@@ -8,13 +8,13 @@ class CoinManager(object):
         self.__money_map = money_map
 
     def is_valid(self, coin: Coin):
-        return self.__coin_to_money(coin).is_valid()
+        return self.__to_money(coin).is_valid()
 
-    def __coin_to_money(self, coin: Coin):
+    def __to_money(self, coin: Coin):
         return self.__money_map[coin.get_measure()]
 
     def get_value(self, coin: Coin):
-        return self.__coin_to_money(coin).get_value()
+        return self.__to_money(coin).get_value()
 
     def get_name(self, coin: Coin):
-        return self.__coin_to_money(coin).get_name()
+        return self.__to_money(coin).get_name()
