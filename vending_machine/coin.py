@@ -3,7 +3,8 @@
 
 class Coin(object):
 
-    def __init__(self, weight, size):
+    def __init__(self, name, weight, size):
+        self.__name = name
         self.__weight = weight
         self.__size = size
 
@@ -18,3 +19,6 @@ class Coin(object):
 
     def __hash__(self):
         return hash(self.__weight) ^ hash(self.__size)
+
+    def __str__(self):
+        return self.__name
