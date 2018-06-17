@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
+from coin_enum import CoinEnum
+from coin import Coin
 from vending_machine import VendingMachine
 from display import Display
 from amount_manager import AmountManager
@@ -8,21 +10,22 @@ from coin_manager import CoinManager
 
 
 class VendingMachineTests(unittest.TestCase):
-    __COIN_1 = 'NICKELS'
-    __COIN_2 = 'DIMES'
-    __COIN_3 = 'QUARTERS'
+    __COIN_1 = CoinEnum.NICKELS
+    __COIN_2 = CoinEnum.DIMES
+    __COIN_3 = CoinEnum.QUARTERS
     __COIN_VALUE_1 = 0.05
     __COIN_VALUE_2 = 0.1
     __COIN_VALUE_3 = 0.25
     __VALID_COINS = [__COIN_1, __COIN_2, __COIN_3]
-    __INVALID_COIN = 'PENNIES'
+    __INVALID_COIN = Coin(15, 20)
     __INVALID_COINS = [__INVALID_COIN]
-    __COIN_VALUES = {'NICKELS': __COIN_VALUE_1, 'DIMES': __COIN_VALUE_2, 'QUARTERS': __COIN_VALUE_3}
+    __COIN_VALUES = {CoinEnum.NICKELS: __COIN_VALUE_1, CoinEnum.DIMES: __COIN_VALUE_2,
+                     CoinEnum.QUARTERS: __COIN_VALUE_3}
     __NO_COINS_MSG = 'INSERT_COIN'
     __AMOUNT_TPL = 'Current amount: %.2f$'
     __RETURN_TPL = "{}:\t{}"
     __DISPLAY = Display(__NO_COINS_MSG, __AMOUNT_TPL, __RETURN_TPL)
-    __COIN_MANAGER = CoinManager(__VALID_COINS, __INVALID_COINS, __COIN_VALUES)
+    __COIN_MANAGER = CoinManager(__VALID_COINS, __COIN_VALUES)
 
     def setUp(self):
         self.vending_machine = VendingMachine(self.__DISPLAY, AmountManager(self.__COIN_MANAGER))
