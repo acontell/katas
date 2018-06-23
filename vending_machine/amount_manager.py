@@ -23,7 +23,7 @@ class AmountManager(object):
     def get_amount(self):
         return self.__current_amount
 
-    def get_return_map(self):
+    def get_return(self):
         return self.__coin_return
 
     def spend(self, amount):
