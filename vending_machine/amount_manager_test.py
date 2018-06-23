@@ -44,5 +44,17 @@ class AmountManagerTests(unittest.TestCase):
         self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
         self.assertEqual(self.amount_manager.get_return_map(), {TestsFixture.INVALID_MONEY_NAME: 2})
 
+    def test_should_return_false_when_not_enough_amount_to_spend(self):
+        self.assertFalse(self.amount_manager.spend(100))
+
+    def test_should_return_true_when_enough_to_spend(self):
+        self.given_amount_manager_with_coins()
+        self.assertTrue(self.amount_manager.spend(0.1))
+
+    def test_should_reset_amount_when_spend_is_successful(self):
+        self.given_amount_manager_with_coins()
+        self.amount_manager.spend(0.1)
+        self.assertEqual(self.amount_manager.get_amount(), 0)
+
         if __name__ == '__main__':
             unittest.main()

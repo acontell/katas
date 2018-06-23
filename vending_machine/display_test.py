@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import unittest
-from display import Display
 from tests_fixture import TestsFixture
 
 
 class DisplayTests(unittest.TestCase):
 
     def setUp(self):
-        self.display = Display(TestsFixture.NO_COINS_MSG, TestsFixture.AMOUNT_TPL, TestsFixture.RETURN_TPL)
+        self.display = TestsFixture.DISPLAY
 
     def test_should_display_amount(self):
         self.assertEqual(self.display.display_amount(5), TestsFixture.AMOUNT_TPL % 5)
@@ -21,6 +20,12 @@ class DisplayTests(unittest.TestCase):
 
     def test_should_display_empty_string_when_return_coins_map_is_empty(self):
         self.assertEqual(self.display.display_return({}), "")
+
+    def test_should_display_price_msg(self):
+        self.assertEqual(self.display.display_price(), TestsFixture.PRICE_MSG)
+
+    def test_should_display_thanks_msg(self):
+        self.assertEqual(self.display.display_thanks(), TestsFixture.THANKS_MSG)
 
         if __name__ == '__main__':
             unittest.main()

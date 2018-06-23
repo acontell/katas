@@ -5,6 +5,8 @@ from display import Display
 from coin_manager import CoinManager
 from money import Money
 from measure import Measure
+from product import Product
+from product_manager import ProductManager
 
 
 class TestsFixture(object):
@@ -39,6 +41,20 @@ class TestsFixture(object):
     NO_COINS_MSG = 'INSERT_COIN'
     AMOUNT_TPL = 'Current amount: %.2f$'
     RETURN_TPL = '{}:\t{}'
+    THANKS_MSG = 'THANK YOU'
+    PRICE_MSG = 'PRICE'
 
-    DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, RETURN_TPL)
+    DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, RETURN_TPL, PRICE_MSG, THANKS_MSG)
     COIN_MANAGER = CoinManager(MONEY_MAP)
+
+    PRODUCT_NAME_1 = 'Cola'
+    PRODUCT_NAME_2 = 'Chips'
+    PRODUCT_NAME_3 = 'Candy'
+    PRODUCT_PRICE_1 = 1
+    PRODUCT_PRICE_2 = 0.5
+    PRODUCT_PRICE_3 = 0.65
+    PRODUCT_1 = Product(PRODUCT_NAME_1, PRODUCT_PRICE_1)
+    PRODUCT_2 = Product(PRODUCT_NAME_2, PRODUCT_PRICE_2)
+    PRODUCT_3 = Product(PRODUCT_NAME_3, PRODUCT_PRICE_3)
+    PRODUCTS = [PRODUCT_1, PRODUCT_2, PRODUCT_3]
+    PRODUCT_MANAGER = ProductManager(PRODUCTS)

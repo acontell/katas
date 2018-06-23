@@ -25,3 +25,13 @@ class AmountManager(object):
 
     def get_return_map(self):
         return self.__coin_return
+
+    def spend(self, amount):
+        return self.__empty() if self.__is_enough_money(amount) else False
+
+    def __is_enough_money(self, amount):
+        return amount <= self.get_amount()
+
+    def __empty(self):
+        self.__current_amount = 0
+        return True
