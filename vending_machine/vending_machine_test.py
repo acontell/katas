@@ -90,5 +90,11 @@ class VendingMachineTests(unittest.TestCase):
         self.vending_machine.push_button(TestsFixture.PRODUCT_NAME_1)
         self.assertEqual(self.vending_machine.check_display(), TestsFixture.NO_COINS_MSG)
 
+    def test_should_display_return_with_remaining_amount_when_product_is_bought(self):
+        self.given_vending_machine_with_coins()
+        self.vending_machine.push_button(TestsFixture.PRODUCT_NAME_3)
+        return_message = TestsFixture.RETURN_TPL.format(TestsFixture.MONEY_NAME_1, 1)
+        self.assertEqual(self.vending_machine.check_return(), return_message)
+
         if __name__ == '__main__':
             unittest.main()

@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from math import ceil
+
 from coin import Coin
 
 
@@ -18,3 +20,16 @@ class CoinManager(object):
 
     def get_name(self, coin: Coin):
         return self.__to_money(coin).get_name()
+
+    def get_change(self, amount):
+        smallest = self.__get_smallest()
+        return {smallest.get_name(): ceil(amount / smallest.get_value())}
+
+    def __get_smallest(self):
+        smallest_money = None
+        current_value = float('inf')
+        for money in self.__money_map.values():
+            if 0 < money.get_value() < current_value:
+                smallest_money = money
+                current_value = money.get_value()
+        return smallest_money

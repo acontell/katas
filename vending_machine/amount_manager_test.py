@@ -40,9 +40,12 @@ class AmountManagerTests(unittest.TestCase):
 
     def test_should_return_map_with_coins_to_return(self):
         self.given_amount_manager_with_coins()
-        self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
-        self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
+        self.given_some_invalid_coins_in_return()
         self.assertEqual(self.amount_manager.get_return(), {TestsFixture.INVALID_MONEY_NAME: 2})
+
+    def given_some_invalid_coins_in_return(self):
+        self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
+        self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
 
     def test_should_return_false_when_not_enough_amount_to_spend(self):
         self.assertFalse(self.amount_manager.spend(100))
@@ -55,6 +58,18 @@ class AmountManagerTests(unittest.TestCase):
         self.given_amount_manager_with_coins()
         self.amount_manager.spend(0.1)
         self.assertEqual(self.amount_manager.get_amount(), 0)
+
+    def test_should_return_change(self):
+        self.given_amount_manager_with_coins()
+        self.amount_manager.spend(0.1)
+        self.assertEqual(self.amount_manager.get_return(), {TestsFixture.MONEY_NAME_1: 12})
+
+    def test_should_add_to_return_change(self):
+        self.given_amount_manager_with_coins()
+        self.given_some_invalid_coins_in_return()
+        self.amount_manager.spend(0.1)
+        self.assertEqual(self.amount_manager.get_return(), {TestsFixture.MONEY_NAME_1: 12,
+                                                            TestsFixture.INVALID_MONEY_NAME: 2})
 
         if __name__ == '__main__':
             unittest.main()
