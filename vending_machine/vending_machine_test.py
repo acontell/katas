@@ -3,6 +3,7 @@
 import unittest
 from vending_machine import VendingMachine
 from amount_manager import AmountManager
+from product_manager import ProductManager
 from tests_fixture import TestsFixture
 
 
@@ -15,7 +16,7 @@ class VendingMachineTests(unittest.TestCase):
     def given_vending_machine(self):
         self.vending_machine = VendingMachine(TestsFixture.DISPLAY,
                                               AmountManager(TestsFixture.COIN_MANAGER),
-                                              TestsFixture.PRODUCT_MANAGER)
+                                              ProductManager(TestsFixture.PRODUCTS))
 
     def test_should_display_correct_amount_for_one_valid_coin_inserted(self):
         for valid_coin in TestsFixture.VALID_COINS:
@@ -34,6 +35,7 @@ class VendingMachineTests(unittest.TestCase):
         self.assertEqual(self.vending_machine.insert_coin(TestsFixture.COIN_1), self.get_display_of_expected_money())
 
     def given_vending_machine_with_coins(self):
+        self.given_vending_machine()
         self.vending_machine.insert_coin(TestsFixture.COIN_1)
         self.vending_machine.insert_coin(TestsFixture.COIN_1)
         self.vending_machine.insert_coin(TestsFixture.COIN_2)
@@ -89,10 +91,20 @@ class VendingMachineTests(unittest.TestCase):
         self.vending_machine.push_product_button(TestsFixture.PRODUCT_NAME_1)
         self.assertEqual(self.vending_machine.display(), TestsFixture.NO_COINS_MSG)
 
+    def test_should_show_empty_dispenser_when_button_is_pressed_and_not_enough_money(self):
+        self.given_vending_machine()
+        self.vending_machine.push_product_button(TestsFixture.PRODUCT_NAME_1)
+        self.assertEqual(self.vending_machine.check_dispenser(), [])
+
     def test_should_display_return_with_remaining_amount_when_product_is_bought(self):
         self.given_vending_machine_with_coins()
         self.vending_machine.push_product_button(TestsFixture.PRODUCT_NAME_3)
         self.assertEqual(self.vending_machine.check_return(), [TestsFixture.COIN_1])
+
+    def test_should_show_product_in_dispenser_when_product_is_bought(self):
+        self.given_vending_machine_with_coins()
+        self.vending_machine.push_product_button(TestsFixture.PRODUCT_NAME_3)
+        self.assertEqual(self.vending_machine.check_dispenser(), [TestsFixture.PRODUCT_3])
 
     def test_should_display_insert_coin_when_return_button_is_pressed(self):
         self.vending_machine.insert_coin(TestsFixture.COIN_1)
