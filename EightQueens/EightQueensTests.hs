@@ -118,3 +118,6 @@ spec = do
 
     it "should return valid array with the problem solution" $ do
       (head . solveQueens) 8 `shouldBe` [0, 4, 7, 5, 2, 6, 1, 3]
+
+    it "should return valid array with the problem solution (Bird)" $ do
+      (head . queensB) 8 `shouldBe` [1, 5, 8, 6, 3, 7, 2, 4]

@@ -36,3 +36,15 @@ queens prev x = concat [queens (prev ++ [column]) (x - 1) | column <- [0..7], is
 
 solveQueens :: Int -> [[Int]]
 solveQueens = queens []
+
+-- Bird's elegant solution to this problem (he starts at 1)
+safe :: [Int] -> Int -> Bool
+safe p n = and [not (check (i, j) (m, n)) | (i, j) <- zip [1..l] p]
+	where
+		l = length p
+		m = l + 1
+		check (i, j) (m, n) = j == n || (i + j) == (m + n) || (i - j) == (m - n)
+
+queensB :: Int -> [[Int]]
+queensB 0 = [[]]
+queensB m = [p ++ [n] | p <- queensB (m-1), n <- [1..8], safe p n]
