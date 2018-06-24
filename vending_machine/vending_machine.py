@@ -21,11 +21,9 @@ class VendingMachine(object):
     def check_return(self):
         return self.__amount_manager.get_return()
 
-    def push_product_button(self, product_name):
-        return self.__display.thanks() if self.__is_buying_ok(product_name) else self.__display.price()
-
-    def __is_buying_ok(self, product_name):
-        return self.__amount_manager.try_to_spend(self.__product_manager.get_product_price_by_name(product_name))
+    def push_product_button(self, b_name):
+        purchase_ok = self.__amount_manager.spend_if_possible(self.__product_manager.get_product_price_by_name(b_name))
+        return self.__display.thanks() if purchase_ok else self.__display.price()
 
     def push_return_button(self):
         self.__amount_manager.flush_coins()

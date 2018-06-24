@@ -19,7 +19,7 @@ class AmountManager(object):
     def get_return(self):
         return self.__return
 
-    def try_to_spend(self, amount):
+    def spend_if_possible(self, amount):
         return self.__give_change_and_reset(amount) if self.__is_enough_money(amount) else False
 
     def __is_enough_money(self, amount):

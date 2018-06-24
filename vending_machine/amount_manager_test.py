@@ -48,26 +48,26 @@ class AmountManagerTests(unittest.TestCase):
         self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
 
     def test_should_return_false_when_not_enough_amount_to_spend(self):
-        self.assertFalse(self.amount_manager.try_to_spend(100))
+        self.assertFalse(self.amount_manager.spend_if_possible(100))
 
     def test_should_return_true_when_enough_to_spend(self):
         self.given_amount_manager_with_coins()
-        self.assertTrue(self.amount_manager.try_to_spend(0.1))
+        self.assertTrue(self.amount_manager.spend_if_possible(0.1))
 
     def test_should_reset_amount_when_spend_is_successful(self):
         self.given_amount_manager_with_coins()
-        self.amount_manager.try_to_spend(0.1)
+        self.amount_manager.spend_if_possible(0.1)
         self.assertEqual(self.amount_manager.get_amount(), 0)
 
     def test_should_return_change(self):
         self.given_amount_manager_with_coins()
-        self.amount_manager.try_to_spend(0.65)
+        self.amount_manager.spend_if_possible(0.65)
         self.assertEqual(self.amount_manager.get_return(), [TestsFixture.COIN_1])
 
     def test_should_add_to_return_change(self):
         self.given_amount_manager_with_coins()
         self.given_some_invalid_coins_in_return()
-        self.amount_manager.try_to_spend(0.65)
+        self.amount_manager.spend_if_possible(0.65)
         expected_return = [TestsFixture.INVALID_COIN, TestsFixture.INVALID_COIN, TestsFixture.COIN_1]
         self.assertEqual(self.amount_manager.get_return(), expected_return)
 
