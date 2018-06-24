@@ -13,16 +13,20 @@ class VendingMachine(object):
 
     def insert_coin(self, coin: Coin):
         self.__amount_manager.insert_coin(coin)
-        return self.check_display()
+        return self.display()
 
-    def check_display(self):
-        return self.__display.display_amount(self.__amount_manager.get_amount())
+    def display(self):
+        return self.__display.amount(self.__amount_manager.get_amount())
 
     def check_return(self):
-        return self.__display.display_return(self.__amount_manager.get_return())
+        return self.__amount_manager.get_return()
 
-    def push_button(self, product_name):
-        return self.__display.display_thanks() if self.__is_buying_ok(product_name) else self.__display.display_price()
+    def push_product_button(self, product_name):
+        return self.__display.thanks() if self.__is_buying_ok(product_name) else self.__display.price()
 
     def __is_buying_ok(self, product_name):
-        return self.__amount_manager.spend(self.__product_manager.get_product_price_by_name(product_name))
+        return self.__amount_manager.try_to_spend(self.__product_manager.get_product_price_by_name(product_name))
+
+    def push_return_button(self):
+        self.__amount_manager.flush_coins()
+        return self.display()

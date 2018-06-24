@@ -40,11 +40,10 @@ class TestsFixture(object):
 
     NO_COINS_MSG = 'INSERT_COIN'
     AMOUNT_TPL = 'Current amount: %.2f$'
-    RETURN_TPL = '{}:\t{}'
     THANKS_MSG = 'THANK YOU'
     PRICE_MSG = 'PRICE'
 
-    DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, RETURN_TPL, PRICE_MSG, THANKS_MSG)
+    DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, PRICE_MSG, THANKS_MSG)
     COIN_MANAGER = CoinManager(MONEY_MAP)
 
     PRODUCT_NAME_1 = 'Cola'

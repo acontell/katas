@@ -9,3 +9,9 @@ class Coin(object):
 
     def get_measure(self):
         return self.__measure
+
+    def __eq__(self, other):
+        return isinstance(other, Coin) and self.__measure.__eq__(other.__measure)
+
+    def __hash__(self):
+        return self.__measure.__hash__()

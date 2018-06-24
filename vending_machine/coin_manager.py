@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+from functools import reduce
 from math import ceil
 
 from coin import Coin
+from measure import Measure
 
 
 class CoinManager(object):
@@ -9,27 +11,22 @@ class CoinManager(object):
     def __init__(self, money_map):
         self.__money_map = money_map
 
-    def is_valid(self, coin: Coin):
-        return self.__to_money(coin).is_valid()
+    def get_value(self, coins):
+        return reduce(lambda x, m: x + m.get_value(), self.__get_valid_money(coins), 0)
+
+    def __get_valid_money(self, coins):
+        return list(filter(lambda m: m.is_valid(), self.__get_money(coins)))
+
+    def __get_money(self, coins):
+        return list(map(lambda coin: self.__to_money(coin), coins))
 
     def __to_money(self, coin: Coin):
         return self.__money_map[coin.get_measure()]
 
-    def get_value(self, coin: Coin):
-        return self.__to_money(coin).get_value()
-
-    def get_name(self, coin: Coin):
-        return self.__to_money(coin).get_name()
+    def is_valid(self, coin: Coin):
+        return self.__to_money(coin).is_valid()
 
     def get_change(self, amount):
-        smallest = self.__get_smallest()
-        return {smallest.get_name(): ceil(amount / smallest.get_value())}
-
-    def __get_smallest(self):
-        smallest_money = None
-        current_value = float('inf')
-        for money in self.__money_map.values():
-            if 0 < money.get_value() < current_value:
-                smallest_money = money
-                current_value = money.get_value()
-        return smallest_money
+        coin = Coin(Measure(1, 1))
+        quantity = int(ceil(amount / self.__to_money(coin).get_value()))
+        return [Coin(Measure(1, 1)) for _ in range(quantity)]

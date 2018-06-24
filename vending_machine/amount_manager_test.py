@@ -17,7 +17,7 @@ class AmountManagerTests(unittest.TestCase):
         for valid_coin in TestsFixture.VALID_COINS:
             amount_manager = AmountManager(self.coin_manager)
             amount_manager.insert_coin(valid_coin)
-            self.assertEqual(amount_manager.get_amount(), self.coin_manager.get_value(valid_coin))
+            self.assertEqual(amount_manager.get_amount(), self.coin_manager.get_value([valid_coin]))
 
     def test_should_not_add_anything_when_incorrect_coin_inserted(self):
         for invalid_coin in TestsFixture.INVALID_COINS:
@@ -38,38 +38,38 @@ class AmountManagerTests(unittest.TestCase):
         self.expected_amount_of_money = 2 * TestsFixture.MONEY_VALUE_1 + TestsFixture.MONEY_VALUE_2 + 2 * TestsFixture.MONEY_VALUE_3
         pass
 
-    def test_should_return_map_with_coins_to_return(self):
+    def test_should_return_list_with_coins_to_return(self):
         self.given_amount_manager_with_coins()
         self.given_some_invalid_coins_in_return()
-        self.assertEqual(self.amount_manager.get_return(), {TestsFixture.INVALID_MONEY_NAME: 2})
+        self.assertEqual(self.amount_manager.get_return(), [TestsFixture.INVALID_COIN, TestsFixture.INVALID_COIN])
 
     def given_some_invalid_coins_in_return(self):
         self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
         self.amount_manager.insert_coin(TestsFixture.INVALID_COIN)
 
     def test_should_return_false_when_not_enough_amount_to_spend(self):
-        self.assertFalse(self.amount_manager.spend(100))
+        self.assertFalse(self.amount_manager.try_to_spend(100))
 
     def test_should_return_true_when_enough_to_spend(self):
         self.given_amount_manager_with_coins()
-        self.assertTrue(self.amount_manager.spend(0.1))
+        self.assertTrue(self.amount_manager.try_to_spend(0.1))
 
     def test_should_reset_amount_when_spend_is_successful(self):
         self.given_amount_manager_with_coins()
-        self.amount_manager.spend(0.1)
+        self.amount_manager.try_to_spend(0.1)
         self.assertEqual(self.amount_manager.get_amount(), 0)
 
     def test_should_return_change(self):
         self.given_amount_manager_with_coins()
-        self.amount_manager.spend(0.1)
-        self.assertEqual(self.amount_manager.get_return(), {TestsFixture.MONEY_NAME_1: 12})
+        self.amount_manager.try_to_spend(0.65)
+        self.assertEqual(self.amount_manager.get_return(), [TestsFixture.COIN_1])
 
     def test_should_add_to_return_change(self):
         self.given_amount_manager_with_coins()
         self.given_some_invalid_coins_in_return()
-        self.amount_manager.spend(0.1)
-        self.assertEqual(self.amount_manager.get_return(), {TestsFixture.MONEY_NAME_1: 12,
-                                                            TestsFixture.INVALID_MONEY_NAME: 2})
+        self.amount_manager.try_to_spend(0.65)
+        expected_return = [TestsFixture.INVALID_COIN, TestsFixture.INVALID_COIN, TestsFixture.COIN_1]
+        self.assertEqual(self.amount_manager.get_return(), expected_return)
 
         if __name__ == '__main__':
             unittest.main()
