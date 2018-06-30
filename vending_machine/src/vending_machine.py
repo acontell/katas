@@ -29,16 +29,17 @@ class VendingMachine(object):
 
     def push_product_button(self, b_name):
         has_enough_stock = self.__dispenser.has_stock(b_name)
-        return self.__spend_if_possible(b_name) if has_enough_stock else self.__display.sold_out()
+        return self.__dispense_if_possible(b_name) if has_enough_stock else self.__display.sold_out()
 
-    def __spend_if_possible(self, b_name):
+    def __dispense_if_possible(self, b_name):
         product_price = self.__dispenser.get_product_price(b_name)
         has_enough_amount = self.__amount.has_enough_amount(product_price)
-        return self.__dispense_and_say_thanks(b_name, product_price) if has_enough_amount else self.__display.price()
+        return self.__dispense(b_name, product_price) if has_enough_amount else self.__display.price()
 
-    def __dispense_and_say_thanks(self, b_name, product_price):
-        change = self.__amount.spend(product_price)
-        self.__return.add_coins(change)
+    def __dispense(self, b_name, product_price):
+        self.__amount.spend(product_price)
+        self.__return.add_coins(self.__amount.get_coins())
+        self.__amount.empty_coins()
         self.__dispenser.dispense(b_name)
         return self.__display.thanks()
 
