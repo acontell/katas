@@ -25,6 +25,9 @@ class AmountManager(object):
         return amount <= self.get_amount()
 
     def spend(self, amount):
+        return self.__change_and_empty(amount)
+
+    def __change_and_empty(self, amount):
         change = self.__coin_repository.get_change(self.get_amount() - amount)
         self.empty_coins()
         return change
