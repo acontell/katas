@@ -18,5 +18,8 @@ class DisplayTests(unittest.TestCase):
     def test_should_display_thanks_msg(self):
         self.assertEqual(TestsFixture.DISPLAY.thanks(), TestsFixture.THANKS_MSG)
 
+    def test_should_display_sold_out_msg(self):
+        self.assertEqual(TestsFixture.DISPLAY.sold_out(), TestsFixture.SOLD_OUT_MSG)
+
         if __name__ == '__main__':
             unittest.main()

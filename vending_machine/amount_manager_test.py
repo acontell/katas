@@ -2,14 +2,14 @@
 
 import unittest
 from amount_manager import AmountManager
-from coin_manager import CoinManager
+from coin_repository import CoinRepository
 from tests_fixture import TestsFixture
 
 
 class AmountManagerTests(unittest.TestCase):
 
     def setUp(self):
-        self.coin_manager = CoinManager(TestsFixture.MONEY_MAP)
+        self.coin_manager = CoinRepository(TestsFixture.MONEY_MAP)
         self.amount_manager = AmountManager(self.coin_manager)
         self.expected_amount_of_money = 0
 
@@ -70,6 +70,14 @@ class AmountManagerTests(unittest.TestCase):
         self.amount_manager.spend_if_possible(0.65)
         expected_return = [TestsFixture.INVALID_COIN, TestsFixture.INVALID_COIN, TestsFixture.COIN_1]
         self.assertEqual(self.amount_manager.get_return(), expected_return)
+
+    def test_should_return_true_when_enough_money(self):
+        self.given_amount_manager_with_coins()
+        self.assertTrue(self.amount_manager.check_enough_amount(0.1))
+
+    def test_should_return_false_when_not_enough_money(self):
+        self.given_amount_manager_with_coins()
+        self.assertFalse(self.amount_manager.check_enough_amount(100))
 
         if __name__ == '__main__':
             unittest.main()

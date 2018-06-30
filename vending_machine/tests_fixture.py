@@ -2,11 +2,12 @@
 
 from coin import Coin
 from display import Display
-from coin_manager import CoinManager
+from coin_repository import CoinRepository
 from money import Money
 from measure import Measure
 from product import Product
-from product_manager import ProductManager
+from product_repository import ProductRepository
+from dispenser_manager import DispenserManager
 
 
 class TestsFixture(object):
@@ -42,9 +43,10 @@ class TestsFixture(object):
     AMOUNT_TPL = 'Current amount: %.2f$'
     THANKS_MSG = 'THANK YOU'
     PRICE_MSG = 'PRICE'
+    SOLD_OUT_MSG = 'SOLD OUT'
 
-    DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, PRICE_MSG, THANKS_MSG)
-    COIN_MANAGER = CoinManager(MONEY_MAP)
+    DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, PRICE_MSG, THANKS_MSG, SOLD_OUT_MSG)
+    COIN_MANAGER = CoinRepository(MONEY_MAP)
 
     PRODUCT_NAME_1 = 'Cola'
     PRODUCT_NAME_2 = 'Chips'
@@ -52,8 +54,12 @@ class TestsFixture(object):
     PRODUCT_PRICE_1 = 1
     PRODUCT_PRICE_2 = 0.5
     PRODUCT_PRICE_3 = 0.65
-    PRODUCT_1 = Product(PRODUCT_NAME_1, PRODUCT_PRICE_1)
-    PRODUCT_2 = Product(PRODUCT_NAME_2, PRODUCT_PRICE_2)
-    PRODUCT_3 = Product(PRODUCT_NAME_3, PRODUCT_PRICE_3)
+    PRODUCT_STOCK_1 = 3
+    PRODUCT_STOCK_2 = 0
+    PRODUCT_STOCK_3 = 1
+    PRODUCT_1 = Product(PRODUCT_NAME_1, PRODUCT_PRICE_1, PRODUCT_STOCK_1)
+    PRODUCT_2 = Product(PRODUCT_NAME_2, PRODUCT_PRICE_2, PRODUCT_STOCK_2)
+    PRODUCT_3 = Product(PRODUCT_NAME_3, PRODUCT_PRICE_3, PRODUCT_STOCK_3)
     PRODUCTS = [PRODUCT_1, PRODUCT_2, PRODUCT_3]
-    PRODUCT_MANAGER = ProductManager(PRODUCTS)
+    PRODUCT_MANAGER = ProductRepository(PRODUCTS)
+    DISPENSER_MANAGER = DispenserManager(PRODUCT_MANAGER)

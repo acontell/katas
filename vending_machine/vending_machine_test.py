@@ -3,7 +3,7 @@
 import unittest
 from vending_machine import VendingMachine
 from amount_manager import AmountManager
-from product_manager import ProductManager
+from dispenser_manager import DispenserManager
 from tests_fixture import TestsFixture
 
 
@@ -16,7 +16,7 @@ class VendingMachineTests(unittest.TestCase):
     def given_vending_machine(self):
         self.vending_machine = VendingMachine(TestsFixture.DISPLAY,
                                               AmountManager(TestsFixture.COIN_MANAGER),
-                                              ProductManager(TestsFixture.PRODUCTS))
+                                              DispenserManager(TestsFixture.PRODUCT_MANAGER))
 
     def test_should_display_correct_amount_for_one_valid_coin_inserted(self):
         for valid_coin in TestsFixture.VALID_COINS:
@@ -114,6 +114,21 @@ class VendingMachineTests(unittest.TestCase):
         self.vending_machine.insert_coin(TestsFixture.COIN_1)
         self.vending_machine.push_return_button()
         self.assertEqual(self.vending_machine.check_return(), [TestsFixture.COIN_1])
+
+    def test_should_say_sold_out_when_stock_of_selected_product_is_zero(self):
+        self.given_vending_machine_with_coins()
+        actual = self.vending_machine.push_product_button(TestsFixture.PRODUCT_NAME_2)
+        self.assertEqual(actual, TestsFixture.SOLD_OUT_MSG)
+
+    def test_should_say_insert_coin_when_stock_and_amount_is_zero_and_display_is_checked_again(self):
+        self.given_vending_machine()
+        self.vending_machine.push_product_button(TestsFixture.PRODUCT_NAME_2)
+        self.assertEqual(self.vending_machine.display(), TestsFixture.NO_COINS_MSG)
+
+    def test_should_say_amount_when_stock_is_zero_and_amount_not_zero_and_display_is_checked_again(self):
+        self.vending_machine.insert_coin(TestsFixture.COIN_1)
+        self.vending_machine.push_product_button(TestsFixture.PRODUCT_NAME_2)
+        self.assertEqual(self.vending_machine.display(), TestsFixture.AMOUNT_TPL % TestsFixture.MONEY_VALUE_1)
 
         if __name__ == '__main__':
             unittest.main()

@@ -6,7 +6,7 @@ from coin import Coin
 from measure import Measure
 
 
-class CoinManager(object):
+class CoinRepository(object):
 
     def __init__(self, money_map):
         self.__money_map = money_map

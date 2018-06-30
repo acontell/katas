@@ -3,11 +3,10 @@ from coin_repository import CoinRepository
 from coin import Coin
 
 
-class AmountManager(object):
+class ReturnManager(object):
 
     def __init__(self, coin_repository: CoinRepository):
         self.__coin_repository = coin_repository
-        self.__coins = []
         self.__return = []
 
     def insert_coin(self, coin: Coin):
