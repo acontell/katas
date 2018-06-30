@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import unittest
-from vending_machine import VendingMachine
-from amount_manager import AmountManager
-from dispenser_manager import DispenserManager
-from return_manager import ReturnManager
-from tests_fixture import TestsFixture
+from src.vending_machine import VendingMachine
+from src.managers.amount_manager import AmountManager
+from src.managers.dispenser_manager import DispenserManager
+from src.managers.return_manager import ReturnManager
+from test.tests_fixture import TestsFixture
 
 
 class VendingMachineTests(unittest.TestCase):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from return_manager import ReturnManager
-from tests_fixture import TestsFixture
+from src.managers.return_manager import ReturnManager
+from test.tests_fixture import TestsFixture
 
 
 class ReturnManagerTests(unittest.TestCase):

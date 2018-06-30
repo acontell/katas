@@ -2,8 +2,8 @@
 from functools import reduce
 from math import ceil
 
-from coin import Coin
-from measure import Measure
+from src.model.coin import Coin
+from src.model.measure import Measure
 
 
 class CoinRepository(object):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from product import Product
-from tests_fixture import TestsFixture
+from src.model.product import Product
+from test.tests_fixture import TestsFixture
 
 
 class ProductTests(unittest.TestCase):

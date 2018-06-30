@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from coin import Coin
+from src.model.coin import Coin
 
 
 class ReturnManager(object):

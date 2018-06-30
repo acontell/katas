@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-from coin import Coin
-from display import Display
-from coin_repository import CoinRepository
-from money import Money
-from measure import Measure
-from product import Product
-from product_repository import ProductRepository
-from dispenser_manager import DispenserManager
+from src.model.coin import Coin
+from src.displays.display import Display
+from src.repositories.coin_repository import CoinRepository
+from src.model.money import Money
+from src.model.measure import Measure
+from src.model.product import Product
+from src.repositories.product_repository import ProductRepository
+from src.managers.dispenser_manager import DispenserManager
 
 
 class TestsFixture(object):

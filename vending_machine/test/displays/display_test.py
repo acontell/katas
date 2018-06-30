@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from tests_fixture import TestsFixture
+from test.tests_fixture import TestsFixture
 
 
 class DisplayTests(unittest.TestCase):

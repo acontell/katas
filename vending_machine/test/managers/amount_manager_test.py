@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from amount_manager import AmountManager
-from coin_repository import CoinRepository
-from tests_fixture import TestsFixture
+from src.managers.amount_manager import AmountManager
+from src.repositories.coin_repository import CoinRepository
+from test.tests_fixture import TestsFixture
 
 
 class AmountManagerTests(unittest.TestCase):

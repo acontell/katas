@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from product_repository import ProductRepository
+from src.repositories.product_repository import ProductRepository
 
 
 class DispenserManager(object):

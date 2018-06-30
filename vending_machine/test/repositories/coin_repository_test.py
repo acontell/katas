@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from coin_repository import CoinRepository
-from tests_fixture import TestsFixture
+from src.repositories.coin_repository import CoinRepository
+from test.tests_fixture import TestsFixture
 
 
 class CoinRepositoryTests(unittest.TestCase):

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from coin_repository import CoinRepository
-from coin import Coin
+from src.repositories.coin_repository import CoinRepository
+from src.model.coin import Coin
 
 
 class AmountManager(object):

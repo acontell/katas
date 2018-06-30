@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import unittest
-from coin import Coin
-from measure import Measure
-from tests_fixture import TestsFixture
+from src.model.coin import Coin
+from src.model.measure import Measure
+from test.tests_fixture import TestsFixture
 
 
 class CoinTests(unittest.TestCase):

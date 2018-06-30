@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-from display import Display
-from amount_manager import AmountManager
-from coin import Coin
-from dispenser_manager import DispenserManager
-from return_manager import ReturnManager
+from src.displays.display import Display
+from src.managers.amount_manager import AmountManager
+from src.model.coin import Coin
+from src.managers.dispenser_manager import DispenserManager
+from src.managers.return_manager import ReturnManager
 
 
 class VendingMachine(object):

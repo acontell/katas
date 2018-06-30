@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from tests_fixture import TestsFixture
-from dispenser_manager import DispenserManager
+from test.tests_fixture import TestsFixture
+from src.managers.dispenser_manager import DispenserManager
 
 
 class DispenserManagerTests(unittest.TestCase):
