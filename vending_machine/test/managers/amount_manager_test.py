@@ -2,14 +2,14 @@
 
 import unittest
 from src.managers.amount_manager import AmountManager
-from src.repositories.coin_repository import CoinRepository
+from src.inventories.coin_inventory import CoinInventory
 from test.tests_fixture import TestsFixture
 
 
 class AmountManagerTests(unittest.TestCase):
 
     def setUp(self):
-        self.coin_manager = CoinRepository(TestsFixture.MONEY_MAP)
+        self.coin_manager = CoinInventory(TestsFixture.MONEY_MAP)
         self.amount_manager = AmountManager(self.coin_manager)
         self.expected_amount_of_money = 0
 

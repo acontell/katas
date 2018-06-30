@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import unittest
-from src.repositories.coin_repository import CoinRepository
+from src.inventories.coin_inventory import CoinInventory
 from test.tests_fixture import TestsFixture
 
 
-class CoinRepositoryTests(unittest.TestCase):
+class CoinInventoryTests(unittest.TestCase):
 
     def setUp(self):
-        self.coin_manager = CoinRepository(TestsFixture.MONEY_MAP)
+        self.coin_manager = CoinInventory(TestsFixture.MONEY_MAP)
 
     def test_should_return_zero_when_coins_is_empty(self):
         self.assertEqual(self.coin_manager.get_value([]), 0)

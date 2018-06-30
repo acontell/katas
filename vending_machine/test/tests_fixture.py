@@ -2,12 +2,12 @@
 
 from src.model.coin import Coin
 from src.displays.display import Display
-from src.repositories.coin_repository import CoinRepository
+from src.inventories.coin_inventory import CoinInventory
 from src.model.money import Money
 from src.model.measure import Measure
 from src.model.product import Product
-from src.repositories.product_repository import ProductRepository
-from src.managers.dispenser_manager import DispenserManager
+from src.inventories.product_inventory import ProductInventory
+from src.managers.product_manager import ProductManager
 
 
 class TestsFixture(object):
@@ -46,7 +46,7 @@ class TestsFixture(object):
     SOLD_OUT_MSG = 'SOLD OUT'
 
     DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, PRICE_MSG, THANKS_MSG, SOLD_OUT_MSG)
-    COIN_MANAGER = CoinRepository(MONEY_MAP)
+    COIN_INVENTORY = CoinInventory(MONEY_MAP)
 
     PRODUCT_NAME_1 = 'Cola'
     PRODUCT_NAME_2 = 'Chips'
@@ -61,5 +61,5 @@ class TestsFixture(object):
     PRODUCT_2 = Product(PRODUCT_NAME_2, PRODUCT_PRICE_2, PRODUCT_STOCK_2)
     PRODUCT_3 = Product(PRODUCT_NAME_3, PRODUCT_PRICE_3, PRODUCT_STOCK_3)
     PRODUCTS = [PRODUCT_1, PRODUCT_2, PRODUCT_3]
-    PRODUCT_MANAGER = ProductRepository(PRODUCTS)
-    DISPENSER_MANAGER = DispenserManager(PRODUCT_MANAGER)
+    PRODUCT_INVENTORY = ProductInventory(PRODUCTS)
+    PRODUCT_MANAGER = ProductManager(PRODUCT_INVENTORY)

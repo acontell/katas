@@ -6,7 +6,7 @@ from src.model.coin import Coin
 from src.model.measure import Measure
 
 
-class CoinRepository(object):
+class CoinInventory(object):
 
     def __init__(self, money_map):
         self.__money_map = money_map

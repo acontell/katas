@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-class ProductRepository(object):
+class ProductInventory(object):
 
     def __init__(self, products):
         self.__products = products

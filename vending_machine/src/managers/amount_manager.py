@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-from src.repositories.coin_repository import CoinRepository
+from src.inventories.coin_inventory import CoinInventory
 from src.model.coin import Coin
 
 
 class AmountManager(object):
 
-    def __init__(self, coin_repository: CoinRepository):
-        self.__coin_repository = coin_repository
+    def __init__(self, coin_inventory: CoinInventory):
+        self.__coin_repository = coin_inventory
         self.__coins = []
 
     def get_coins(self):

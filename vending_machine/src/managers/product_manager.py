@@ -1,15 +1,12 @@
 #!/usr/bin/env python
-from src.repositories.product_repository import ProductRepository
+from src.inventories.product_inventory import ProductInventory
 
 
-class DispenserManager(object):
+class ProductManager(object):
 
-    def __init__(self, product_manager: ProductRepository):
-        self.__product_manager = product_manager
+    def __init__(self, product_inventory: ProductInventory):
+        self.__product_manager = product_inventory
         self.__dispenser = []
-
-    def get_products(self):
-        return self.__product_manager.get_products()
 
     def get_dispenser(self):
         return self.__dispenser
