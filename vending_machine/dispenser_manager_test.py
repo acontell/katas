@@ -15,19 +15,13 @@ class DispenserManagerTests(unittest.TestCase):
 
     def test_should_return_dispenser_when_product_sold(self):
         dispenser_manager = DispenserManager(TestsFixture.PRODUCT_MANAGER)
-        dispenser_manager.dispense_if_possible(TestsFixture.PRODUCT_NAME_1)
-        dispenser_manager.dispense_if_possible(TestsFixture.PRODUCT_NAME_3)
+        dispenser_manager.dispense(TestsFixture.PRODUCT_NAME_1)
+        dispenser_manager.dispense(TestsFixture.PRODUCT_NAME_3)
         self.assertEqual(dispenser_manager.get_dispenser(), [TestsFixture.PRODUCT_1, TestsFixture.PRODUCT_3])
 
     def test_should_return_price_when_asked_by_product_name(self):
         price = TestsFixture.DISPENSER_MANAGER.get_product_price(TestsFixture.PRODUCT_NAME_1)
         self.assertEqual(price, TestsFixture.PRODUCT_PRICE_1)
-
-    def test_should_return_true_when_dispense_is_successful(self):
-        self.assertTrue(TestsFixture.DISPENSER_MANAGER.dispense_if_possible(TestsFixture.PRODUCT_NAME_1))
-
-    def test_should_return_false_when_dispense_is_not_successful(self):
-        self.assertFalse(TestsFixture.DISPENSER_MANAGER.dispense_if_possible(TestsFixture.PRODUCT_NAME_2))
 
     def test_should_return_true_when_enough_stock(self):
         self.assertTrue(TestsFixture.DISPENSER_MANAGER.has_stock(TestsFixture.PRODUCT_NAME_3))

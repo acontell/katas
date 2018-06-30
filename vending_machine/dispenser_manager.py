@@ -17,12 +17,8 @@ class DispenserManager(object):
     def get_product_price(self, name):
         return self.__product_manager.get_product(name).get_price()
 
-    def dispense_if_possible(self, name):
-        return False if not self.has_stock(name) else self.__dispense_product(name)
+    def dispense(self, name):
+        self.__dispenser.append(self.__product_manager.get_product(name))
 
     def has_stock(self, name):
         return self.__product_manager.has_stock(name)
-
-    def __dispense_product(self, name):
-        self.__dispenser.append(self.__product_manager.get_product(name))
-        return True

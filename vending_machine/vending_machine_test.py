@@ -4,6 +4,7 @@ import unittest
 from vending_machine import VendingMachine
 from amount_manager import AmountManager
 from dispenser_manager import DispenserManager
+from return_manager import ReturnManager
 from tests_fixture import TestsFixture
 
 
@@ -16,7 +17,8 @@ class VendingMachineTests(unittest.TestCase):
     def given_vending_machine(self):
         self.vending_machine = VendingMachine(TestsFixture.DISPLAY,
                                               AmountManager(TestsFixture.COIN_MANAGER),
-                                              DispenserManager(TestsFixture.PRODUCT_MANAGER))
+                                              DispenserManager(TestsFixture.PRODUCT_MANAGER),
+                                              ReturnManager())
 
     def test_should_display_correct_amount_for_one_valid_coin_inserted(self):
         for valid_coin in TestsFixture.VALID_COINS:
