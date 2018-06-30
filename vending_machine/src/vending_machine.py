@@ -38,15 +38,17 @@ class VendingMachine(object):
 
     def __dispense(self, b_name, product_price):
         self.__amount.spend(product_price)
-        self.__return.add_coins(self.__amount.get_coins())
-        self.__amount.empty_coins()
+        self.__coins_to_return()
         self.__dispenser.dispense(b_name)
         return self.__display.thanks()
+
+    def __coins_to_return(self):
+        self.__return.add_coins(self.__amount.get_coins())
+        self.__amount.empty_coins()
 
     def check_dispenser(self):
         return self.__dispenser.get_dispenser()
 
     def push_return_button(self):
-        self.__return.add_coins(self.__amount.get_coins())
-        self.__amount.empty_coins()
+        self.__coins_to_return()
         return self.display()
