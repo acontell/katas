@@ -4,7 +4,7 @@ import unittest
 from test.tests_fixture import TestsFixture
 
 
-class CoinTests(unittest.TestCase):
+class MoneyTests(unittest.TestCase):
 
     def test_should_return_true_when_value_is_more_than_zero(self):
         self.assertTrue(TestsFixture.MONEY_1.is_valid())

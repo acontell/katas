@@ -26,5 +26,9 @@ class ProductManagerTests(unittest.TestCase):
     def test_should_return_false_when_not_enough_stock(self):
         self.assertFalse(TestsFixture.PRODUCT_MANAGER.has_stock(TestsFixture.PRODUCT_NAME_2))
 
+    def test_should_return_array_of_prices(self):
+        prices = [TestsFixture.PRODUCT_PRICE_1, TestsFixture.PRODUCT_PRICE_2, TestsFixture.PRODUCT_PRICE_3]
+        self.assertEqual(TestsFixture.PRODUCT_MANAGER.get_product_prices(), prices)
+
         if __name__ == '__main__':
             unittest.main()

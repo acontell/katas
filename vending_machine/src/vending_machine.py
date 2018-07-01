@@ -22,7 +22,16 @@ class VendingMachine(object):
         return self.display()
 
     def display(self):
-        return self.__display.amount(self.__amount.get_amount())
+        return self.__display_amount() if self.__has_enough_change() else self.__display.exact_change()
+
+    def __display_amount(self):
+        return self.__display.amount(self.__amount.get_amount()) if self.__has_money() else self.__display.insert_coin()
+
+    def __has_money(self):
+        return self.__amount.get_amount() > 0
+
+    def __has_enough_change(self):
+        return all(list(map(lambda price: self.__amount.has_enough_change(price), self.__product.get_product_prices())))
 
     def check_return(self):
         return self.__return.check_return()

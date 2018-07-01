@@ -16,5 +16,8 @@ class ProductInventoryTests(unittest.TestCase):
     def test_should_return_false_when_not_enough_stock(self):
         self.assertFalse(TestsFixture.PRODUCT_INVENTORY.has_stock(TestsFixture.PRODUCT_NAME_2))
 
+    def test_should_return_list_of_products(self):
+        self.assertEqual(TestsFixture.PRODUCT_INVENTORY.get_products(), TestsFixture.PRODUCTS)
+
         if __name__ == '__main__':
             unittest.main()

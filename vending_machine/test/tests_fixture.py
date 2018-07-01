@@ -8,6 +8,7 @@ from src.model.measure import Measure
 from src.model.product import Product
 from src.inventories.product_inventory import ProductInventory
 from src.managers.product_manager import ProductManager
+from src.converters.coin_converter import CoinConverter
 
 
 class TestsFixture(object):
@@ -38,15 +39,18 @@ class TestsFixture(object):
     MONEY_MAP = {MEASURE_1: MONEY_1, MEASURE_2: MONEY_2, MEASURE_3: MONEY_3, INVALID_COIN_MEASURE: INVALID_MONEY}
     VALID_COINS = [COIN_1, COIN_2, COIN_3]
     INVALID_COINS = [INVALID_COIN]
+    CURRENT_CHANGE = [COIN_3, COIN_3, COIN_3, COIN_3, COIN_3, COIN_3]
 
     NO_COINS_MSG = 'INSERT_COIN'
     AMOUNT_TPL = 'Current amount: %.2f$'
     THANKS_MSG = 'THANK YOU'
     PRICE_MSG = 'PRICE'
     SOLD_OUT_MSG = 'SOLD OUT'
+    EXACT_CHANGE_MSG = 'EXACT CHANGE ONLY'
 
-    DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, PRICE_MSG, THANKS_MSG, SOLD_OUT_MSG)
-    COIN_INVENTORY = CoinInventory(MONEY_MAP)
+    DISPLAY = Display(NO_COINS_MSG, AMOUNT_TPL, PRICE_MSG, THANKS_MSG, SOLD_OUT_MSG, EXACT_CHANGE_MSG)
+    COIN_CONVERTER = CoinConverter(MONEY_MAP)
+    COIN_INVENTORY = CoinInventory(CURRENT_CHANGE, COIN_CONVERTER)
 
     PRODUCT_NAME_1 = 'Cola'
     PRODUCT_NAME_2 = 'Chips'

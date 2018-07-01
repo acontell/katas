@@ -2,22 +2,20 @@
 
 import unittest
 from src.managers.amount_manager import AmountManager
-from src.inventories.coin_inventory import CoinInventory
 from test.tests_fixture import TestsFixture
 
 
 class AmountManagerTests(unittest.TestCase):
 
     def setUp(self):
-        self.coin_manager = CoinInventory(TestsFixture.MONEY_MAP)
-        self.amount_manager = AmountManager(self.coin_manager)
+        self.amount_manager = AmountManager(TestsFixture.COIN_INVENTORY)
         self.expected_amount_of_money = 0
 
     def test_should_add_correct_amount_for_one_coin(self):
         for valid_coin in TestsFixture.VALID_COINS:
-            amount_manager = AmountManager(self.coin_manager)
+            amount_manager = AmountManager(TestsFixture.COIN_INVENTORY)
             amount_manager.insert_coin(valid_coin)
-            self.assertEqual(amount_manager.get_amount(), self.coin_manager.get_value([valid_coin]))
+            self.assertEqual(amount_manager.get_amount(), TestsFixture.COIN_INVENTORY.get_value([valid_coin]))
 
     def test_should_add_amount_of_inserted_coins(self):
         self.given_amount_manager_with_coins()
@@ -53,6 +51,12 @@ class AmountManagerTests(unittest.TestCase):
     def test_should_empty_coins(self):
         self.amount_manager.empty_coins()
         self.assertEqual(self.amount_manager.get_coins(), [])
+
+    def test_should_return_true_when_enough_change(self):
+        self.assertTrue(TestsFixture.COIN_INVENTORY.has_enough_change(0.3))
+
+    def test_should_return_false_when_not_enough_change(self):
+        self.assertFalse(TestsFixture.COIN_INVENTORY.has_enough_change(30))
 
         if __name__ == '__main__':
             unittest.main()

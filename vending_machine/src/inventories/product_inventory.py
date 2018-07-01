@@ -11,3 +11,6 @@ class ProductInventory(object):
 
     def has_stock(self, name):
         return self.get_product(name).get_stock() > 0
+
+    def get_products(self):
+        return self.__products

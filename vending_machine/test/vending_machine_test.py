@@ -5,6 +5,7 @@ from src.vending_machine import VendingMachine
 from src.managers.amount_manager import AmountManager
 from src.managers.product_manager import ProductManager
 from src.managers.return_manager import ReturnManager
+from src.inventories.coin_inventory import CoinInventory
 from test.tests_fixture import TestsFixture
 
 
@@ -15,8 +16,11 @@ class VendingMachineTests(unittest.TestCase):
         self.expected_money = 0
 
     def given_vending_machine(self):
+        self.given_vending_machine_with_change(TestsFixture.CURRENT_CHANGE)
+
+    def given_vending_machine_with_change(self, change):
         self.vending_machine = VendingMachine(TestsFixture.DISPLAY,
-                                              AmountManager(TestsFixture.COIN_INVENTORY),
+                                              AmountManager(CoinInventory(change, TestsFixture.COIN_CONVERTER)),
                                               ProductManager(TestsFixture.PRODUCT_INVENTORY),
                                               ReturnManager())
 
@@ -131,6 +135,10 @@ class VendingMachineTests(unittest.TestCase):
         self.vending_machine.insert_coin(TestsFixture.COIN_1)
         self.vending_machine.push_product_button(TestsFixture.PRODUCT_NAME_2)
         self.assertEqual(self.vending_machine.display(), TestsFixture.AMOUNT_TPL % TestsFixture.MONEY_VALUE_1)
+
+    def test_should_display_exact_change_when_not_enough_money_for_product(self):
+        self.given_vending_machine_with_change([TestsFixture.COIN_3, TestsFixture.COIN_3])
+        self.assertEqual(self.vending_machine.display(), TestsFixture.EXACT_CHANGE_MSG)
 
         if __name__ == '__main__':
             unittest.main()
