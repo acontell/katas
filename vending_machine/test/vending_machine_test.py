@@ -2,7 +2,7 @@
 
 import unittest
 from src.vending_machine import VendingMachine
-from src.managers.amount_manager import AmountManager
+from src.managers.money_manager import MoneyManager
 from src.managers.product_manager import ProductManager
 from src.managers.return_manager import ReturnManager
 from src.inventories.coin_inventory import CoinInventory
@@ -20,7 +20,7 @@ class VendingMachineTests(unittest.TestCase):
 
     def given_vending_machine_with_change(self, change):
         self.vending_machine = VendingMachine(TestsFixture.DISPLAY,
-                                              AmountManager(CoinInventory(change, TestsFixture.COIN_CONVERTER)),
+                                              MoneyManager(CoinInventory(change, TestsFixture.COIN_CONVERTER)),
                                               ProductManager(TestsFixture.PRODUCT_INVENTORY),
                                               ReturnManager())
 

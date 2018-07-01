@@ -7,10 +7,10 @@ from test.tests_fixture import TestsFixture
 class DisplayTests(unittest.TestCase):
 
     def test_should_display_amount(self):
-        self.assertEqual(TestsFixture.DISPLAY.amount(5), TestsFixture.AMOUNT_TPL % 5)
+        self.assertEqual(TestsFixture.DISPLAY.money(5), TestsFixture.AMOUNT_TPL % 5)
 
     def test_should_display_insert_coin_msg(self):
-        self.assertEqual(TestsFixture.DISPLAY.insert_coin(), TestsFixture.NO_COINS_MSG)
+        self.assertEqual(TestsFixture.DISPLAY.no_money(), TestsFixture.NO_COINS_MSG)
 
     def test_should_display_price_msg(self):
         self.assertEqual(TestsFixture.DISPLAY.price(), TestsFixture.PRICE_MSG)
