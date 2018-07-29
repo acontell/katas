@@ -12,6 +12,7 @@ Curently done Katas:
  4. Greeting (Haskell)
  5. Shopping cart (Kotlin) - my first Kotlin application
  6. Vending machine (Python) - my first Python application
+ 7. Alphaber-Cipher (Scala) - my first Scala application
 
  Not Katas but just for fun and using TDD
 
