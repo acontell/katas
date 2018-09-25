@@ -13,6 +13,7 @@ Curently done Katas:
  5. Shopping cart (Kotlin) - my first Kotlin application
  6. Vending machine (Python) - my first Python application
  7. Alphaber-Cipher (Scala) - my first Scala application
+ 8. Weather-kata (Java) - Codium team from Barcelona introduced us to this Kata which main purpose was dealing with legacy code
 
  Not Katas but just for fun and using TDD
 
