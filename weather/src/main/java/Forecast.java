@@ -1,55 +1,39 @@
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import httpclients.GoogleHttpClient;
+import infrastructure.Clock;
+import models.Prediction;
+import providers.PredictionProvider;
+import providers.metaweather.MetaWeatherPredictionProvider;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
-public class Forecast {
-    public String predict(String city, Date datetime, boolean wind) throws IOException {
-        // When date is not provided we look for the current prediction
-        if (datetime == null) {
-            datetime = new Date();
-        }
-        String format = new SimpleDateFormat("yyyy-MM-dd").format(datetime);
+class Forecast {
 
-        // If there are predictions
-        if (datetime.before(new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 6)))) {
+    private static final String EMPTY = "";
+    private final PredictionProvider predictionProvider;
+    private final Clock clock;
 
-            // Find the id of the city on metawheather
-            HttpRequestFactory requestFactory
-                    = new NetHttpTransport().createRequestFactory();
-            HttpRequest request = requestFactory.buildGetRequest(
-                    new GenericUrl("https://www.metaweather.com/api/location/search/?query=" + city));
-            String rawResponse = request.execute().parseAsString();
-            JSONArray jsonArray = new JSONArray(rawResponse);
-            String woeid = jsonArray.getJSONObject(0).get("woeid").toString();
+    Forecast() {
+        this(new MetaWeatherPredictionProvider(new GoogleHttpClient()), new Clock());
+    }
 
-            // Find the predictions for the city
-            requestFactory = new NetHttpTransport().createRequestFactory();
-            request = requestFactory.buildGetRequest(
-                    new GenericUrl("https://www.metaweather.com/api/location/" + woeid));
-            rawResponse = request.execute().parseAsString();
-            JSONArray results = new JSONObject(rawResponse).getJSONArray("consolidated_weather");
+    private Forecast(final PredictionProvider predictionProvider, final Clock clock) {
+        this.predictionProvider = predictionProvider;
+        this.clock = clock;
+    }
 
-            for (int i = 0; i < results.length(); i++) {
-//            // When the date is the expected
-                if (format.equals(results.getJSONObject(i).get("applicable_date").toString())) {
-//                // If we have to return the wind information
-                    if (wind) {
-                        return results.getJSONObject(i).get("wind_speed").toString();
-                    } else {
-                        return results.getJSONObject(i).get("weather_state_name").toString();
-                    }
-                }
-            }
-        } else {
-            return "";
-        }
-        return "";
+    String predict(final String city, final Date datetime, final boolean wind) throws IOException {
+        return getPrediction(city, this.clock.localDateOrDefault(datetime))
+                .map(p -> wind ? p.getWindSpeed() : p.getWeatherState())
+                .orElse(EMPTY);
+    }
+
+    private Optional<Prediction> getPrediction(final String city, final LocalDate date) throws IOException {
+        return this.predictionProvider.getPredictions(city)
+                .stream()
+                .filter(p -> date.equals(p.getWhen()))
+                .findAny();
     }
 }
