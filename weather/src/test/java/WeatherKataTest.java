@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -8,45 +9,46 @@ import static org.junit.Assert.assertEquals;
 
 public class WeatherKataTest {
 
-    public static final int ONE_DAY = 1000 * 60 * 60 * 24 * 1;
+    private static final int ONE_DAY = 1000 * 60 * 60 * 24 * 1;
+
+    private ForecastService forecastService;
+
+    @Before
+    public void setUp() {
+        this.forecastService = new ForecastAdapter(new Forecast());
+    }
 
     // https://www.metaweather.com/api/location/766273/
     @Test
-    public void find_the_weather_of_today() throws IOException {
-        Forecast forecast = new Forecast();
-
-        String prediction = forecast.predict("Madrid",null, false);
+    public void find_the_weather_of_today() {
+        String prediction = this.forecastService.predictWeather("Madrid", null);
 
         System.out.println("Today: " + prediction);
         assertTrue("I don't know how to test it", true);
     }
-    @Test
-    public void find_the_weather_of_any_day() throws IOException {
-        Forecast forecast = new Forecast();
 
+    @Test
+    public void find_the_weather_of_any_day() {
         Date tomorrow = new Date(new Date().getTime() + ONE_DAY);
 
-        String prediction = forecast.predict("Madrid",tomorrow, false);
+        String prediction = this.forecastService.predictWeather("Madrid", tomorrow);
         System.out.println("Tomorrow: " + prediction);
         assertTrue("I don't know how to test it", true);
     }
-    @Test
-    public void find_the_wind_of_any_day() throws IOException {
-        Forecast forecast = new Forecast();
 
-        String prediction = forecast.predict("Madrid",null, true);
+    @Test
+    public void find_the_wind_of_any_day() {
+        String prediction = this.forecastService.predictWind("Madrid", null);
 
         System.out.println("Wind: " + prediction);
         assertTrue("I don't know how to test it", true);
     }
 
     @Test
-    public void there_is_no_prediction_for_more_than_5_days() throws IOException {
-        Forecast forecast = new Forecast();
-
+    public void there_is_no_prediction_for_more_than_5_days() {
         Date tomorrow = new Date(new Date().getTime() + (ONE_DAY * 6));
 
-        String prediction = forecast.predict("Madrid",tomorrow, false);
+        String prediction = this.forecastService.predictWeather("Madrid", tomorrow);
         assertEquals("", prediction);
     }
 }
