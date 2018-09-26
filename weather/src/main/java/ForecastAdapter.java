@@ -21,7 +21,7 @@ public class ForecastAdapter implements ForecastService {
     private String predict(final String cityName, final Date when, final boolean wind) {
         try {
             return this.forecast.predict(cityName, when, wind);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }

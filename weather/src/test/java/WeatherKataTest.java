@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.Date;
 
 import static junit.framework.TestCase.assertTrue;
@@ -12,6 +11,10 @@ public class WeatherKataTest {
     private static final int ONE_DAY = 1000 * 60 * 60 * 24 * 1;
 
     private ForecastService forecastService;
+
+    /*
+    Integration tests provided by Codium team: in order to test, check prediction gets printed on sout.
+     */
 
     @Before
     public void setUp() {

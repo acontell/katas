@@ -1,6 +1,8 @@
 # Weather kata
 The goal of this kata is to identify the code smells and fix them.
 
+Original code: https://github.com/CodiumTeam/weather-kata
+
 Exercise:
 - Use ForecastService interface.
 - Abstract clients.
