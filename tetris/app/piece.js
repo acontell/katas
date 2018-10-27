@@ -4,7 +4,7 @@ function Piece(blocks, id) {
     this.getInitialBlock = () => _.head(blocks);
     this.getBlocks = () => blocks;
     this.getId = () => id;
-    this.getNumberOfBlocks = () => _.size(blocks);
+    this.moveDown = () => _.forEach(blocks, block => block.moveDown());
 }
 
 module.exports = Piece;
