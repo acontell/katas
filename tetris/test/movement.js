@@ -50,6 +50,6 @@ function advanceThreeSeconds() {
 }
 
 function assertActivePieceHasMovedAndStop(newActivePieceRow) {
-    expect(newActivePieceRow).to.equal(board.getTopCenterBlock().getRow() + 3);
     game.stop();
+    expect(newActivePieceRow).to.equal(board.getTopCenterBlock().getRow() + 3);
 }
