@@ -9,6 +9,18 @@ function isContiguous(block, block1) {
         || row1 - 1 === row;
 }
 
+// TODO
+function canMoveDown(piece, pieces, numberOfRows) {
+    // lowerRow
+    //let lowerRow = piece.getInitialBlock().getRow();
+    //let columnsWithLowerRow = _.filter(piece.getBlocks(), block => block.getRow() === lowerRow)
+      //  .map(block => block.getColumn());
+    //return _.filter(pieces, blockedPiece => piece !== blockedPiece)
+    //    .filter(blockedPiece => )
+    return true;
+}
+
 module.exports = {
-    isContiguous: isContiguous
+    isContiguous: isContiguous,
+    canMoveDown: canMoveDown
 };

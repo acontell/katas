@@ -1,0 +1,28 @@
+const Game = require('../app/game');
+const Board = require('../app/board');
+const pieceFactory = require('../app/piece_factory');
+const math = require('../app/math');
+const numberOfRows = 24;
+const numberOfColumns = 10;
+
+function buildBoard(numberOfRows, numberOfColumns, pieceFactory, math) {
+    return new Board(numberOfRows, numberOfColumns, pieceFactory, math);
+}
+
+function buildBoardWith(pieceFactory, math) {
+    return buildBoard(numberOfRows, numberOfColumns, pieceFactory, math);
+}
+
+function buildGame() {
+    return buildGameWith(buildBoardWith(pieceFactory, math));
+}
+
+function buildGameWith(board) {
+    return new Game(board);
+}
+
+module.exports = {
+    buildBoardWith: buildBoardWith,
+    buildGame: buildGame,
+    buildGameWith: buildGameWith
+};

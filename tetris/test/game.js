@@ -1,11 +1,11 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
-const Game = require('../app/game');
+const fixture = require('./fixture');
 let game;
 let board;
 
 beforeEach('Setting up things', () => {
-    game = new Game;
+    game = fixture.buildGame();
     board = game.getBoard();
 });
 
@@ -50,7 +50,7 @@ function aDifferentPiece(piece) {
 }
 
 function getInitializedGame() {
-    let nGame = new Game();
+    let nGame = fixture.buildGame();
     nGame.init();
     return nGame;
 }
