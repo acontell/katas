@@ -1,16 +1,22 @@
-function Board(numberOfColumns, numberOfRows) {
-    const topCenter = 0;
+const _ = require('lodash');
+const Block = require('./block');
+const pieceFactory = require('./piece_factory');
+
+function Board(numberOfRows, numberOfColumns) {
+    const topCenterBlock = new Block(Math.ceil(numberOfRows / 2), Math.ceil(numberOfColumns / 2));
     let pieces = [];
     let activePiece;
 
-    this.getNumberOfColumns = () => numberOfColumns;
     this.getNumberOfRows = () => numberOfRows;
-    this.getNumberOfPieces = () => pieces.length;
+    this.getNumberOfColumns = () => numberOfColumns;
+    this.getNumberOfPieces = () => _.size(pieces);
     this.addNewPiece = () => {
-        let newPiece = new Piece;
+        let newPiece = pieceFactory.getRandomPiece(topCenterBlock);
         pieces = pieces.concat(newPiece);
         activePiece = newPiece;
     };
+    this.getActivePiece = () => activePiece;
+    this.getTopCenterBlock = () => topCenterBlock;
 }
 
 module.exports = Board;

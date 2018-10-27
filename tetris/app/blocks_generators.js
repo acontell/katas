@@ -1,29 +1,85 @@
-const Piece = require('./piece');
-const Block = require('./block');
 const _ = require('lodash');
+const Block = require('./block');
+const generators = [shapeOne, shapeTwo, shapeThree, shapeFour, shapeFive, shapeSix, shapeSeven];
 
-// Shape
-// #
-// #
-// #
-// #
-function myBlocks(initialBlock) {
-    return _.range(4)
-        .map((x) => new Block(initialBlock.getRow() + x, initialBlock.getColumn()));
+// Vertical Shape
+// [new Block(0, 0), new Block(-1, 0), new Block(-2, 0), new Block(-3, 0)];
+function shapeOne(initialBlock) {
+    return [
+        initialBlock,
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn()),
+        new Block(initialBlock.getRow() - 2, initialBlock.getColumn()),
+        new Block(initialBlock.getRow() - 3, initialBlock.getColumn())
+    ];
 }
 
-function TypeOnePiece(initialBlock) {
-    let blocks = myBlocks(initialBlock);
-    Piece.call(this, _.head(blocks));
-
-    this.getBlocks = () => blocks;
+// L Shape
+// [new Block(0, 0), new Block(0, 1), new Block(-1, 0), new Block(-1, -1)];
+function shapeTwo(initialBlock) {
+    return [
+        initialBlock,
+        new Block(initialBlock.getRow(), initialBlock.getColumn() + 1),
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn()),
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn() - 1)
+    ];
 }
 
-TypeOnePiece.prototype = Object.create(Piece.prototype);
-Object.defineProperty(TypeOnePiece.prototype, 'constructor', {
-    value: TypeOnePiece,
-    enumerable: false,
-    writable: true
-});
+// half H shape
+// const shapeThree = [new Block(0, 0), new Block(-1, 0), new Block(-1, -1), new Block(-2, 0)];
+function shapeThree(initialBlock) {
+    return [
+        initialBlock,
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn()),
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn() - 1),
+        new Block(initialBlock.getRow() - 2, initialBlock.getColumn())
+    ];
+}
 
-module.exports = TypeOnePiece;
+// kid of S
+// [new Block(0, 0), new Block(-1, 0), new Block(-1, 1), new Block(-2, 1)];
+function shapeFour(initialBlock) {
+    return [
+        initialBlock,
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn()),
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn() + 1),
+        new Block(initialBlock.getRow() - 2, initialBlock.getColumn() + 1)
+    ];
+}
+
+// inverted kind of S
+// [new Block(0, 0), new Block(-1, 0), new Block(-1, -1), new Block(-2, -1)];
+function shapeFive(initialBlock) {
+    return [
+        initialBlock,
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn()),
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn() - 1),
+        new Block(initialBlock.getRow() - 2, initialBlock.getColumn() - 1)
+    ];
+}
+
+// L
+// [new Block(0, 0), new Block(0, 1), new Block(-1, 0), new Block(-2, 0)];
+function shapeSix(initialBlock) {
+    return [
+        initialBlock,
+        new Block(initialBlock.getRow(), initialBlock.getColumn() + 1),
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn()),
+        new Block(initialBlock.getRow() - 2, initialBlock.getColumn())
+    ];
+}
+
+// inverted L
+// [new Block(0, 0), new Block(0, 1), new Block(-1, -1), new Block(-2, -1)];
+function shapeSeven(initialBlock) {
+    return [
+        initialBlock,
+        new Block(initialBlock.getRow(), initialBlock.getColumn() + 1),
+        new Block(initialBlock.getRow() - 1, initialBlock.getColumn() - 1),
+        new Block(initialBlock.getRow() - 2, initialBlock.getColumn() - 1)
+    ];
+}
+
+module.exports = {
+    getGeneratorById: id => generators[id],
+    getNumberOfGenerators: () => _.size(generators)
+};
