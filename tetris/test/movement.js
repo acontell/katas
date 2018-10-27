@@ -21,7 +21,7 @@ describe('As the game', () => {
         });
         it('should move it at a regular interval', () => {
             game.start();
-            return advanceThreeSeconds().then(assertActivePieceHasMovedAndStop);
+            return advanceThreeTicks().then(assertActivePieceHasMovedAndStop);
         });
         it('should inactive active piece when it cannot go down anymore', () => {
             let game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, {canMoveDown: _.constant(false)}));
@@ -32,7 +32,7 @@ describe('As the game', () => {
         });
         it('should detect active piece is stopped when another piece prevents it to go down anymore', () => {
             // TODO
-            //expect(math.canMoveDown(pieceFactory.getRandomPiece(new Block(0, 0)), [pieceFactory.getRandomPiece(new Block(1, 0))], 30)).to.be.false;
+            expect(math.canMoveDown(pieceFactory.getRandomPiece(new Block(0, 0)), [pieceFactory.getRandomPiece(new Block(1, 0))], 30)).to.be.false;
         });
         it('should detect active piece is stopped when it reaches the bottom of the board', () => {
             // TODO
@@ -41,7 +41,7 @@ describe('As the game', () => {
     });
 });
 
-function advanceThreeSeconds() {
+function advanceThreeTicks() {
     return new Promise(resolve => {
         _.delay(() => {
             resolve(board.getActivePiece().getInitialBlock().getRow());
