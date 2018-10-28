@@ -10,7 +10,11 @@ function Game(board, fps) {
         intervalId = setInterval(this.tick, time);
     };
     this.init = () => board.addNewPiece();
-    this.tick = () => board.canMoveDown() ? board.moveDown() : this.noMoveDownSituation();
+    this.tick = () => {
+        board.clearLines();
+        this.movePieces();
+    };
+    this.movePieces = () => board.canMoveDown() ? board.moveDown() : this.noMoveDownSituation();
     this.noMoveDownSituation = () => board.isBoardFull() ? this.gameOver() : board.addNewPiece();
     this.gameOver = () => {
         clearInterval(intervalId);

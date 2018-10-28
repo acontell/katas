@@ -13,7 +13,7 @@ function shapeOne(initialBlock) {
     ];
 }
 
-// L Shape
+// Square Shape
 // [new Block(0, 0), new Block(0, 1), new Block(-1, 0), new Block(-1, -1)];
 function shapeTwo(initialBlock) {
     return [

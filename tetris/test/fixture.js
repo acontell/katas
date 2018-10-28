@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Game = require('../app/game');
 const Board = require('../app/board');
 const pieceFactory = require('../app/piece_factory');
@@ -21,9 +22,14 @@ function buildGameWith(board, fps) {
     return new Game(board, fps);
 }
 
+function mockMath(source) {
+    return _.assignIn({}, math, source);
+}
+
 module.exports = {
     buildBoard: () => buildBoardWith(pieceFactory, math),
     buildBoardWith: buildBoardWith,
     buildGame: buildGame,
-    buildGameWith: buildGameWith
+    buildGameWith: buildGameWith,
+    mockMath: mockMath
 };
