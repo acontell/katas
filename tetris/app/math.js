@@ -1,3 +1,6 @@
+let _ = require('lodash');
+let Block = require('../app/block');
+
 function isContiguous(block, block1) {
     let row = block.getRow();
     let column = block.getColumn();
@@ -9,15 +12,31 @@ function isContiguous(block, block1) {
         || row1 - 1 === row;
 }
 
-// TODO
 function canMoveDown(piece, pieces, numberOfRows) {
-    // lowerRow
-    //let lowerRow = piece.getInitialBlock().getRow();
-    //let columnsWithLowerRow = _.filter(piece.getBlocks(), block => block.getRow() === lowerRow)
-      //  .map(block => block.getColumn());
-    //return _.filter(pieces, blockedPiece => piece !== blockedPiece)
-    //    .filter(blockedPiece => )
-    return true;
+    return checkHasNoReachedBottom(piece, numberOfRows) && checkBlocksNoBottomCollision(piece.getBlocks(), toBlocks(removePiece(piece, pieces)));
+}
+
+function removePiece(piece, pieces) {
+    return _.filter(pieces, aPiece => aPiece !== piece);
+}
+
+function toBlocks(pieces) {
+    return _.flatMap(pieces, piece => piece.getBlocks());
+}
+
+function checkHasNoReachedBottom(piece, bottom) {
+    return getNextRow(piece.getLowestBlock()) <= bottom;
+}
+function getNextRow(block) {
+    return block.getRow() + 1;
+}
+
+function checkBlocksNoBottomCollision(blocks, allBlocks) {
+    return _.every(blocks, block => !isPositionTaken(new Block(getNextRow(block), block.getColumn()), allBlocks));
+}
+
+function isPositionTaken(block, blocks) {
+    return _.some(blocks, aBlock => block.equals(aBlock));
 }
 
 module.exports = {
