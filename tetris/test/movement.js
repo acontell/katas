@@ -7,15 +7,22 @@ const Block = require('../app/block');
 let game;
 let board;
 let initialBlock = new Block(0, 0);
-let activePiece = pieceFactory.getRandomPiece(initialBlock);
+let activePiece;
 
 beforeEach('Setting up things', () => {
     game = fixture.buildGame();
     board = game.getBoard();
+    activePiece = pieceFactory.getRandomPiece(initialBlock);
 });
 
 describe('As the game', () => {
     describe('In order to advance the game', () => {
+        function givenBoardWithBlockedPiecesButNotFull() {
+            game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, {canMoveDown: _.constant(false)}));
+            board = game.getBoard();
+            board.isBoardFull = _.constant(false);
+        }
+
         it('should move the active piece one unit down', () => {
             game.init();
             game.tick();
@@ -26,10 +33,11 @@ describe('As the game', () => {
             return advanceThreeTicks().then(assertActivePieceHasMovedAndStop);
         });
         it('should make not movable the active piece when it cannot go down anymore', () => {
-            let game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, {canMoveDown: _.constant(false)}));
+            givenBoardWithBlockedPiecesButNotFull();
             game.init();
-            let activePiece = game.getBoard().getActivePiece();
+            activePiece = game.getBoard().getActivePiece();
             game.tick();
+            // Only active piece is movable.
             expect(game.getBoard().getActivePiece()).to.be.not.equal(activePiece);
         });
         it('should detect active piece is stopped when another piece prevents it to go down anymore', () => {

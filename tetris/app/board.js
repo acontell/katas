@@ -19,7 +19,7 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, math) {
     this.getTopCenterBlock = () => new Block(top, center);
     this.moveDown = () => activePiece.moveDown();
     this.canMoveDown = () => math.canMoveDown(activePiece, pieces, numberOfRows);
-    this.isBoardFull = () => math.canMoveDown(this.buildNewPiece(), pieces, numberOfRows);
+    this.isBoardFull = () => !math.canMoveDown(this.buildNewPiece(), pieces, numberOfRows);
 }
 
 module.exports = Board;
