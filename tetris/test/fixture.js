@@ -17,11 +17,12 @@ function buildGame() {
     return buildGameWith(buildBoardWith(pieceFactory, math));
 }
 
-function buildGameWith(board) {
-    return new Game(board);
+function buildGameWith(board, fps) {
+    return new Game(board, fps);
 }
 
 module.exports = {
+    buildBoard: () => buildBoardWith(pieceFactory, math),
     buildBoardWith: buildBoardWith,
     buildGame: buildGame,
     buildGameWith: buildGameWith

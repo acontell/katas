@@ -1,6 +1,9 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 const fixture = require('./fixture');
+const numberOfColumns = 10;
+const numberOfRows = 24;
+const ultraQuickSpeed = 5;
 let game;
 let board;
 
@@ -12,10 +15,10 @@ beforeEach('Setting up things', () => {
 describe('As the game', () => {
     describe('In order to restrict play area', () => {
         it('should create a board with 10 columns', () => {
-            expect(board.getNumberOfColumns()).to.equal(10);
+            expect(board.getNumberOfColumns()).to.equal(numberOfColumns);
         });
         it('should create a board with 24 rows', () => {
-            expect(board.getNumberOfRows()).to.equal(24);
+            expect(board.getNumberOfRows()).to.equal(numberOfRows);
         });
         it('should create an empty board', () => {
             expect(board.getNumberOfPieces()).to.equal(0);
@@ -36,6 +39,14 @@ describe('As the game', () => {
             expect(getOneHundredInitialPieces().find(aDifferentPiece(board.getActivePiece()))).to.not.be.undefined;
         });
     });
+
+    describe('In order to end the game', () => {
+        it('should end the game when the next active piece comes to rest on top of the board', () => {
+            let game = fixture.buildGameWith(fixture.buildBoard(), ultraQuickSpeed);
+            game.start();
+            return advanceUntilGameOver(game);
+        });
+    });
 });
 
 function getOneHundredInitialPieces() {
@@ -53,4 +64,14 @@ function getInitializedGame() {
     let nGame = fixture.buildGame();
     nGame.init();
     return nGame;
+}
+
+function advanceUntilGameOver(game) {
+    // if motion loop is not broken, it will never end and Mocha will complain.
+    return advance(game)
+        .then(isGameOver => isGameOver || advanceUntilGameOver(game));
+}
+
+function advance(game) {
+    return new Promise(resolve => _.delay(() => resolve(game.isEnded()), ultraQuickSpeed * numberOfRows));
 }

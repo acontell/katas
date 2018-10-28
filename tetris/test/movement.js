@@ -25,7 +25,7 @@ describe('As the game', () => {
             game.start();
             return advanceThreeTicks().then(assertActivePieceHasMovedAndStop);
         });
-        it('should inactive active piece when it cannot go down anymore (inactive === not movable)', () => {
+        it('should make not movable the active piece when it cannot go down anymore', () => {
             let game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, {canMoveDown: _.constant(false)}));
             game.init();
             let activePiece = game.getBoard().getActivePiece();
@@ -64,6 +64,6 @@ function advanceThreeTicks() {
 }
 
 function assertActivePieceHasMovedAndStop(newActivePieceRow) {
-    game.stop();
     expect(newActivePieceRow).to.equal(board.getTopCenterBlock().getRow() + 3);
+    game.gameOver();
 }
