@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Block = require('./block');
-const generators = [shapeOne, shapeTwo, shapeThree, shapeFour, shapeFive, shapeSix, shapeSeven];
+const shapeBuilders = [shapeOne, shapeTwo, shapeThree, shapeFour, shapeFive, shapeSix, shapeSeven];
 
 // Vertical Shape
 // [new Block(0, 0), new Block(-1, 0), new Block(-2, 0), new Block(-3, 0)];
@@ -80,6 +80,6 @@ function shapeSeven(initialBlock) {
 }
 
 module.exports = {
-    getGeneratorById: id => generators[id],
-    getNumberOfGenerators: () => _.size(generators)
+    getBlocksOfShape: (id, initialBlock) => shapeBuilders[id](initialBlock),
+    getNumberOfShapes: () => _.size(shapeBuilders)
 };
