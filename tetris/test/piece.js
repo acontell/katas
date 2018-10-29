@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 const pieceFactory = require('../app/piece_factory');
-const math = require('../app/math');
 const Block = require('../app/block');
 
 // vertical shape
@@ -47,7 +46,16 @@ function checkContiguousBlocks(piece) {
 }
 
 function isContiguous(block) {
-    return aBlock => math.isContiguous(block, aBlock);
+    return aBlock => {
+        let row = block.getRow();
+        let column = block.getColumn();
+        let row1 = aBlock.getRow();
+        let column1 = aBlock.getColumn();
+        return column1 + 1 === column
+            || column1 - 1 === column
+            || row1 + 1 === row
+            || row1 - 1 === row;
+    };
 }
 
 function getBlocks() {

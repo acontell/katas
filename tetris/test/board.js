@@ -2,14 +2,14 @@ const _ = require('lodash');
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const fixture = require('./fixture');
-const math = require('../app/math');
+const rules = require('../app/rules');
 const pieceFactory = require('../app/piece_factory');
 const Block = require('../app/block');
 let game;
 let board;
 let initialBlock = new Block(0, 0);
 let activePiece;
-let mockMath = fixture.mockMath({canMoveDown: _.constant(false), clearLines: _.constant([])});
+let mockRules = fixture.mockRules({canMoveDown: _.constant(false), clearLines: _.constant([])});
 
 beforeEach('Setting up things', () => {
     game = fixture.buildGame();
@@ -20,7 +20,7 @@ beforeEach('Setting up things', () => {
 describe('As the game', () => {
     describe('In order to advance the game', () => {
         function givenBoardWithBlockedPiecesButNotFull() {
-            game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, mockMath));
+            game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, mockRules));
             board = game.getBoard();
             board.isBoardFull = _.constant(false);
         }
@@ -32,7 +32,7 @@ describe('As the game', () => {
 
         it('should move the active piece one unit down', () => {
             givenInitAndTick();
-            expect(board.getActivePiece().getInitialBlock().getRow()).to.equal(board.getTopCenterBlock().getRow() + 1);
+            expect(board.getActivePiece().getLowestBlock().getRow()).to.equal(board.getTopCenterBlock().getRow() + 1);
         });
         it('should move it at a regular interval', () => {
             game.start();
@@ -51,20 +51,20 @@ describe('As the game', () => {
                 pieceFactory.getRandomPiece(new Block(initialBlock.getRow() + 1, initialBlock.getColumn())),
                 activePiece
             ];
-            expect(math.canMoveDown(activePiece, pieces, 15)).to.be.false;
+            expect(rules.canMoveDown(activePiece, pieces, 15)).to.be.false;
         });
         it('should detect active piece is stopped when it reaches the bottom of the board', () => {
-            expect(math.canMoveDown(pieceFactory.getRandomPiece(new Block(15, 0)), [], 15)).to.be.false;
+            expect(rules.canMoveDown(pieceFactory.getRandomPiece(new Block(15, 0)), [], 15)).to.be.false;
         });
         it('should move when no other piece prevents it to go down', () => {
             let pieces = [
                 pieceFactory.getRandomPiece(new Block(initialBlock.getRow() + 5, initialBlock.getColumn())),
                 activePiece
             ];
-            expect(math.canMoveDown(activePiece, pieces, 15)).to.be.true;
+            expect(rules.canMoveDown(activePiece, pieces, 15)).to.be.true;
         });
         it('should be able to advance when the bottom is far', () => {
-            expect(math.canMoveDown(pieceFactory.getRandomPiece(new Block(14, 0)), [], 15)).to.be.true;
+            expect(rules.canMoveDown(pieceFactory.getRandomPiece(new Block(14, 0)), [], 15)).to.be.true;
         });
         it('should clear lines every tick (game calls board)', () => {
             let mock = sinon.mock(board).expects('clearLines').once();
@@ -72,25 +72,31 @@ describe('As the game', () => {
             mock.verify();
         });
         it('should clear lines every tick (board calls helper and assigns pieces to the result of the call)', () => {
-            game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, mockMath));
+            game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, mockRules));
             givenInitAndTick();
             expect(game.getBoard().getNumberOfPieces()).to.equal(0);
         });
         it('should be able to clear line and leave pieces incomplete', () => {
-            let result = math.clearLines(generatePiecesFillingOneLine(), board.getNumberOfColumns());
+            let result = rules.clearLines(generatePiecesFillingOneLine(), board.getNumberOfColumns());
             expect(_.every(result, piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and leave pieces incomplete', () => {
-            let result = math.clearLines(generatePiecesFillingTwoLines(), board.getNumberOfColumns());
+            let result = rules.clearLines(generatePiecesFillingTwoLines(), board.getNumberOfColumns());
             expect(_.every(result, piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and remove pieces without blocks', () => {
-            let result = math.clearLines(generatePiecesFillingTwoLines(), board.getNumberOfColumns());
+            let result = rules.clearLines(generatePiecesFillingTwoLines(), board.getNumberOfColumns());
             expect(_.size(result)).to.equal(8);
         });
         it('should be able to clear pieces completely', () => {
-            let result = math.clearLines(generatePiecesThatFillLines(), board.getNumberOfColumns());
+            let result = rules.clearLines(generatePiecesThatFillLines(), board.getNumberOfColumns());
             expect(_.size(result)).to.equal(0);
+        });
+        it('should move down blocks one unit when some row below has disappeared', () =>{
+
+        });
+        it('should move down blocks n units when n rows below have disappeared', () =>{
+
         });
     });
 });
@@ -98,7 +104,7 @@ describe('As the game', () => {
 function advanceThreeTicks() {
     return new Promise(resolve => {
         _.delay(() => {
-            resolve(board.getActivePiece().getInitialBlock().getRow());
+            resolve(board.getActivePiece().getLowestBlock().getRow());
         }, game.getFps() * 3 + game.getFps() / 2);
     });
 }

@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const Block = require('./block');
 
-function Board(numberOfRows, numberOfColumns, pieceFactory, math) {
+function Board(numberOfRows, numberOfColumns, pieceFactory, rules) {
     const top = Math.ceil(numberOfRows / 2);
     const center = Math.ceil(numberOfColumns / 2);
     let pieces = [];
@@ -17,10 +17,10 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, math) {
     this.buildNewPiece = () => pieceFactory.getRandomPiece(this.getTopCenterBlock());
     this.getActivePiece = () => activePiece;
     this.getTopCenterBlock = () => new Block(top, center);
-    this.moveDown = () => activePiece.moveDown();
-    this.canMoveDown = () => math.canMoveDown(activePiece, pieces, numberOfRows);
-    this.isBoardFull = () => !math.canMoveDown(this.buildNewPiece(), pieces, numberOfRows);
-    this.clearLines = () => pieces = math.clearLines(pieces, numberOfColumns);
+    this.moveActivePiece = () => activePiece.moveDown();
+    this.canMoveActivePiece = () => rules.canMoveDown(activePiece, pieces, numberOfRows);
+    this.isBoardFull = () => !rules.canMoveDown(this.buildNewPiece(), pieces, numberOfRows);
+    this.clearLines = () => pieces = rules.clearLines(pieces, numberOfColumns);
 }
 
 module.exports = Board;
