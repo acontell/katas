@@ -47,7 +47,7 @@ describe('As the game', () => {
 
     describe('In order to advance the game', () => {
         function givenBoardGameWithPiecesBlocked() {
-            game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, fixture.mockRules({canMoveDown: _.constant(false)})));
+            game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, fixture.mockBoardRules({canMoveDown: _.constant(false)})));
             board = game.getBoard();
             board.isBoardFull = _.constant(false);
         }

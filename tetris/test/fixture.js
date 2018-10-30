@@ -2,7 +2,7 @@ const _ = require('lodash');
 const Game = require('../app/game');
 const Board = require('../app/board');
 const pieceFactory = require('../app/piece_factory');
-const rules = require('../app/rules');
+const boardRules = require('../app/board_rules');
 const numberOfRows = 24;
 const numberOfColumns = 10;
 
@@ -15,21 +15,21 @@ function buildBoardWith(pieceFactory, rules) {
 }
 
 function buildGame() {
-    return buildGameWith(buildBoardWith(pieceFactory, rules));
+    return buildGameWith(buildBoardWith(pieceFactory, boardRules));
 }
 
 function buildGameWith(board, fps) {
     return new Game(board, fps);
 }
 
-function mockRules(source) {
-    return _.assignIn({}, rules, source);
+function mockBoardRules(source) {
+    return _.assignIn({}, boardRules, source);
 }
 
 module.exports = {
-    buildBoard: () => buildBoardWith(pieceFactory, rules),
+    buildBoard: () => buildBoardWith(pieceFactory, boardRules),
     buildBoardWith: buildBoardWith,
     buildGame: buildGame,
     buildGameWith: buildGameWith,
-    mockRules: mockRules
+    mockBoardRules: mockBoardRules
 };
