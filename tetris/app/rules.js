@@ -3,19 +3,16 @@ let collisionDetector = require('./collision_detector');
 
 function canMoveDown(piece, pieces, numberOfRows) {
     return collisionDetector.checkHasNotReachedBottom(piece, numberOfRows)
-        && collisionDetector.checkNoBottomCollision(piece.getBlocks(), toBlocks(removePiece(piece, pieces)));
+        && collisionDetector.checkNoBottomCollision(piece.getBlocks(), toBlocks(pieces));
 }
 
 function toBlocks(pieces) {
     return _.flatMap(pieces, piece => piece.getBlocks());
 }
 
-function removePiece(piece, pieces) {
-    return _.filter(pieces, aPiece => aPiece !== piece);
+function canAddNewPiece(newPiece, pieces) {
+    return collisionDetector.checkNoBottomCollision(newPiece.getBlocks(), toBlocks(pieces));
 }
-
-
-
 
 
 /*
@@ -39,8 +36,8 @@ function updatePieces(pieces) {
 }
 
 
-
 module.exports = {
     canMoveDown: canMoveDown,
+    canAddNewPiece: canAddNewPiece,
     clearLines: clearLines
 };

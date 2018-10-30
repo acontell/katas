@@ -15,10 +15,14 @@ function Game(board, fps) {
         this.moveActivePiece();
     };
     this.moveActivePiece = () => board.canMoveActivePiece() ? board.moveActivePiece() : this.activePieceStuckSituation();
-    this.activePieceStuckSituation = () => board.isBoardFull() ? this.gameOver() : board.addNewPiece();
+    this.activePieceStuckSituation = () => board.isBoardFull() ? this.gameOver() : this.addNewPiece();
     this.gameOver = () => {
         clearInterval(intervalId);
         isEnded = true;
+    };
+    this.addNewPiece = () => {
+        board.activePieceToBoard();
+        board.addNewPiece();
     };
     this.isEnded = () => isEnded;
 }

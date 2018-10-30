@@ -33,7 +33,7 @@ describe('As the game', () => {
     describe('In order to start the game', () => {
         it('should create a new piece', () => {
             game.init();
-            expect(board.getNumberOfPieces()).to.equal(1);
+            expect(!!board.getActivePiece()).to.be.true;
         });
         it('should be created at the top center of the board', () => {
             game.init();

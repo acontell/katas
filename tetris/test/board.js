@@ -9,7 +9,12 @@ let game;
 let board;
 let initialBlock = new Block(0, 0);
 let activePiece;
-let mockRules = fixture.mockRules({canMoveDown: _.constant(false), clearLines: _.constant([])});
+let piece = pieceFactory.getRandomPiece(new Block(0, 0));
+let mockRules = fixture.mockRules({
+    canMoveDown: _.constant(false),
+    clearLines: _.constant([piece, piece]),
+    canAddNewPiece: _.constant(true)
+});
 
 beforeEach('Setting up things', () => {
     game = fixture.buildGame();
@@ -57,10 +62,7 @@ describe('As the game', () => {
             expect(rules.canMoveDown(pieceFactory.getRandomPiece(new Block(15, 0)), [], 15)).to.be.false;
         });
         it('should move when no other piece prevents it to go down', () => {
-            let pieces = [
-                pieceFactory.getRandomPiece(new Block(initialBlock.getRow() + 5, initialBlock.getColumn())),
-                activePiece
-            ];
+            let pieces = [pieceFactory.getRandomPiece(new Block(initialBlock.getRow() + 5, initialBlock.getColumn()))];
             expect(rules.canMoveDown(activePiece, pieces, 15)).to.be.true;
         });
         it('should be able to advance when the bottom is far', () => {
@@ -74,7 +76,7 @@ describe('As the game', () => {
         it('should clear lines every tick (board calls helper and assigns pieces to the result of the call)', () => {
             game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, mockRules));
             givenInitAndTick();
-            expect(game.getBoard().getNumberOfPieces()).to.equal(0);
+            expect(game.getBoard().getNumberOfPieces()).to.equal(2);
         });
         it('should be able to clear line and leave pieces incomplete', () => {
             let result = rules.clearLines(generatePiecesFillingOneLine(), board.getNumberOfColumns());
@@ -92,10 +94,10 @@ describe('As the game', () => {
             let result = rules.clearLines(generatePiecesThatFillLines(), board.getNumberOfColumns());
             expect(_.size(result)).to.equal(0);
         });
-        it('should move down blocks one unit when some row below has disappeared', () =>{
+        it('should move down blocks one unit when some row below has disappeared', () => {
 
         });
-        it('should move down blocks n units when n rows below have disappeared', () =>{
+        it('should move down blocks n units when n rows below have disappeared', () => {
 
         });
     });

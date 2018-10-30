@@ -10,16 +10,14 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, rules) {
     this.getNumberOfRows = () => numberOfRows;
     this.getNumberOfColumns = () => numberOfColumns;
     this.getNumberOfPieces = () => _.size(pieces);
-    this.addNewPiece = () => {
-        activePiece = this.buildNewPiece();
-        pieces = pieces.concat(activePiece);
-    };
+    this.addNewPiece = () => activePiece = this.buildNewPiece();
+    this.activePieceToBoard = () => pieces = pieces.concat(activePiece);
     this.buildNewPiece = () => pieceFactory.getRandomPiece(this.getTopCenterBlock());
     this.getActivePiece = () => activePiece;
     this.getTopCenterBlock = () => new Block(top, center);
     this.moveActivePiece = () => activePiece.moveDown();
     this.canMoveActivePiece = () => rules.canMoveDown(activePiece, pieces, numberOfRows);
-    this.isBoardFull = () => !rules.canMoveDown(this.buildNewPiece(), pieces, numberOfRows);
+    this.isBoardFull = () => rules.canAddNewPiece(this.buildNewPiece(), pieces);
     this.clearLines = () => pieces = rules.clearLines(pieces, numberOfColumns);
 }
 
