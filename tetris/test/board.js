@@ -9,10 +9,9 @@ let game;
 let board;
 let initialBlock = new Block(0, 0);
 let activePiece;
-let piece = pieceFactory.getRandomPiece(new Block(0, 0));
+let mockGameRules = fixture.mockGameRules({});
 let mockBoardRules = fixture.mockBoardRules({
     canMoveDown: _.constant(false),
-    clearLines: _.constant([piece, piece]),
     canAddNewPiece: _.constant(true)
 });
 
@@ -65,31 +64,29 @@ describe('As the game', () => {
         it('should be able to advance when the bottom is far', () => {
             expect(boardRules.canMoveDown(pieceFactory.getRandomPiece(new Block(14, 0)), [], 15)).to.be.true;
         });
-        // TODO : REVISE THIS, IT IS IMPROVABLE
-        it('should clear lines every tick (game calls board)', () => {
+        it('should clear lines every tick', () => {
             let mock = sinon.mock(board).expects('clearLines').once();
             givenInitAndTick();
             mock.verify();
         });
-        it('should clear lines every tick (board calls helper and assigns pieces to the result of the call)', () => {
-            game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, mockBoardRules));
-            givenInitAndTick();
-            expect(game.getBoard().getNumberOfPieces()).to.equal(2);
-        });
         it('should be able to clear line and leave pieces incomplete', () => {
-            let result = boardRules.clearLines(generatePiecesFillingOneLine(), board.getNumberOfColumns());
+            board.addPieces(generatePiecesFillingOneLine());
+            let result = board.clearLines(board.getCompletedLines());
             expect(_.every(result, piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and leave pieces incomplete', () => {
-            let result = boardRules.clearLines(generatePiecesFillingTwoLines(), board.getNumberOfColumns());
+            board.addPieces(generatePiecesFillingTwoLines());
+            let result = board.clearLines(board.getCompletedLines());
             expect(_.every(result, piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and remove pieces without blocks', () => {
-            let result = boardRules.clearLines(generatePiecesFillingTwoLines(), board.getNumberOfColumns());
+            board.addPieces(generatePiecesFillingTwoLines());
+            let result = board.clearLines(board.getCompletedLines());
             expect(_.size(result)).to.equal(8);
         });
         it('should be able to clear pieces completely', () => {
-            let result = boardRules.clearLines(generatePiecesThatFillLines(), board.getNumberOfColumns());
+            board.addPieces(generatePiecesThatFillLines());
+            let result = board.clearLines(board.getCompletedLines());
             expect(_.size(result)).to.equal(0);
         });
         it('should move down blocks one unit when some row below has disappeared', () => {

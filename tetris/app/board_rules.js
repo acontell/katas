@@ -14,30 +14,14 @@ function canAddNewPiece(newPiece, pieces) {
     return collisionDetector.checkNoBottomCollision(newPiece.getBlocks(), toBlocks(pieces));
 }
 
-
-/*
-- GroupBy all blocks by row => if size === numberOfColumns, mark them for deletion.
-- Iterate over pieces => if all its blocks are mark for deletion, mark it for deletion.
-- filter pieces and return only those that are not marked for deletion.
- */
-function clearLines(pieces, numberOfColumns) {
-    markBlocksForDeletion(toBlocks(pieces), numberOfColumns);
-    updatePieces(pieces);
-    return _.filter(pieces, piece => !piece.isEmpty());
+function getCompletedLines(pieces, numberOfColumns) {
+    return _.map(_.groupBy(toBlocks(pieces), block => block.getRow()), (value, key) => [key, _.size(value)])
+        .filter(arr => arr[1] === numberOfColumns)
+        .map(arr => +arr[0]);
 }
-
-function markBlocksForDeletion(allBlocks, numberOfColumns) {
-    let blocksToDelete = _.filter(_.groupBy(allBlocks, block => block.getRow()), blocks => _.size(blocks) === numberOfColumns);
-    return _.flatten(blocksToDelete).map(block => block.markForDeletion());
-}
-
-function updatePieces(pieces) {
-    _.forEach(pieces, piece => piece.removeDeletedBlocks());
-}
-
 
 module.exports = {
     canMoveDown: canMoveDown,
     canAddNewPiece: canAddNewPiece,
-    clearLines: clearLines
+    getCompletedLines: getCompletedLines
 };

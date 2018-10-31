@@ -1,4 +1,4 @@
-function Game(board, fps) {
+function Game(board, fps, gameRules) {
     const time = fps || 200;
     let isEnded;
     let intervalId;
@@ -11,7 +11,8 @@ function Game(board, fps) {
     };
     this.init = () => board.addNewPiece();
     this.tick = () => {
-        board.clearLines();
+        let completedLines = board.getCompletedLines();
+        board.clearLines(completedLines);
         this.moveActivePiece();
     };
     this.moveActivePiece = () => board.canMoveActivePiece() ? board.moveActivePiece() : this.activePieceStuckSituation();
@@ -21,7 +22,7 @@ function Game(board, fps) {
         isEnded = true;
     };
     this.addNewPiece = () => {
-        board.activePieceToBoard();
+        board.blockActivePiece();
         board.addNewPiece();
     };
     this.isEnded = () => isEnded;

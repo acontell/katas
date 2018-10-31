@@ -11,14 +11,16 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.getNumberOfColumns = () => numberOfColumns;
     this.getNumberOfPieces = () => _.size(pieces);
     this.addNewPiece = () => activePiece = this.buildNewPiece();
-    this.activePieceToBoard = () => pieces = pieces.concat(activePiece);
+    this.addPieces = morePieces => pieces = pieces.concat(morePieces);
+    this.blockActivePiece = () => pieces = pieces.concat(activePiece);
     this.buildNewPiece = () => pieceFactory.getRandomPiece(this.getTopCenterBlock());
     this.getActivePiece = () => activePiece;
     this.getTopCenterBlock = () => new Block(top, center);
     this.moveActivePiece = () => activePiece.moveDown();
     this.canMoveActivePiece = () => boardRules.canMoveDown(activePiece, pieces, numberOfRows);
     this.isBoardFull = () => boardRules.canAddNewPiece(this.buildNewPiece(), pieces);
-    this.clearLines = () => pieces = boardRules.clearLines(pieces, numberOfColumns);
+    this.getCompletedLines = () => boardRules.getCompletedLines(pieces, numberOfColumns);
+    this.clearLines = lines => _.filter(_.map(pieces, piece => piece.clearBlocks(lines)), piece => !piece.isEmpty());
 }
 
 module.exports = Board;
