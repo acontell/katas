@@ -1,11 +1,15 @@
 const _ = require('lodash');
 
 function Piece(blocks, id) {
+    let rotationState = 0;
+
     this.getBlocks = () => blocks;
     this.getId = () => id;
     this.moveDown = () => _.forEach(blocks, block => block.moveDown());
     this.getLowestBlock = () => _.last(sortByRowAscColumnDesc());
     this.getHighestBlock = () => _.head(sortByRowAscColumnDesc());
+    this.getRotatingBlock = () => _.find(blocks, block => block.isRotatingCenter());
+    this.rotate = () => ++rotationState;
     this.isEmpty = () => _.size(blocks) === 0;
     this.clearBlocks = lines => {
         blocks = _.filter(blocks, block => !_.includes(lines, block.getRow()));

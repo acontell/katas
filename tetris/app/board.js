@@ -21,6 +21,7 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.isBoardFull = () => boardRules.canAddNewPiece(this.buildNewPiece(), pieces);
     this.getCompletedLines = () => boardRules.getCompletedLines(pieces, numberOfColumns);
     this.updateBoard = completedLines => pieces = clearAndCollapse(completedLines);
+    this.rotateActivePiece = () => activePiece = pieceFactory.getPiece(activePiece.getId(), activePiece.getRotatingBlock(), activePiece.rotate());
 
     function clearAndCollapse(lines) {
         return pieces
