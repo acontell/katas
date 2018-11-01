@@ -12,16 +12,16 @@ function Game(board, fps, gameRules) {
     this.init = () => board.addNewPiece();
     this.tick = () => {
         let completedLines = board.getCompletedLines();
-        board.clearLines(completedLines);
-        this.moveActivePiece();
+        board.updateBoard(completedLines);
+        this.advance();
     };
-    this.moveActivePiece = () => board.canMoveActivePiece() ? board.moveActivePiece() : this.activePieceStuckSituation();
-    this.activePieceStuckSituation = () => board.isBoardFull() ? this.gameOver() : this.addNewPiece();
+    this.advance = () => board.canMoveActivePiece() ? board.moveActivePiece() : this.noAdvancePossible();
+    this.noAdvancePossible = () => board.isBoardFull() ? this.gameOver() : this.keepPlaying();
     this.gameOver = () => {
         clearInterval(intervalId);
         isEnded = true;
     };
-    this.addNewPiece = () => {
+    this.keepPlaying = () => {
         board.blockActivePiece();
         board.addNewPiece();
     };

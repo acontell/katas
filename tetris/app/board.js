@@ -20,7 +20,14 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.canMoveActivePiece = () => boardRules.canMoveDown(activePiece, pieces, numberOfRows);
     this.isBoardFull = () => boardRules.canAddNewPiece(this.buildNewPiece(), pieces);
     this.getCompletedLines = () => boardRules.getCompletedLines(pieces, numberOfColumns);
-    this.clearLines = lines => _.filter(_.map(pieces, piece => piece.clearBlocks(lines)), piece => !piece.isEmpty());
+    this.updateBoard = completedLines => pieces = clearAndCollapse(completedLines);
+
+    function clearAndCollapse(lines) {
+        return pieces
+            .map(piece => piece.clearBlocks(lines))
+            .filter(piece => !piece.isEmpty())
+            .map(piece => piece.collapse(lines));
+    }
 }
 
 module.exports = Board;

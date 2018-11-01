@@ -64,38 +64,41 @@ describe('As the game', () => {
         it('should be able to advance when the bottom is far', () => {
             expect(boardRules.canMoveDown(pieceFactory.getRandomPiece(new Block(14, 0)), [], 15)).to.be.true;
         });
-        it('should clear lines every tick', () => {
-            let mock = sinon.mock(board).expects('clearLines').once();
+        it('should update board every tick', () => {
+            let mock = sinon.mock(board).expects('updateBoard').once();
             givenInitAndTick();
             mock.verify();
         });
         it('should be able to clear line and leave pieces incomplete', () => {
-            board.addPieces(generatePiecesFillingOneLine());
-            let result = board.clearLines(board.getCompletedLines());
+            board.addPieces(generatePiecesFillingOneLine(5));
+            let result = board.updateBoard(board.getCompletedLines());
             expect(_.every(result, piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and leave pieces incomplete', () => {
             board.addPieces(generatePiecesFillingTwoLines());
-            let result = board.clearLines(board.getCompletedLines());
+            let result = board.updateBoard(board.getCompletedLines());
             expect(_.every(result, piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and remove pieces without blocks', () => {
             board.addPieces(generatePiecesFillingTwoLines());
-            let result = board.clearLines(board.getCompletedLines());
+            let result = board.updateBoard(board.getCompletedLines());
             expect(_.size(result)).to.equal(8);
         });
         it('should be able to clear pieces completely', () => {
             board.addPieces(generatePiecesThatFillLines());
-            let result = board.clearLines(board.getCompletedLines());
+            let result = board.updateBoard(board.getCompletedLines());
             expect(_.size(result)).to.equal(0);
         });
         it('should move down blocks one unit when some row below has disappeared', () => {
-
+            board.addPieces(generatePiecesFillingOneLine(2));
+            let result = board.updateBoard(board.getCompletedLines());
+            expect(_.every(result, piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
         });
         it('should move down blocks n units when n rows below have disappeared', () => {
-
+            board.addPieces(generatePiecesFillingTwoLines());
+            let result = board.updateBoard(board.getCompletedLines());
+            expect(_.every(result, piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
         });
-        // TODO UNTIL HERE
     });
 });
 
@@ -112,10 +115,11 @@ function assertActivePieceHasMovedAndStop(newActivePieceRow) {
     game.gameOver();
 }
 
-function generatePiecesFillingOneLine() {
+function generatePiecesFillingOneLine(id) {
     // Shape L => 5
-    return _.range(board.getNumberOfColumns())
-        .map(n => pieceFactory.getPiece(5, new Block(5, n * 2)));
+    // Shape half H shape => 2
+    return _.range(board.getNumberOfColumns() / 2)
+        .map(n => pieceFactory.getPiece(id, new Block(5, n * 2)));
 }
 
 function generatePiecesFillingTwoLines() {
