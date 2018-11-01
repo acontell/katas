@@ -17,49 +17,19 @@ describe('As the game', () => {
             testAllPiecesRotation(0);
         });
         it('should rotate 90 degrees clockwise', () => {
-            //testPieceRotation(0, 1);
-            //testPieceRotation(1, 1);
-            //testPieceRotation(2, 1);
-            //testPieceRotation(3, 1);
-            //testPieceRotation(4, 1);
-            //testPieceRotation(5, 1);
-            //testPieceRotation(6, 1);
+            testAllPiecesRotation(1);
         });
         it('should rotate 180 degrees rotated twice', () => {
-            //testPieceRotation(0, 2);
-            //testPieceRotation(1, 2);
-            //testPieceRotation(2, 2);
-            //testPieceRotation(3, 2);
-            //testPieceRotation(4, 2);
-            //testPieceRotation(5, 2);
-            //testPieceRotation(6, 2);
+            testAllPiecesRotation(2);
         });
-        it('should rotate 180 degrees rotated thrice', () => {
-            //testPieceRotation(0, 3);
-            //testPieceRotation(1, 3);
-            //testPieceRotation(2, 3);
-            //testPieceRotation(3, 3);
-            //testPieceRotation(4, 3);
-            //testPieceRotation(5, 3);
-            //testPieceRotation(6, 3);
+        it('should rotate 270 degrees rotated thrice', () => {
+            testAllPiecesRotation(3);
         });
         it('should recover initial state when rotated four times', () => {
-            //testPieceRotation(0, 4);
-            //testPieceRotation(1, 4);
-            //testPieceRotation(2, 4);
-            //testPieceRotation(3, 4);
-            //testPieceRotation(4, 4);
-            //testPieceRotation(5, 4);
-            //testPieceRotation(6, 4);
+            testAllPiecesRotation(4);
         });
         it('should go back to rotation one when rotated five times', () => {
-            //testPieceRotation(0, 5);
-            //testPieceRotation(1, 4);
-            //testPieceRotation(2, 4);
-            //testPieceRotation(3, 4);
-            //testPieceRotation(4, 4);
-            //testPieceRotation(5, 4);
-            //testPieceRotation(6, 4);
+            testAllPiecesRotation(5);
         });
     });
 });
@@ -91,18 +61,11 @@ function testAllPiecesRotation(nTimes) {
 }
 
 function testPieceRotation(pieceId, nRotations) {
-    let piece = pieceFactory.getPiece(pieceId, initialBlock);
-    rotatePiece(piece, nRotations);
-    assertPieceHasRotatedWell(piece, nRotations);
-}
-
-function rotatePiece(piece, nRotations) {
-    _.range(nRotations).forEach(_ => piece.rotate());
+    let piece = pieceFactory.getPiece(pieceId, initialBlock, nRotations);
+    assertPieceHasRotatedWell(piece, nRotations % 4);
 }
 
 function assertPieceHasRotatedWell(piece, nRotations) {
-    //console.log("EXPECTED:", expectedRotations[piece.getId()][nRotations].map(block => block.row + "," + block.column));
-    //console.log("ACTUAL:", piece.getBlocks().map(block => block.getRow() + "," + block.getColumn()));
     piece.getBlocks().forEach((block, idx) => {
         expect(block.getRow()).to.equal(expectedRotations[piece.getId()][nRotations][idx].row);
         expect(block.getColumn()).to.equal(expectedRotations[piece.getId()][nRotations][idx].column);
@@ -113,55 +76,50 @@ const expectedRotations = {
     // Vertical shape
     0: {
         0: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 3, column: 6}],
-        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}],
+        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 7}, {row: 6, column: 8}],
         2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 3, column: 6}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}]
+        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 7}, {row: 6, column: 8}]
     },
     // Square Shape
     1: {
         0: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 6}, {row: 5, column: 7}],
-        // TODO : FROM HERE ON
-        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}],
-        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 3, column: 6}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}]
+        1: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 6}, {row: 5, column: 7}],
+        2: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 6}, {row: 5, column: 7}],
+        3: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 6}, {row: 5, column: 7}]
     },
     // half H shape
     2: {
         0: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 5}, {row: 4, column: 6}],
-        // TODO : FROM HERE ON
-        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}],
-        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 3, column: 6}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}]
+        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 7, column: 5}, {row: 6, column: 4}],
+        2: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 7, column: 7}, {row: 5, column: 7}],
+        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 5, column: 6}, {row: 6, column: 7}]
     },
     // kind of S
     3: {
         0: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 5}, {row: 4, column: 5}],
-        // TODO : FROM HERE ON
-        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}],
-        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 3, column: 6}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}]
+        1: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 6}, {row: 5, column: 7}],
+        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 5}, {row: 4, column: 5}],
+        3: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 6}, {row: 5, column: 7}]
     },
     // inverted kind of S
     4: {
         0: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 7}, {row: 4, column: 7}],
-        // TODO : FROM HERE ON
-        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}],
-        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 3, column: 6}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}]
+        1: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 6}, {row: 5, column: 5}],
+        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 7}, {row: 4, column: 7}],
+        3: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 6}, {row: 5, column: 5}]
     },
     // L
     5: {
         0: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 6}, {row: 4, column: 6}],
-        // TODO : FROM HERE ON
-        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}],
-        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 3, column: 6}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}]
+        1: [{row: 6, column: 6}, {row: 7, column: 6}, {row: 6, column: 7}, {row: 6, column: 8}],
+        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 4, column: 5}],
+        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 5, column: 6}]
     },
     // inverted L
     6: {
         0: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 7}, {row: 4, column: 7}],
-        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}],
-        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 3, column: 6}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 6, column: 3}]
+        1: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 6, column: 7}, {row: 6, column: 8}],
+        2: [{row: 6, column: 6}, {row: 7, column: 6}, {row: 8, column: 6}, {row: 8, column: 7}],
+        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 7, column: 6}]
     }
 };

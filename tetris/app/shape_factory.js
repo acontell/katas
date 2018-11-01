@@ -12,10 +12,10 @@ function shapeOne(initialRow, initialColumn, rotation) {
             new Block(initialRow - 3, initialColumn)
         ],
         1: [
-            new Block(initialRow, initialColumn - 1),
             new Block(initialRow, initialColumn, true),
-            new Block(initialRow, initialColumn + 2),
-            new Block(initialRow, initialColumn + 3)
+            new Block(initialRow, initialColumn - 1),
+            new Block(initialRow, initialColumn + 1),
+            new Block(initialRow, initialColumn + 2)
         ]
     }[rotation % 2];
 }
