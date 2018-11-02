@@ -1,23 +1,28 @@
 let _ = require('lodash');
-let Block = require('../app/block');
 
-function checkHasNotReachedBottom(piece, bottom) {
-    return getNextRow(piece.getLowestBlock()) <= bottom;
+function checkHasNotReachedBottom(lowestBlock, bottom) {
+    return lowestBlock <= bottom;
 }
 
-function getNextRow(block) {
-    return block.getRow() + 1;
-}
-
-function checkNoBottomCollision(blocks, allBlocks) {
-    return _.every(blocks, block => !isPositionTaken(new Block(getNextRow(block), block.getColumn()), allBlocks));
+function checkNoCollision(blocks, allBlocks) {
+    return _.every(blocks, block => !isPositionTaken(block, allBlocks));
 }
 
 function isPositionTaken(block, blocks) {
     return _.some(blocks, aBlock => block.equals(aBlock));
 }
 
+function checkHasNotReachedRightSide(farRightBlockColumn, bottom) {
+    return farRightBlockColumn <= bottom;
+}
+
+function checkHasNotReachedLeftSide(farLeftBlockColumn) {
+    return farLeftBlockColumn >= 0;
+}
+
 module.exports = {
     checkHasNotReachedBottom: checkHasNotReachedBottom,
-    checkNoBottomCollision: checkNoBottomCollision
+    checkNoCollision: checkNoCollision,
+    checkHasNotReachedRightSide: checkHasNotReachedRightSide,
+    checkHasNotReachedLeftSide: checkHasNotReachedLeftSide
 };

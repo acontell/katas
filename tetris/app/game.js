@@ -25,7 +25,7 @@ function Game(board, fps, gameRules) {
         board.blockActivePiece();
         board.addNewPiece();
     };
-    this.rotateActivePiece = () => board.rotateActivePiece();
+    this.rotateActivePiece = () => board.canRotatePiece() && board.rotateActivePiece();
     this.isEnded = () => isEnded;
 }
 

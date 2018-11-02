@@ -10,10 +10,13 @@ let board;
 let initialBlock = new Block(0, 0);
 let activePiece;
 let mockGameRules = fixture.mockGameRules({});
+const noRotateMsg = 'no rotation';
 let mockBoardRules = fixture.mockBoardRules({
     canMoveDown: _.constant(false),
-    canAddNewPiece: _.constant(true)
+    canAddNewPiece: _.constant(true),
+    canRotate: _.constant(noRotateMsg)
 });
+let mock;
 
 beforeEach('Setting up things', () => {
     game = fixture.buildGame();
@@ -32,6 +35,11 @@ describe('As the game', () => {
         function givenInitAndTick() {
             game.init();
             game.tick();
+        }
+
+        function rotateAndVerify() {
+            game.rotateActivePiece();
+            mock.verify();
         }
 
         it('should move the active piece one unit down', () => {
@@ -65,7 +73,7 @@ describe('As the game', () => {
             expect(boardRules.canMoveDown(pieceFactory.getRandomPiece(new Block(14, 0)), [], 15)).to.be.true;
         });
         it('should update board every tick', () => {
-            let mock = sinon.mock(board).expects('updateBoard').once();
+            mock = sinon.mock(board).expects('updateBoard').once();
             givenInitAndTick();
             mock.verify();
         });
@@ -98,6 +106,53 @@ describe('As the game', () => {
             board.addPieces(generatePiecesFillingTwoLines());
             let result = board.updateBoard(board.getCompletedLines());
             expect(_.every(result, piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
+        });
+        it('should prevent rotation when there is collision with the bottom', () => {
+            let result = boardRules.canRotate(pieceFactory.getPiece(0, new Block(16, 0)), [], 15, 10);
+            expect(result).to.be.false;
+        });
+        it('should prevent rotation when there is collision with the left side', () => {
+            let result = boardRules.canRotate(pieceFactory.getPiece(0, new Block(0, -1)), [], 15, 10);
+            expect(result).to.be.false;
+        });
+        it('should prevent rotation when there is collision with the right side', () => {
+            let result = boardRules.canRotate(pieceFactory.getPiece(0, new Block(0, 11)), [], 15, 10);
+            expect(result).to.be.false;
+        });
+        it('should prevent rotation when there is collision with other piece on the bottom', () => {
+            let pieces = [pieceFactory.getPiece(0, new Block(5, 11))];
+            let result = boardRules.canRotate(pieceFactory.getPiece(0, new Block(5, 11)), pieces, 30, 30);
+            expect(result).to.be.false;
+        });
+        it('should prevent rotation when there is collision with other piece on the side', () => {
+            let pieces = [pieceFactory.getPiece(0, new Block(5, 10))];
+            let result = boardRules.canRotate(pieceFactory.getPiece(0, new Block(3, 10), 1), pieces, 30, 30);
+            expect(result).to.be.false;
+        });
+        it('should rotate when there are no obstacles', () => {
+            let pieces = [pieceFactory.getPiece(0, new Block(5, 10))];
+            let result = boardRules.canRotate(pieceFactory.getPiece(0, new Block(5, 9), 1), pieces, 30, 30);
+            expect(result).to.be.true;
+        });
+        it('should not rotate piece when piece cannot be rotated (game)', () => {
+            board.canRotatePiece = _.constant(false);
+            mock = sinon.mock(board).expects('rotateActivePiece').never();
+            rotateAndVerify();
+        });
+        it('should rotate piece when piece can be rotated (game)', () => {
+            board.canRotatePiece = _.constant(true);
+            mock = sinon.mock(board).expects('rotateActivePiece').once();
+            rotateAndVerify();
+        });
+        it('should call board rules when checking if piece can be rotated', () => {
+            givenBoardWithBlockedPiecesButNotFull();
+            game.init();
+            expect(board.canRotatePiece()).to.be.equal(noRotateMsg);
+        });
+        it('should change active piece when piece is rotated', () => {
+            game.init();
+            board.rotateActivePiece();
+            expect(board.getActivePiece()).to.be.not.equal(board.rotateActivePiece());
         });
     });
 });
