@@ -24,15 +24,25 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.canMoveLeft = () => boardRules.canMoveLeft(activePiece, pieces);
     this.isBoardFull = () => boardRules.canAddNewPiece(this.buildNewPiece(), pieces);
     this.getCompletedLines = () => boardRules.getCompletedLines(pieces, numberOfColumns);
-    this.updateBoard = completedLines => pieces = clearAndCollapse(completedLines);
     this.canRotatePiece = () => boardRules.canRotate(activePiece, pieces, numberOfRows, numberOfColumns);
     this.rotateActivePiece = () => activePiece = pieceFactory.getRotatedPiece(activePiece);
+    this.updateBoard = completedRows => {
+        clear(completedRows);
+        removeEmptyPieces();
+        collapse(completedRows);
+        return pieces;
+    };
 
-    function clearAndCollapse(lines) {
-        return pieces
-            .map(piece => piece.clearBlocks(lines))
-            .filter(piece => !piece.isEmpty())
-            .map(piece => piece.collapse(lines));
+    function clear(completedRows) {
+        pieces.forEach(piece => piece.clearBlocks(completedRows));
+    }
+
+    function removeEmptyPieces() {
+        pieces = pieces.filter(piece => !piece.isEmpty());
+    }
+
+    function collapse(completedRows) {
+        pieces.forEach(piece => piece.collapse(completedRows));
     }
 }
 

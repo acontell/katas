@@ -1,16 +1,14 @@
 const _ = require('lodash');
 
-function Block(row, column, isRotatingCenter) {
+function Block(row, column, isRotatingOrigin) {
     this.getRow = () => row;
     this.getColumn = () => column;
     this.moveDown = () => ++row;
     this.moveRight = () => ++column;
     this.moveLeft = () => --column;
-    this.updatePosition = lines => {
-        row += _.size(_.filter(lines, line => line > row));
-        return this;
-    };
-    this.isRotatingCenter = () => Boolean(isRotatingCenter);
+    this.getNumberOfRowsBelow = rows => _.size(rows.filter(aRow => aRow > row));
+    this.addRows = numberOfRows => row += numberOfRows;
+    this.isRotatingOrigin = () => Boolean(isRotatingOrigin);
     this.equals = aBlock => row === aBlock.getRow() && column === aBlock.getColumn();
 }
 

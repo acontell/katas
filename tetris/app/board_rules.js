@@ -5,14 +5,14 @@ let pieceFactory = require('./piece_factory');
 
 function canMoveDown(piece, pieces, numberOfRows) {
     return collisionDetector.checkHasNotReachedBottom(getNextRow(piece.getLowestBlock()), numberOfRows)
-        && collisionDetector.checkNoCollision(blocksNextRow(piece.getBlocks()), toBlocks(pieces));
+        && collisionDetector.checkNoCollision(blocksToNextRow(piece.getBlocks()), toBlocks(pieces));
 }
 
 function getNextRow(block) {
     return block.getRow() + 1;
 }
 
-function blocksNextRow(blocks) {
+function blocksToNextRow(blocks) {
     return blocks.map(block => new Block(getNextRow(block), block.getColumn()));
 }
 
@@ -22,27 +22,27 @@ function toBlocks(pieces) {
 
 function canMoveRight(piece, pieces, numberOfColumns) {
     return collisionDetector.checkHasNotReachedRightSide(getNextColumn(piece.getFarRightBlock()), numberOfColumns)
-        && collisionDetector.checkNoCollision(blocksNextColumn(piece.getBlocks()), toBlocks(pieces));
+        && collisionDetector.checkNoCollision(blocksToNextColumn(piece.getBlocks()), toBlocks(pieces));
 }
 
 function getNextColumn(block) {
     return block.getColumn() + 1;
 }
 
-function blocksNextColumn(blocks) {
+function blocksToNextColumn(blocks) {
     return blocks.map(block => new Block(block.getRow(), getNextColumn(block)));
 }
 
 function canMoveLeft(piece, pieces) {
     return collisionDetector.checkHasNotReachedLeftSide(getPreviousColumn(piece.getLowestBlock()))
-        && collisionDetector.checkNoCollision(blocksPreviousColumn(piece.getBlocks()), toBlocks(pieces));
+        && collisionDetector.checkNoCollision(blocksToPreviousColumn(piece.getBlocks()), toBlocks(pieces));
 }
 
 function getPreviousColumn(block) {
     return block.getColumn() - 1;
 }
 
-function blocksPreviousColumn(blocks) {
+function blocksToPreviousColumn(blocks) {
     return blocks.map(block => new Block(block.getRow(), getPreviousColumn(block)));
 }
 
