@@ -6,6 +6,8 @@ function Piece(blocks, id, rotation) {
     this.getBlocks = () => blocks;
     this.getId = () => id;
     this.moveDown = () => _.forEach(blocks, block => block.moveDown());
+    this.moveRight = () => _.forEach(blocks, block => block.moveRight());
+    this.moveLeft = () => _.forEach(blocks, block => block.moveLeft());
     this.getLowestBlock = () => _.last(sortByRowAscColumnDesc());
     this.getHighestBlock = () => _.head(sortByRowAscColumnDesc());
     this.getFarRightBlock = () => _.last(sortByColumnAsc());

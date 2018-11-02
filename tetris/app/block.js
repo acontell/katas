@@ -4,6 +4,8 @@ function Block(row, column, isRotatingCenter) {
     this.getRow = () => row;
     this.getColumn = () => column;
     this.moveDown = () => ++row;
+    this.moveRight = () => ++column;
+    this.moveLeft = () => --column;
     this.updatePosition = lines => {
         row += _.size(_.filter(lines, line => line > row));
         return this;

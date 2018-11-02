@@ -20,6 +20,32 @@ function toBlocks(pieces) {
     return _.flatMap(pieces, piece => piece.getBlocks());
 }
 
+function canMoveRight(piece, pieces, numberOfColumns) {
+    return collisionDetector.checkHasNotReachedRightSide(getNextColumn(piece.getFarRightBlock()), numberOfColumns)
+        && collisionDetector.checkNoCollision(blocksNextColumn(piece.getBlocks()), toBlocks(pieces));
+}
+
+function getNextColumn(block) {
+    return block.getColumn() + 1;
+}
+
+function blocksNextColumn(blocks) {
+    return blocks.map(block => new Block(block.getRow(), getNextColumn(block)));
+}
+
+function canMoveLeft(piece, pieces) {
+    return collisionDetector.checkHasNotReachedLeftSide(getPreviousColumn(piece.getLowestBlock()))
+        && collisionDetector.checkNoCollision(blocksPreviousColumn(piece.getBlocks()), toBlocks(pieces));
+}
+
+function getPreviousColumn(block) {
+    return block.getColumn() - 1;
+}
+
+function blocksPreviousColumn(blocks) {
+    return blocks.map(block => new Block(block.getRow(), getPreviousColumn(block)));
+}
+
 function canAddNewPiece(newPiece, pieces) {
     return collisionDetector.checkNoCollision(newPiece.getBlocks(), toBlocks(pieces));
 }
@@ -40,6 +66,8 @@ function canRotate(piece, pieces, numberOfRows, numberOfColumns) {
 
 module.exports = {
     canMoveDown: canMoveDown,
+    canMoveRight: canMoveRight,
+    canMoveLeft: canMoveLeft,
     canAddNewPiece: canAddNewPiece,
     getCompletedLines: getCompletedLines,
     canRotate: canRotate

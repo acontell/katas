@@ -17,7 +17,11 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.getActivePiece = () => activePiece;
     this.getTopCenterBlock = () => new Block(top, center);
     this.moveActivePiece = () => activePiece.moveDown();
+    this.moveRight = () => activePiece.moveRight();
+    this.moveLeft = () => activePiece.moveLeft();
     this.canMoveActivePiece = () => boardRules.canMoveDown(activePiece, pieces, numberOfRows);
+    this.canMoveRight = () => boardRules.canMoveRight(activePiece, pieces, numberOfColumns);
+    this.canMoveLeft = () => boardRules.canMoveLeft(activePiece, pieces);
     this.isBoardFull = () => boardRules.canAddNewPiece(this.buildNewPiece(), pieces);
     this.getCompletedLines = () => boardRules.getCompletedLines(pieces, numberOfColumns);
     this.updateBoard = completedLines => pieces = clearAndCollapse(completedLines);
