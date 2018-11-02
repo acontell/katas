@@ -46,14 +46,14 @@ function blocksToPreviousColumn(blocks) {
     return blocks.map(block => new Block(block.getRow(), getPreviousColumn(block)));
 }
 
-function canAddNewPiece(newPiece, pieces) {
-    return collisionDetector.checkNoCollision(newPiece.getBlocks(), toBlocks(pieces));
+function getCompletedLines(pieces, numberOfColumns) {
+    return getBlocksPerRow(pieces)
+        .filter(rowAndNumberOfBlocks => _.last(rowAndNumberOfBlocks) === numberOfColumns)
+        .map(rowAndNumberOfBlocks => Number(_.head(rowAndNumberOfBlocks)));
 }
 
-function getCompletedLines(pieces, numberOfColumns) {
-    return _.map(_.groupBy(toBlocks(pieces), block => block.getRow()), (value, key) => [key, _.size(value)])
-        .filter(arr => arr[1] === numberOfColumns)
-        .map(arr => +arr[0]);
+function getBlocksPerRow(pieces) {
+    return _.map(_.groupBy(toBlocks(pieces), block => block.getRow()), (blocks, row) => [row, _.size(blocks)])
 }
 
 function canRotate(piece, pieces, numberOfRows, numberOfColumns) {
@@ -68,7 +68,7 @@ module.exports = {
     canMoveDown: canMoveDown,
     canMoveRight: canMoveRight,
     canMoveLeft: canMoveLeft,
-    canAddNewPiece: canAddNewPiece,
-    getCompletedLines: getCompletedLines,
-    canRotate: canRotate
+    canRotate: canRotate,
+    canAddPiece: (newPiece, pieces) => collisionDetector.checkNoCollision(newPiece.getBlocks(), toBlocks(pieces)),
+    getCompletedLines: getCompletedLines
 };

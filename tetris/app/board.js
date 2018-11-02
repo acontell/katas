@@ -22,7 +22,7 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.canMoveActivePiece = () => boardRules.canMoveDown(activePiece, pieces, numberOfRows);
     this.canMoveRight = () => boardRules.canMoveRight(activePiece, pieces, numberOfColumns);
     this.canMoveLeft = () => boardRules.canMoveLeft(activePiece, pieces);
-    this.isBoardFull = () => boardRules.canAddNewPiece(this.buildNewPiece(), pieces);
+    this.isBoardFull = () => boardRules.canAddPiece(this.buildNewPiece(), pieces);
     this.getCompletedLines = () => boardRules.getCompletedLines(pieces, numberOfColumns);
     this.canRotatePiece = () => boardRules.canRotate(activePiece, pieces, numberOfRows, numberOfColumns);
     this.rotateActivePiece = () => activePiece = pieceFactory.getRotatedPiece(activePiece);

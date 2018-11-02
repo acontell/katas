@@ -13,7 +13,7 @@ let mockGameRules = fixture.mockGameRules({});
 const noRotateMsg = 'no rotation';
 let mockBoardRules = fixture.mockBoardRules({
     canMoveDown: _.constant(false),
-    canAddNewPiece: _.constant(true),
+    canAddPiece: _.constant(true),
     canRotate: _.constant(noRotateMsg)
 });
 let mock;
