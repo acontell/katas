@@ -7,12 +7,12 @@
     "test": "test"
   },
   "dependencies": {
-    "chai": "^4.2.0",
-    "lodash": "^4.17.11",
-    "sinon": "^7.1.0"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.1.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
