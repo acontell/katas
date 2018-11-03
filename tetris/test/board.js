@@ -9,26 +9,30 @@ let game;
 let board;
 let initialBlock = new Block(0, 0);
 let activePiece;
-let mockGameRules = fixture.mockGameRules({});
 const noRotateMsg = 'no rotation';
-let mockBoardRules = fixture.mockBoardRules({
-    canMoveDown: _.constant(false),
-    canAddPiece: _.constant(true),
-    canRotate: _.constant(noRotateMsg)
-});
+let mockBoardRules;
 let mock;
 
 beforeEach('Setting up things', () => {
     game = fixture.buildGame();
     board = game.getBoard();
     activePiece = pieceFactory.getRandomPiece(initialBlock);
+    mockBoardRules = fixture.mockBoardRules({
+        canMoveDown: _.constant(false),
+        canAddPiece: _.constant(true),
+        canRotate: _.constant(noRotateMsg)
+    });
 });
 
 describe('As the game', () => {
     describe('In order to advance the game', () => {
-        function givenBoardWithBlockedPiecesButNotFull() {
+        function givenBoardWithMockBoardRules() {
             game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, mockBoardRules));
             board = game.getBoard();
+        }
+
+        function givenBoardWithBlockedPiecesButNotFull() {
+            givenBoardWithMockBoardRules();
             board.isBoardFull = _.constant(false);
         }
 
@@ -71,6 +75,15 @@ describe('As the game', () => {
         });
         it('should be able to advance when the bottom is far', () => {
             expect(boardRules.canMoveDown(pieceFactory.getRandomPiece(new Block(14, 0)), [], 15)).to.be.true;
+        });
+        it('should say that the board is full when no new piece can be added', () => {
+            givenBoardWithMockBoardRules();
+            mockBoardRules.canAddPiece = _.constant(false);
+            expect(board.isBoardFull()).to.be.true;
+        });
+        it('should say that the board is not full when new pieces can be added', () => {
+            givenBoardWithMockBoardRules();
+            expect(board.isBoardFull()).to.be.false;
         });
         it('should update board every tick', () => {
             mock = sinon.mock(board).expects('updateBoard').once();
@@ -161,7 +174,7 @@ function advanceThreeTicks() {
     return new Promise(resolve => {
         _.delay(() => {
             resolve(board.getActivePiece().getLowestBlock().getRow());
-        }, game.getFps() * 3 + game.getFps() / 2);
+        }, game.getRepaintInterval() * 3 + game.getRepaintInterval() / 2);
     });
 }
 

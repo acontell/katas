@@ -1,24 +1,25 @@
-function Game(board, fps, gameRules) {
-    const time = fps || 200;
+function Game(board, interval, gameActions) {
+    const repaintInterval = interval || 200;
     let isEnded;
-    let intervalId;
+    let loopId;
 
     this.getBoard = () => board;
-    this.getFps = () => time;
+    this.getRepaintInterval = () => repaintInterval;
     this.start = () => {
         this.init();
-        intervalId = setInterval(this.tick, time);
+        loopId = gameActions.startLoop(this.tick, repaintInterval);
     };
     this.init = () => board.addNewPiece();
     this.tick = () => {
         let completedLines = board.getCompletedLines();
         board.updateBoard(completedLines);
         this.advance();
+        return board.toMatrix();
     };
     this.advance = () => board.canMoveActivePiece() ? board.moveActivePiece() : this.noAdvancePossible();
     this.noAdvancePossible = () => board.isBoardFull() ? this.gameOver() : this.keepPlaying();
     this.gameOver = () => {
-        clearInterval(intervalId);
+        gameActions.stopLoop(loopId);
         isEnded = true;
     };
     this.keepPlaying = () => {

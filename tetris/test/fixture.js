@@ -3,7 +3,8 @@ const Game = require('../app/game');
 const Board = require('../app/board');
 const pieceFactory = require('../app/piece_factory');
 const boardRules = require('../app/board_rules');
-const gameRules = require('../app/game_rules');
+const GameActions = require('../app/game_actions');
+const gameActions = new GameActions(setInterval, clearInterval);
 const numberOfRows = 24;
 const numberOfColumns = 10;
 
@@ -19,8 +20,8 @@ function buildGame() {
     return buildGameWith(buildBoardWith(pieceFactory, boardRules));
 }
 
-function buildGameWith(board, fps) {
-    return new Game(board, fps, gameRules);
+function buildGameWith(board, repaintInterval) {
+    return new Game(board, repaintInterval, gameActions);
 }
 
 function mockBoardRules(source) {
@@ -28,7 +29,7 @@ function mockBoardRules(source) {
 }
 
 function mockGameRules(source) {
-    return _.assignIn({}, gameRules, source);
+    return _.assignIn({}, gameActions, source);
 }
 
 module.exports = {
