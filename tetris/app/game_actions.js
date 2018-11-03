@@ -1,8 +1,13 @@
-let _ = require('lodash');
+function GameActions(loopFnc, clearFnc, interval) {
+    let id;
+    let isEnded = false;
 
-function GameActions(loopFnc, clearFnc) {
-    this.startLoop = (tickFnc, interval) => loopFnc(tickFnc, interval);
-    this.stopLoop = id => clearFnc(id);
+    this.startLoop = tickFnc => id = loopFnc(tickFnc, interval);
+    this.stopLoop = () => {
+        clearFnc(id);
+        isEnded = true;
+    };
+    this.isLoopEnded = () => isEnded;
 }
 
 module.exports = GameActions;

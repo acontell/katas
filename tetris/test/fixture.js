@@ -4,9 +4,11 @@ const Board = require('../app/board');
 const pieceFactory = require('../app/piece_factory');
 const boardRules = require('../app/board_rules');
 const GameActions = require('../app/game_actions');
-const gameActions = new GameActions(setInterval, clearInterval);
+const Scorer = require('../app/scorer');
+const Block = require('../app/block');
 const numberOfRows = 24;
 const numberOfColumns = 10;
+const repaintInterval = 200;
 
 function buildBoard(numberOfRows, numberOfColumns, pieceFactory, rules) {
     return new Board(numberOfRows, numberOfColumns, pieceFactory, rules);
@@ -17,19 +19,36 @@ function buildBoardWith(pieceFactory, rules) {
 }
 
 function buildGame() {
-    return buildGameWith(buildBoardWith(pieceFactory, boardRules));
+    return buildGameWith(buildBoardWith(pieceFactory, boardRules), repaintInterval);
 }
 
 function buildGameWith(board, repaintInterval) {
-    return new Game(board, repaintInterval, gameActions);
+    return new Game(board, new GameActions(setInterval, clearInterval, repaintInterval), new Scorer());
 }
 
 function mockBoardRules(source) {
     return _.assignIn({}, boardRules, source);
 }
 
-function mockGameRules(source) {
-    return _.assignIn({}, gameActions, source);
+function generatePiecesFillingOneLine(id) {
+    // Shape L => 5
+    // Shape half H shape => 2
+    return _.range(numberOfColumns / 2)
+        .map(n => pieceFactory.getPiece(id, new Block(5, n * 2)));
+}
+
+function generatePiecesFillingTwoLines() {
+    // Vertical Shape => 0, square => 1
+    // 8 vertical shapes + 1 squares
+    return _.range(numberOfColumns - 2)
+        .map(n => pieceFactory.getPiece(0, new Block(5, n)))
+        .concat([pieceFactory.getPiece(1, new Block(5, 8))]);
+}
+
+function generatePiecesThatFillLines() {
+    // Vertical Shape => 0
+    return _.range(numberOfColumns)
+        .map(n => pieceFactory.getPiece(0, new Block(5, n)));
 }
 
 module.exports = {
@@ -38,5 +57,8 @@ module.exports = {
     buildGame: buildGame,
     buildGameWith: buildGameWith,
     mockBoardRules: mockBoardRules,
-    mockGameRules: mockGameRules
+    getRepaintInterval: () => repaintInterval,
+    generatePiecesFillingOneLine: generatePiecesFillingOneLine,
+    generatePiecesFillingTwoLines: generatePiecesFillingTwoLines,
+    generatePiecesThatFillLines: generatePiecesThatFillLines
 };

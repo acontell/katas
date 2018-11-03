@@ -76,6 +76,36 @@ describe('As the player', () => {
             expect(result).to.be.true;
         });
     });
+    describe('In order to be better than my friends', () => {
+        function givenGameWithPieces(pieces) {
+            board.addPieces(pieces);
+            game.tick();
+        }
+
+        it('should score 100 points per one line', () => {
+            givenGameWithPieces(fixture.generatePiecesFillingOneLine(5));
+            expect(game.getScore()).to.be.equal(100);
+        });
+        it('should score n * 100 points per n lines', () => {
+            givenGameWithPieces(fixture.generatePiecesFillingTwoLines());
+            expect(game.getScore()).to.be.equal(200);
+        });
+        it('should score 800 points per Tetris', () => {
+            givenGameWithPieces(fixture.generatePiecesThatFillLines().concat(pieceFactory.getPiece(1, new Block(7, 8))));
+            expect(game.getScore()).to.be.equal(800);
+        });
+        it('should score 1200 points per back-to-back Tetris', () => {
+            givenGameWithPieces(fixture.generatePiecesThatFillLines());
+            expect(game.getScore()).to.be.equal(1200);
+
+        });
+        it('should accumulate score between ticks', () => {
+            givenGameWithPieces(fixture.generatePiecesThatFillLines());
+            board.addPieces(fixture.generatePiecesThatFillLines());
+            game.tick();
+            expect(game.getScore()).to.be.equal(2400);
+        });
+    });
 });
 
 function moveHorizontallyAndAssertExpectations(mocks) {

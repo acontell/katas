@@ -91,32 +91,32 @@ describe('As the game', () => {
             mock.verify();
         });
         it('should be able to clear line and leave pieces incomplete', () => {
-            board.addPieces(generatePiecesFillingOneLine(5));
+            board.addPieces(fixture.generatePiecesFillingOneLine(5));
             game.update(board.getCompletedLines());
             expect(_.every(board.getPieces(), piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and leave pieces incomplete', () => {
-            board.addPieces(generatePiecesFillingTwoLines());
+            board.addPieces(fixture.generatePiecesFillingTwoLines());
             game.update(board.getCompletedLines());
             expect(_.every(board.getPieces(), piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and remove pieces without blocks', () => {
-            board.addPieces(generatePiecesFillingTwoLines());
+            board.addPieces(fixture.generatePiecesFillingTwoLines());
             game.update(board.getCompletedLines());
             expect(_.size(board.getPieces())).to.equal(8);
         });
         it('should be able to clear pieces completely', () => {
-            board.addPieces(generatePiecesThatFillLines());
+            board.addPieces(fixture.generatePiecesThatFillLines());
             game.update(board.getCompletedLines());
             expect(_.size(board.getPieces())).to.equal(0);
         });
         it('should move down blocks one unit when some row below has disappeared', () => {
-            board.addPieces(generatePiecesFillingOneLine(2));
+            board.addPieces(fixture.generatePiecesFillingOneLine(2));
             game.update(board.getCompletedLines());
             expect(_.every(board.getPieces(), piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
         });
         it('should move down blocks n units when n rows below have disappeared', () => {
-            board.addPieces(generatePiecesFillingTwoLines());
+            board.addPieces(fixture.generatePiecesFillingTwoLines());
             game.update(board.getCompletedLines());
             expect(_.every(board.getPieces(), piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
         });
@@ -174,32 +174,11 @@ function advanceThreeTicks() {
     return new Promise(resolve => {
         _.delay(() => {
             resolve(board.getActivePiece().getLowestBlock().getRow());
-        }, game.getRepaintInterval() * 3 + game.getRepaintInterval() / 2);
+        }, fixture.getRepaintInterval() * 3 + fixture.getRepaintInterval() / 2);
     });
 }
 
 function assertActivePieceHasMovedAndStop(newActivePieceRow) {
     expect(newActivePieceRow).to.equal(board.getTopCenterBlock().getRow() + 3);
     game.gameOver();
-}
-
-function generatePiecesFillingOneLine(id) {
-    // Shape L => 5
-    // Shape half H shape => 2
-    return _.range(board.getNumberOfColumns() / 2)
-        .map(n => pieceFactory.getPiece(id, new Block(5, n * 2)));
-}
-
-function generatePiecesFillingTwoLines() {
-    // Vertical Shape => 0, square => 1
-    // 8 vertical shapes + 1 squares
-    return _.range(board.getNumberOfColumns() - 2)
-        .map(n => pieceFactory.getPiece(0, new Block(5, n)))
-        .concat([pieceFactory.getPiece(1, new Block(5, 8))]);
-}
-
-function generatePiecesThatFillLines() {
-    // Vertical Shape => 0
-    return _.range(board.getNumberOfColumns())
-        .map(n => pieceFactory.getPiece(0, new Block(5, n)));
 }

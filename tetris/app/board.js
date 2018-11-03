@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const Block = require('./block');
-const toMatrix = require('./board_representations').toMatrix;
 
 function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     const top = 0;
@@ -25,13 +24,13 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.canMoveRight = () => boardRules.canMoveRight(activePiece, pieces, numberOfColumns);
     this.canMoveLeft = () => boardRules.canMoveLeft(activePiece, pieces);
     this.isBoardFull = () => !boardRules.canAddPiece(this.buildNewPiece(), pieces);
+    this.isBoardEmpty = () => _.isEmpty(pieces);
     this.getCompletedLines = () => boardRules.getCompletedLines(pieces, numberOfColumns);
     this.canRotatePiece = () => boardRules.canRotate(activePiece, pieces, numberOfRows, numberOfColumns);
     this.rotateActivePiece = () => activePiece = pieceFactory.getRotatedPiece(activePiece);
     this.clearLines = completedRows => pieces.forEach(piece => piece.clearBlocks(completedRows));
     this.removeEmptyPieces = () => pieces = pieces.filter(piece => !piece.isEmpty());
     this.collapsePieces = completedRows => pieces.forEach(piece => piece.collapse(completedRows));
-    this.toMatrix = () => toMatrix(pieces.concat(activePiece || []), numberOfRows, numberOfColumns, 'empty');
 }
 
 module.exports = Board;

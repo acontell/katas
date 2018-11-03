@@ -1,20 +1,13 @@
-function Game(board, interval, gameActions) {
-    const repaintInterval = interval || 200;
-    let isEnded;
-    let loopId;
-
+function Game(board, gameActions, scorer) {
     this.getBoard = () => board;
-    this.getRepaintInterval = () => repaintInterval;
-    this.start = () => {
-        this.init();
-        loopId = gameActions.startLoop(this.tick, repaintInterval);
-    };
+    this.start = () => this.init() && gameActions.startLoop(this.tick);
     this.init = () => board.addNewPiece();
     this.tick = () => {
         let completedLines = board.getCompletedLines();
         this.update(completedLines);
+        scorer.addPoints(completedLines, board.isBoardEmpty());
         this.advance();
-        return board.toMatrix();
+        return this;
     };
     this.update = completedLines => {
         board.clearLines(completedLines);
@@ -23,10 +16,7 @@ function Game(board, interval, gameActions) {
     };
     this.advance = () => board.canMoveActivePiece() ? board.moveActivePiece() : this.noAdvancePossible();
     this.noAdvancePossible = () => board.isBoardFull() ? this.gameOver() : this.keepPlaying();
-    this.gameOver = () => {
-        gameActions.stopLoop(loopId);
-        isEnded = true;
-    };
+    this.gameOver = () => gameActions.stopLoop();
     this.keepPlaying = () => {
         board.blockActivePiece();
         board.addNewPiece();
@@ -34,7 +24,8 @@ function Game(board, interval, gameActions) {
     this.rotateActivePiece = () => board.canRotatePiece() && board.rotateActivePiece();
     this.moveRight = () => board.canMoveRight() && board.moveRight();
     this.moveLeft = () => board.canMoveLeft() && board.moveLeft();
-    this.isEnded = () => isEnded;
+    this.isEnded = () => gameActions.isLoopEnded();
+    this.getScore = () => scorer.getScore();
 }
 
 module.exports = Game;

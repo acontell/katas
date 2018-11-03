@@ -11,9 +11,9 @@ function getBlocksInRange(blocks, matrix) {
 }
 
 module.exports = {
-    toMatrix: (pieces, numberOfRows, numberOfColumns, defaultValue) => {
-        let matrix = filledMatrix(numberOfRows, numberOfColumns, defaultValue);
-        pieces.forEach(piece => addToMatrix(piece, matrix));
+    toMatrix: (board) => {
+        let matrix = filledMatrix(board.getNumberOfRows(), board.getNumberOfColumns(), 'empty');
+        board.getPieces().concat(board.getActivePiece()).forEach(piece => addToMatrix(piece, matrix));
         return matrix;
     }
 };
