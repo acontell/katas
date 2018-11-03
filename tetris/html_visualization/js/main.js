@@ -1,4 +1,3 @@
-// In charge of creating the game and start the visualization.
 const _ = require('lodash');
 const Game = require('../../app/game');
 const Board = require('../../app/board');
@@ -8,16 +7,25 @@ const GameActions = require('../../app/game_actions');
 const gameActions = new GameActions(start, cancel);
 const numberOfRows = 24;
 const numberOfColumns = 10;
-const squareSide = 40;
+const squareSide = 25;
 const width = numberOfColumns * squareSide;
 const height = numberOfRows * squareSide;
 
 const board = new Board(numberOfRows, numberOfColumns, pieceFactory, boardRules);
 const game = new Game(board, 300, gameActions);
 const ctx = document.getElementById('canvas').getContext('2d');
-const logger = document.getElementById('logger');
+const keys = {
+    37: game.moveLeft,//Left
+    39: game.moveRight,// Right
+    40: game.advance,// Down,
+    90: game.rotateActivePiece// z
+};
 ctx.canvas.width = width;
 ctx.canvas.height = height;
+
+const bindEvents = function (keys) {
+    document.addEventListener('keydown', ev => keys[ev.keyCode] && keys[ev.keyCode]());
+};
 
 const colors = {
     0: '#0000cc',
@@ -32,19 +40,12 @@ const colors = {
 var animationId;
 var keepGoing = true;
 
-function log(text) {
-    logger.innerHTML = text;
-}
-
 function cancel() {
-    log("CLOSING");
     keepGoing = false;
     cancelAnimationFrame(animationId);
 }
 
 function start(tickFnc, interval) {
-    log("START FUNCTION!!!");
-
     function draw(matrix) {
         matrix.forEach((row, rowIdx) =>
             row.forEach((column, columnIdx) => {
@@ -56,8 +57,6 @@ function start(tickFnc, interval) {
     }
 
     function mainLoop() {
-        log("MAIN LOOP!!!");
-
         // Clear canvas
         ctx.clearRect(0, 0, height, width);
 
@@ -73,5 +72,6 @@ function start(tickFnc, interval) {
     animationId = requestAnimationFrame(mainLoop);
 }
 
+bindEvents(keys);
 // Let the fun begin!
 game.start();

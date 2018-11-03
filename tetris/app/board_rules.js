@@ -34,7 +34,7 @@ function blocksToNextColumn(blocks) {
 }
 
 function canMoveLeft(piece, pieces) {
-    return collisionDetector.checkHasNotReachedLeftSide(getPreviousColumn(piece.getLowestBlock()))
+    return collisionDetector.checkHasNotReachedLeftSide(getPreviousColumn(piece.getFarLeftBlock()))
         && collisionDetector.checkNoCollision(blocksToPreviousColumn(piece.getBlocks()), toBlocks(pieces));
 }
 

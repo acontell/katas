@@ -74,7 +74,7 @@ describe('As the game', () => {
             expect(boardRules.canMoveDown(activePiece, pieces, 15)).to.be.true;
         });
         it('should be able to advance when the bottom is far', () => {
-            expect(boardRules.canMoveDown(pieceFactory.getRandomPiece(new Block(14, 0)), [], 15)).to.be.true;
+            expect(boardRules.canMoveDown(pieceFactory.getRandomPiece(new Block(13, 0)), [], 15)).to.be.true;
         });
         it('should say that the board is full when no new piece can be added', () => {
             givenBoardWithMockBoardRules();
@@ -86,39 +86,39 @@ describe('As the game', () => {
             expect(board.isBoardFull()).to.be.false;
         });
         it('should update board every tick', () => {
-            mock = sinon.mock(board).expects('updateBoard').once();
+            mock = sinon.mock(game).expects('update').once();
             givenInitAndTick();
             mock.verify();
         });
         it('should be able to clear line and leave pieces incomplete', () => {
             board.addPieces(generatePiecesFillingOneLine(5));
-            let result = board.updateBoard(board.getCompletedLines());
-            expect(_.every(result, piece => _.size(piece.getBlocks()) === 2)).to.be.true;
+            game.update(board.getCompletedLines());
+            expect(_.every(board.getPieces(), piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and leave pieces incomplete', () => {
             board.addPieces(generatePiecesFillingTwoLines());
-            let result = board.updateBoard(board.getCompletedLines());
-            expect(_.every(result, piece => _.size(piece.getBlocks()) === 2)).to.be.true;
+            game.update(board.getCompletedLines());
+            expect(_.every(board.getPieces(), piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and remove pieces without blocks', () => {
             board.addPieces(generatePiecesFillingTwoLines());
-            let result = board.updateBoard(board.getCompletedLines());
-            expect(_.size(result)).to.equal(8);
+            game.update(board.getCompletedLines());
+            expect(_.size(board.getPieces())).to.equal(8);
         });
         it('should be able to clear pieces completely', () => {
             board.addPieces(generatePiecesThatFillLines());
-            let result = board.updateBoard(board.getCompletedLines());
-            expect(_.size(result)).to.equal(0);
+            game.update(board.getCompletedLines());
+            expect(_.size(board.getPieces())).to.equal(0);
         });
         it('should move down blocks one unit when some row below has disappeared', () => {
             board.addPieces(generatePiecesFillingOneLine(2));
-            let result = board.updateBoard(board.getCompletedLines());
-            expect(_.every(result, piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
+            game.update(board.getCompletedLines());
+            expect(_.every(board.getPieces(), piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
         });
         it('should move down blocks n units when n rows below have disappeared', () => {
             board.addPieces(generatePiecesFillingTwoLines());
-            let result = board.updateBoard(board.getCompletedLines());
-            expect(_.every(result, piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
+            game.update(board.getCompletedLines());
+            expect(_.every(board.getPieces(), piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
         });
         it('should prevent rotation when there is collision with the bottom', () => {
             let result = boardRules.canRotate(pieceFactory.getPiece(0, new Block(16, 0)), [], 15, 10);

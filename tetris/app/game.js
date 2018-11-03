@@ -12,9 +12,14 @@ function Game(board, interval, gameActions) {
     this.init = () => board.addNewPiece();
     this.tick = () => {
         let completedLines = board.getCompletedLines();
-        board.updateBoard(completedLines);
+        this.update(completedLines);
         this.advance();
         return board.toMatrix();
+    };
+    this.update = completedLines => {
+        board.clearLines(completedLines);
+        board.removeEmptyPieces();
+        board.collapsePieces(completedLines);
     };
     this.advance = () => board.canMoveActivePiece() ? board.moveActivePiece() : this.noAdvancePossible();
     this.noAdvancePossible = () => board.isBoardFull() ? this.gameOver() : this.keepPlaying();

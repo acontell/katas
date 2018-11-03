@@ -13,6 +13,7 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.getNumberOfPieces = () => _.size(pieces);
     this.addNewPiece = () => activePiece = this.buildNewPiece();
     this.addPieces = morePieces => pieces = pieces.concat(morePieces);
+    this.getPieces = () => pieces;
     this.blockActivePiece = () => pieces = pieces.concat(activePiece);
     this.buildNewPiece = () => pieceFactory.getRandomPiece(this.getTopCenterBlock());
     this.getActivePiece = () => activePiece;
@@ -27,25 +28,10 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.getCompletedLines = () => boardRules.getCompletedLines(pieces, numberOfColumns);
     this.canRotatePiece = () => boardRules.canRotate(activePiece, pieces, numberOfRows, numberOfColumns);
     this.rotateActivePiece = () => activePiece = pieceFactory.getRotatedPiece(activePiece);
-    this.toMatrix = () => toMatrix(pieces.concat(activePiece || []), numberOfRows, numberOfColumns, -1);
-    this.updateBoard = completedRows => {
-        clear(completedRows);
-        removeEmptyPieces();
-        collapse(completedRows);
-        return pieces;
-    };
-
-    function clear(completedRows) {
-        pieces.forEach(piece => piece.clearBlocks(completedRows));
-    }
-
-    function removeEmptyPieces() {
-        pieces = pieces.filter(piece => !piece.isEmpty());
-    }
-
-    function collapse(completedRows) {
-        pieces.forEach(piece => piece.collapse(completedRows));
-    }
+    this.clearLines = completedRows => pieces.forEach(piece => piece.clearBlocks(completedRows));
+    this.removeEmptyPieces = () => pieces = pieces.filter(piece => !piece.isEmpty());
+    this.collapsePieces = completedRows => pieces.forEach(piece => piece.collapse(completedRows));
+    this.toMatrix = () => toMatrix(pieces.concat(activePiece || []), numberOfRows, numberOfColumns, 'empty');
 }
 
 module.exports = Board;
