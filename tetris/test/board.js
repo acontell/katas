@@ -33,7 +33,7 @@ describe('As the game', () => {
 
         function givenBoardWithBlockedPiecesButNotFull() {
             givenBoardWithMockBoardRules();
-            board.isBoardFull = _.constant(false);
+            board.isFull = _.constant(false);
         }
 
         function givenInitAndTick() {
@@ -42,7 +42,7 @@ describe('As the game', () => {
         }
 
         function rotateAndVerify() {
-            game.rotateActivePiece();
+            game.rotate();
             mock.verify();
         }
 
@@ -79,11 +79,11 @@ describe('As the game', () => {
         it('should say that the board is full when no new piece can be added', () => {
             givenBoardWithMockBoardRules();
             mockBoardRules.canAddPiece = _.constant(false);
-            expect(board.isBoardFull()).to.be.true;
+            expect(board.isFull()).to.be.true;
         });
         it('should say that the board is not full when new pieces can be added', () => {
             givenBoardWithMockBoardRules();
-            expect(board.isBoardFull()).to.be.false;
+            expect(board.isFull()).to.be.false;
         });
         it('should update board every tick', () => {
             mock = sinon.mock(game).expects('update').once();
@@ -148,19 +148,19 @@ describe('As the game', () => {
             expect(result).to.be.true;
         });
         it('should not rotate piece when piece cannot be rotated (game)', () => {
-            board.canRotatePiece = _.constant(false);
+            board.canRotateActivePiece = _.constant(false);
             mock = sinon.mock(board).expects('rotateActivePiece').never();
             rotateAndVerify();
         });
         it('should rotate piece when piece can be rotated (game)', () => {
-            board.canRotatePiece = _.constant(true);
+            board.canRotateActivePiece = _.constant(true);
             mock = sinon.mock(board).expects('rotateActivePiece').once();
             rotateAndVerify();
         });
         it('should call board rules when checking if piece can be rotated', () => {
             givenBoardWithBlockedPiecesButNotFull();
             game.init();
-            expect(board.canRotatePiece()).to.be.equal(noRotateMsg);
+            expect(board.canRotateActivePiece()).to.be.equal(noRotateMsg);
         });
         it('should change active piece when piece is rotated', () => {
             game.init();

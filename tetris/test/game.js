@@ -49,7 +49,7 @@ describe('As the game', () => {
         function givenBoardGameWithPiecesBlocked() {
             game = fixture.buildGameWith(fixture.buildBoardWith(pieceFactory, fixture.mockBoardRules({canMoveDown: _.constant(false)})));
             board = game.getBoard();
-            board.isBoardFull = _.constant(false);
+            board.isFull = _.constant(false);
         }
 
         function givenInitializedBoardGameWithPiecesBlocked() {
@@ -63,7 +63,7 @@ describe('As the game', () => {
             mockBoard = sinon.mock(board).expects('newActivePiece').once();
             game.init();
             activePiece = game.getBoard().getActivePiece();
-            board.isBoardFull = _.constant(true);
+            board.isFull = _.constant(true);
         }
 
         it('should not create a new piece if the game is over', () => {

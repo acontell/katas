@@ -18,22 +18,22 @@ beforeEach('Setting up things', () => {
 
 describe('As the player', () => {
     function givenBoardCanMoveHorizontally(canMove) {
-        board.canMoveLeft = _.constant(canMove);
-        board.canMoveRight = _.constant(canMove);
+        board.canMoveLeftActivePiece = _.constant(canMove);
+        board.canMoveRightActivePiece = _.constant(canMove);
     }
 
     describe('In order to place pieces', () => {
         it('should check if horizontal movement is allowed', () => {
             givenBoardCanMoveHorizontally(false);
-            moveHorizontallyAndAssertExpectations([sinon.mock(board).expects('canMoveRight').once(), sinon.mock(board).expects('canMoveLeft').once()]);
+            moveHorizontallyAndAssertExpectations([sinon.mock(board).expects('canMoveRightActivePiece').once(), sinon.mock(board).expects('canMoveLeftActivePiece').once()]);
         });
         it('should move if horizontal movement is allowed', () => {
             givenBoardCanMoveHorizontally(true);
-            moveHorizontallyAndAssertExpectations([sinon.mock(board).expects('moveRight').once(), sinon.mock(board).expects('moveLeft').once()]);
+            moveHorizontallyAndAssertExpectations([sinon.mock(board).expects('moveRightActivePiece').once(), sinon.mock(board).expects('moveLeftActivePiece').once()]);
         });
         it('should not move if horizontal movement is allowed', () => {
             givenBoardCanMoveHorizontally(false);
-            moveHorizontallyAndAssertExpectations([sinon.mock(board).expects('moveRight').never(), sinon.mock(board).expects('moveLeft').never()]);
+            moveHorizontallyAndAssertExpectations([sinon.mock(board).expects('moveRightActivePiece').never(), sinon.mock(board).expects('moveLeftActivePiece').never()]);
         });
         it('should move the active piece to the right', () => {
             givenBoardCanMoveHorizontally(true);

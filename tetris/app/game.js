@@ -5,7 +5,7 @@ function Game(board, looper, scorer) {
     this.tick = () => {
         let completedLines = board.getCompletedLines();
         this.update(completedLines);
-        scorer.addPoints(completedLines, board.isBoardEmpty());
+        scorer.addPoints(completedLines, board.isEmpty());
         this.advance();
         return this;
     };
@@ -14,16 +14,17 @@ function Game(board, looper, scorer) {
         board.removeEmptyPieces();
         board.collapsePieces(completedLines);
     };
-    this.advance = () => board.canMoveActivePiece() ? board.moveActivePiece() : this.noAdvancePossible();
-    this.noAdvancePossible = () => board.isBoardFull() ? this.gameOver() : this.keepPlaying();
+    this.advance = () => board.canMoveDownActivePiece() ? board.moveDownActivePiece() : this.noAdvancePossible();
+    this.noAdvancePossible = () => board.isFull() ? this.gameOver() : this.keepPlaying();
     this.gameOver = () => looper.stop();
     this.keepPlaying = () => {
         board.blockActivePiece();
         board.newActivePiece();
     };
-    this.rotateActivePiece = () => board.canRotatePiece() && board.rotateActivePiece();
-    this.moveRight = () => board.canMoveRight() && board.moveRight();
-    this.moveLeft = () => board.canMoveLeft() && board.moveLeft();
+    this.rotate = () => board.canRotateActivePiece() && board.rotateActivePiece();
+    this.moveRight = () => board.canMoveRightActivePiece() && board.moveRightActivePiece();
+    this.moveLeft = () => board.canMoveLeftActivePiece() && board.moveLeftActivePiece();
+    this.moveDown = this.advance;
     this.isEnded = () => looper.isEnded();
     this.getScore = () => scorer.getScore();
 }
