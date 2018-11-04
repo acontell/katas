@@ -73,7 +73,7 @@ function shapeFour(initialRow, initialColumn, rotation) {
         ],
         1: [
             new Block(initialRow, initialColumn, true),
-            new Block(initialRow - 1, initialColumn),
+            new Block(initialRow, initialColumn - 1),
             new Block(initialRow - 1, initialColumn),
             new Block(initialRow - 1, initialColumn + 1)
         ]

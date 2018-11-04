@@ -97,9 +97,9 @@ const expectedRotations = {
     // kind of S
     3: {
         0: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 5}, {row: 4, column: 5}],
-        1: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 6}, {row: 5, column: 7}],
+        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 5, column: 6}, {row: 5, column: 7}],
         2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 5}, {row: 4, column: 5}],
-        3: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 6}, {row: 5, column: 7}]
+        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 5, column: 6}, {row: 5, column: 7}]
     },
     // inverted kind of S
     4: {
