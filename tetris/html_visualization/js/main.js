@@ -23,9 +23,12 @@ const pencilConf = {
     squareSide: squareSide,
     font: font
 };
+const backToBackPoints = 1200;
+const tetrisPoints = 800;
+const linePoints = 100;
 const looper = new CanvasLooper(new Pencil(buildContext(width, height + scoreOffset), pencilConf));
 const board = new Board(numberOfRows, numberOfColumns, pieceFactory, boardRules);
-const game = new Game(board, new Looper(looper.start, looper.cancel, fps), new Scorer());
+const game = new Game(board, new Looper(looper.start, looper.cancel, fps), new Scorer(linePoints, tetrisPoints, backToBackPoints));
 
 addEvents(document, game);
 game.start();

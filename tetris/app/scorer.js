@@ -1,9 +1,6 @@
 const _ = require('lodash');
 
-function Scorer() {
-    const backToBackPoints = 1200;
-    const tetrisPoints = 800;
-    const linePoints = 100;
+function Scorer(linePoints, tetrisPoints, backToBackPoints) {
     let score = 0;
 
     this.addPoints = (completedLines, isBoardEmpty) => score += getPoints(_.size(completedLines), isBoardEmpty);

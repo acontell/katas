@@ -23,7 +23,7 @@ function buildGame() {
 }
 
 function buildGameWith(board, repaintInterval) {
-    return new Game(board, new Looper(setInterval, clearInterval, repaintInterval), new Scorer());
+    return new Game(board, new Looper(setInterval, clearInterval, repaintInterval), new Scorer(100, 800, 1200));
 }
 
 function mockBoardRules(source) {
