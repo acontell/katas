@@ -1,10 +1,11 @@
 const path = require('path');
+const visualizationPath = './visualization';
 
 module.exports = {
-    entry: './html_visualization/js/main.js',
+    entry: visualizationPath + '/js/main.js',
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, './html_visualization/dist')
+        path: path.resolve(__dirname, visualizationPath + '/dist')
     },
     mode: 'production'
 };

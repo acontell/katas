@@ -1,6 +1,5 @@
-const toMatrix = require('./board_representations').toMatrix;
-
-function CanvasGameActions(pencil) {
+function CanvasLooper(pencil, converter) {
+    const convert = converter.convert;
     let animationId;
     let keepGoing = true;
 
@@ -13,7 +12,7 @@ function CanvasGameActions(pencil) {
     this.start = (tickFnc, interval) => {
         function paint(game) {
             pencil.clear();
-            pencil.drawMatrix(toMatrix(game.getBoard()));
+            pencil.drawMatrix(convert(game.getBoard()));
             pencil.drawSeparatingLine();
             pencil.drawScore(game.getScore());
         }
@@ -29,4 +28,4 @@ function CanvasGameActions(pencil) {
     }
 }
 
-module.exports = CanvasGameActions;
+module.exports = CanvasLooper;
