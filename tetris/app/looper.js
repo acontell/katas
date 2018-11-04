@@ -1,4 +1,4 @@
-function GameActions(loopFnc, clearFnc, interval) {
+function Looper(loopFnc, clearFnc, interval) {
     let id;
     let isEnded = false;
 
@@ -10,4 +10,4 @@ function GameActions(loopFnc, clearFnc, interval) {
     this.isEnded = () => isEnded;
 }
 
-module.exports = GameActions;
+module.exports = Looper;

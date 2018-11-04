@@ -37,7 +37,7 @@ describe('As the game', () => {
         });
         it('should be created at the top center of the board', () => {
             game.init();
-            expect(board.getActivePiece().getRotatingBlock().equals(board.getTopCenterBlock())).to.be.true;
+            expect(board.getActivePiece().getInitialBlock().equals(board.getTopCenterBlock())).to.be.true;
         });
         it('should create a random piece', () => {
             game.init();
@@ -80,7 +80,7 @@ describe('As the game', () => {
         it('should create the new piece in the top center of the board', () => {
             givenInitializedBoardGameWithPiecesBlocked();
             game.tick();
-            expect(game.getBoard().getActivePiece().getRotatingBlock().equals(board.getTopCenterBlock())).to.be.true;
+            expect(game.getBoard().getActivePiece().getInitialBlock().equals(board.getTopCenterBlock())).to.be.true;
         });
     });
 
