@@ -3,7 +3,7 @@ const Game = require('../app/game');
 const Board = require('../app/board');
 const pieceFactory = require('../app/piece_factory');
 const boardRules = require('../app/board_rules');
-const GameActions = require('../app/game_actions');
+const Looper = require('../app/looper');
 const Scorer = require('../app/scorer');
 const Block = require('../app/block');
 const numberOfRows = 24;
@@ -23,7 +23,7 @@ function buildGame() {
 }
 
 function buildGameWith(board, repaintInterval) {
-    return new Game(board, new GameActions(setInterval, clearInterval, repaintInterval), new Scorer());
+    return new Game(board, new Looper(setInterval, clearInterval, repaintInterval), new Scorer());
 }
 
 function mockBoardRules(source) {

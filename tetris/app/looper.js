@@ -2,12 +2,12 @@ function GameActions(loopFnc, clearFnc, interval) {
     let id;
     let isEnded = false;
 
-    this.startLoop = tickFnc => id = loopFnc(tickFnc, interval);
-    this.stopLoop = () => {
+    this.start = tickFnc => id = loopFnc(tickFnc, interval);
+    this.stop = () => {
         clearFnc(id);
         isEnded = true;
     };
-    this.isLoopEnded = () => isEnded;
+    this.isEnded = () => isEnded;
 }
 
 module.exports = GameActions;

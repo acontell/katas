@@ -1,7 +1,7 @@
 const Game = require('../../app/game');
 const Board = require('../../app/board');
-const GameActions = require('../../app/game_actions');
-const CanvasGameActions = require('./canvas_game_actions');
+const Looper = require('../../app/looper');
+const CanvasLooper = require('./canvas_looper');
 const Pencil = require('./pencil');
 const Scorer = require('../../app/scorer');
 const pieceFactory = require('../../app/piece_factory');
@@ -23,9 +23,9 @@ const pencilConf = {
     squareSide: squareSide,
     font: font
 };
-const canvasActions = new CanvasGameActions(new Pencil(buildContext(width, height + scoreOffset), pencilConf));
+const looper = new CanvasLooper(new Pencil(buildContext(width, height + scoreOffset), pencilConf));
 const board = new Board(numberOfRows, numberOfColumns, pieceFactory, boardRules);
-const game = new Game(board, new GameActions(canvasActions.start, canvasActions.cancel, fps), new Scorer());
+const game = new Game(board, new Looper(looper.start, looper.cancel, fps), new Scorer());
 
 addEvents(document, game);
 game.start();
