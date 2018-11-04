@@ -136,27 +136,27 @@ function shapeSeven(initialRow, initialColumn, rotation) {
     return {
         0: [
             new Block(initialRow, initialColumn, true),
-            new Block(initialRow, initialColumn + 1),
-            new Block(initialRow - 1, initialColumn + 1),
-            new Block(initialRow - 2, initialColumn + 1)
+            new Block(initialRow, initialColumn - 1),
+            new Block(initialRow - 1, initialColumn),
+            new Block(initialRow - 2, initialColumn)
         ],
         1: [
             new Block(initialRow, initialColumn, true),
-            new Block(initialRow - 1, initialColumn),
-            new Block(initialRow, initialColumn + 1),
-            new Block(initialRow, initialColumn + 2)
+            new Block(initialRow, initialColumn - 1),
+            new Block(initialRow - 1, initialColumn - 1),
+            new Block(initialRow, initialColumn + 1)
         ],
         2: [
             new Block(initialRow, initialColumn, true),
-            new Block(initialRow + 1, initialColumn),
-            new Block(initialRow + 2, initialColumn),
-            new Block(initialRow + 2, initialColumn + 1)
+            new Block(initialRow - 1, initialColumn),
+            new Block(initialRow - 2, initialColumn),
+            new Block(initialRow - 2, initialColumn + 1)
         ],
         3: [
             new Block(initialRow, initialColumn, true),
             new Block(initialRow, initialColumn - 1),
-            new Block(initialRow, initialColumn - 2),
-            new Block(initialRow + 1, initialColumn)
+            new Block(initialRow, initialColumn + 1),
+            new Block(initialRow + 1, initialColumn + 1)
         ]
     }[rotation % 4];
 }
