@@ -17,9 +17,9 @@ function Piece(blocks, id, rotation) {
     this.getFarLeftBlock = () => _.head(sortByColumnAsc(blocks));
     this.getInitialBlock = () => _.find(blocks, block => block.isInitialBlock());
     this.getRotationState = () => rotationState;
-    this.isEmpty = () => _.size(blocks) === 0;
+    this.isEmpty = () => _.isEmpty(blocks);
     this.clearBlocks = lines => blocks = blocks.filter(block => !_.includes(lines, block.getRow()));
-    this.collapse = rows => blocks.forEach(block => block.goDown(block.getNumberOfRowsBelow(rows)));
+    this.collapseBlocks = rows => blocks.forEach(block => block.goDown(block.getNumberOfRowsBelow(rows)));
 }
 
 module.exports = Piece;

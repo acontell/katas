@@ -86,38 +86,38 @@ describe('As the game', () => {
             expect(board.isFull()).to.be.false;
         });
         it('should update board every tick', () => {
-            mock = sinon.mock(game).expects('update').once();
+            mock = sinon.mock(game).expects('updateBoard').once();
             givenInitAndTick();
             mock.verify();
         });
         it('should be able to clear line and leave pieces incomplete', () => {
             board.addStuckPieces(fixture.generatePiecesFillingOneLine(5));
-            game.update(board.getCompletedLines());
+            game.updateBoard(board.getCompletedLines());
             expect(_.every(board.getStuckPieces(), piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and leave pieces incomplete', () => {
             board.addStuckPieces(fixture.generatePiecesFillingTwoLines());
-            game.update(board.getCompletedLines());
+            game.updateBoard(board.getCompletedLines());
             expect(_.every(board.getStuckPieces(), piece => _.size(piece.getBlocks()) === 2)).to.be.true;
         });
         it('should be able to clear lines and remove pieces without blocks', () => {
             board.addStuckPieces(fixture.generatePiecesFillingTwoLines());
-            game.update(board.getCompletedLines());
+            game.updateBoard(board.getCompletedLines());
             expect(_.size(board.getStuckPieces())).to.equal(8);
         });
         it('should be able to clear pieces completely', () => {
             board.addStuckPieces(fixture.generatePiecesThatFillLines());
-            game.update(board.getCompletedLines());
+            game.updateBoard(board.getCompletedLines());
             expect(_.size(board.getStuckPieces())).to.equal(0);
         });
         it('should move down blocks one unit when some row below has disappeared', () => {
             board.addStuckPieces(fixture.generatePiecesFillingOneLine(2));
-            game.update(board.getCompletedLines());
+            game.updateBoard(board.getCompletedLines());
             expect(_.every(board.getStuckPieces(), piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
         });
         it('should move down blocks n units when n rows below have disappeared', () => {
             board.addStuckPieces(fixture.generatePiecesFillingTwoLines());
-            game.update(board.getCompletedLines());
+            game.updateBoard(board.getCompletedLines());
             expect(_.every(board.getStuckPieces(), piece => piece.getHighestBlock().getRow() === 4)).to.be.true;
         });
         it('should prevent rotation when there is collision with the bottom', () => {

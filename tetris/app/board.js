@@ -29,7 +29,7 @@ function Board(numberOfRows, numberOfColumns, pieceFactory, boardRules) {
     this.getCompletedLines = () => boardRules.getCompletedLines(stuckPieces, numberOfColumns);
     this.clearLines = completedRows => stuckPieces.forEach(piece => piece.clearBlocks(completedRows));
     this.removeEmptyPieces = () => stuckPieces = stuckPieces.filter(piece => !piece.isEmpty());
-    this.collapsePieces = completedRows => stuckPieces.forEach(piece => piece.collapse(completedRows));
+    this.collapsePieces = completedRows => stuckPieces.forEach(piece => piece.collapseBlocks(completedRows));
 }
 
 module.exports = Board;
