@@ -8,17 +8,17 @@ function Piece(blocks, id, rotation) {
 
     this.getBlocks = () => blocks;
     this.getId = () => id;
-    this.moveDown = () => _.forEach(blocks, block => block.moveDown());
-    this.moveRight = () => _.forEach(blocks, block => block.moveRight());
-    this.moveLeft = () => _.forEach(blocks, block => block.moveLeft());
+    this.moveDown = () => blocks.forEach(block => block.moveDown());
+    this.moveRight = () => blocks.forEach(block => block.moveRight());
+    this.moveLeft = () => blocks.forEach(block => block.moveLeft());
     this.getLowestBlock = () => _.last(sortByRowAscColumnDesc(blocks));
     this.getHighestBlock = () => _.head(sortByRowAscColumnDesc(blocks));
     this.getFarRightBlock = () => _.last(sortByColumnAsc(blocks));
     this.getFarLeftBlock = () => _.head(sortByColumnAsc(blocks));
-    this.getInitialBlock = () => _.find(blocks, block => block.isInitialBlock());
+    this.getInitialBlock = () => blocks.find(block => block.isInitialBlock());
     this.getRotationState = () => rotationState;
     this.isEmpty = () => _.isEmpty(blocks);
-    this.clearBlocks = lines => blocks = blocks.filter(block => !_.includes(lines, block.getRow()));
+    this.clearBlocks = lines => blocks = blocks.filter(block => !lines.includes(block.getRow()));
     this.collapseBlocks = rows => blocks.forEach(block => block.goDown(block.getNumberOfRowsBelow(rows)));
 }
 

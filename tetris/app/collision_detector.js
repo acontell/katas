@@ -1,7 +1,7 @@
 let _ = require('lodash');
 
 function isPositionTaken(block, blocks) {
-    return _.some(blocks, aBlock => block.equals(aBlock));
+    return blocks.some(aBlock => block.equals(aBlock));
 }
 
 module.exports = {
