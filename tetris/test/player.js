@@ -75,6 +75,11 @@ describe('As the player', () => {
             let result = boardRules.canMoveRight(pieceFactory.getPiece(0, new Block(3, 5)), pieces, 30, 30);
             expect(result).to.be.true;
         });
+        it('should be able to move down', () => {
+            let oldActivePieceRow = activePiece.getLowestBlock().getRow();
+            game.advance();
+            expect(board.getActivePiece().getLowestBlock().getRow()).to.be.equal(oldActivePieceRow + 1);
+        });
     });
     describe('In order to be better than my friends', () => {
         function givenGameWithPieces(pieces) {
