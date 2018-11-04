@@ -19,7 +19,7 @@ function Piece(blocks, id, rotation) {
     this.getRotationState = () => rotationState;
     this.isEmpty = () => _.size(blocks) === 0;
     this.clearBlocks = lines => blocks = blocks.filter(block => !_.includes(lines, block.getRow()));
-    this.collapse = rows => blocks.forEach(block => block.addRows(block.getNumberOfRowsBelow(rows)));
+    this.collapse = rows => blocks.forEach(block => block.goDown(block.getNumberOfRowsBelow(rows)));
 }
 
 module.exports = Piece;
