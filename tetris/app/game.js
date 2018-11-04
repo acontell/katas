@@ -1,7 +1,7 @@
 function Game(board, looper, scorer) {
     this.getBoard = () => board;
     this.start = () => this.init() && looper.start(this.tick);
-    this.init = () => board.addNewPiece();
+    this.init = () => board.newActivePiece();
     this.tick = () => {
         let completedLines = board.getCompletedLines();
         this.update(completedLines);
@@ -19,7 +19,7 @@ function Game(board, looper, scorer) {
     this.gameOver = () => looper.stop();
     this.keepPlaying = () => {
         board.blockActivePiece();
-        board.addNewPiece();
+        board.newActivePiece();
     };
     this.rotateActivePiece = () => board.canRotatePiece() && board.rotateActivePiece();
     this.moveRight = () => board.canMoveRight() && board.moveRight();

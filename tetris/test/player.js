@@ -83,7 +83,7 @@ describe('As the player', () => {
     });
     describe('In order to be better than my friends', () => {
         function givenGameWithPieces(pieces) {
-            board.addPieces(pieces);
+            board.addStuckPieces(pieces);
             game.tick();
         }
 
@@ -106,7 +106,7 @@ describe('As the player', () => {
         });
         it('should accumulate score between ticks', () => {
             givenGameWithPieces(fixture.generatePiecesThatFillLines());
-            board.addPieces(fixture.generatePiecesThatFillLines());
+            board.addStuckPieces(fixture.generatePiecesThatFillLines());
             game.tick();
             expect(game.getScore()).to.be.equal(2400);
         });

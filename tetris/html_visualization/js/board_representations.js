@@ -13,7 +13,7 @@ function getBlocksInRange(blocks, matrix) {
 module.exports = {
     toMatrix: (board) => {
         let matrix = filledMatrix(board.getNumberOfRows(), board.getNumberOfColumns(), 'empty');
-        board.getPieces().concat(board.getActivePiece()).forEach(piece => addToMatrix(piece, matrix));
+        board.getStuckPieces().concat(board.getActivePiece()).forEach(piece => addToMatrix(piece, matrix));
         return matrix;
     }
 };

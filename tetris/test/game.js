@@ -26,7 +26,7 @@ describe('As the game', () => {
             expect(board.getNumberOfRows()).to.equal(numberOfRows);
         });
         it('should create an empty board', () => {
-            expect(board.getNumberOfPieces()).to.equal(0);
+            expect(_.size(board.getStuckPieces())).to.equal(0);
         });
     });
 
@@ -60,7 +60,7 @@ describe('As the game', () => {
 
         function givenInitializedFullBoardGameWithExpectations() {
             givenBoardGameWithPiecesBlocked();
-            mockBoard = sinon.mock(board).expects('addNewPiece').once();
+            mockBoard = sinon.mock(board).expects('newActivePiece').once();
             game.init();
             activePiece = game.getBoard().getActivePiece();
             board.isBoardFull = _.constant(true);
