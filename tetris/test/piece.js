@@ -89,10 +89,10 @@ const expectedRotations = {
     },
     // half H shape
     2: {
-        0: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 5}, {row: 4, column: 6}],
-        1: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 7, column: 5}, {row: 6, column: 4}],
-        2: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 7, column: 7}, {row: 5, column: 7}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 5, column: 6}, {row: 6, column: 7}]
+        0: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 7}, {row: 4, column: 6}],
+        1: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 5}, {row: 5, column: 7}],
+        2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 5, column: 5}, {row: 4, column: 6}],
+        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 7}, {row: 5, column: 6}]
     },
     // kind of S
     3: {
