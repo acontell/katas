@@ -37,7 +37,7 @@ describe('As the game', () => {
         });
         it('should be created at the top center of the board', () => {
             game.init();
-            expect(board.getActivePiece().getLowestBlock().equals(board.getTopCenterBlock())).to.be.true;
+            expect(board.getActivePiece().getRotatingBlock().equals(board.getTopCenterBlock())).to.be.true;
         });
         it('should create a random piece', () => {
             game.init();
