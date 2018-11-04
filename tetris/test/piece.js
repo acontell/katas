@@ -113,7 +113,7 @@ const expectedRotations = {
         0: [{row: 6, column: 6}, {row: 6, column: 7}, {row: 5, column: 6}, {row: 4, column: 6}],
         1: [{row: 6, column: 6}, {row: 7, column: 6}, {row: 6, column: 7}, {row: 6, column: 8}],
         2: [{row: 6, column: 6}, {row: 5, column: 6}, {row: 4, column: 6}, {row: 4, column: 5}],
-        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 4}, {row: 5, column: 6}]
+        3: [{row: 6, column: 6}, {row: 6, column: 5}, {row: 6, column: 7}, {row: 5, column: 7}]
     },
     // inverted L
     6: {
