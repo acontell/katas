@@ -6,11 +6,15 @@ const scoreOffset = 45;
 const height = numberOfRows * squareSide + scoreOffset;
 const emptyCellKey = 'empty';
 const pencilConf = {
-    scoreOffset: scoreOffset,
-    scoreStartingPoint: 10,
+    separatingLineYPoint: height - scoreOffset,
+    scoreY: height - 10,
+    scoreX: 5,
+    gameOverX: width / 7,
+    gameOverY: height / 2,
     squareSide: squareSide,
     font: '30px Arial',
     scoreMessage: 'Score: ',
+    gameOverMessage: 'GAME OVER',
     colors: {
         0: '#0000cc',
         1: '#cc0000',
@@ -31,10 +35,17 @@ module.exports = {
     height: height,
     emptyCellKey: emptyCellKey,
     pencilConf: pencilConf,
-    fps: 300,
+    fps: 10,
+    canvasId: 'canvas',
     scoreConf: {
         linePoints: 100,
         tetris: 800,
         backToBack: 1200
+    },
+    keys: {
+        37: 'moveLeft',//Left
+        39: 'moveRight',// Right
+        40: 'moveDown',// Down,
+        90: 'rotate'// z
     }
 };

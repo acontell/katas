@@ -3,12 +3,16 @@ function Pencil(ctx, conf) {
     let height = canvas.height;
     let width = canvas.width;
     let squareSide = conf.squareSide;
-    let separatingLineYPoint = height - conf.scoreOffset;
-    let scoreYPoint = height - conf.scoreStartingPoint;
+    let separatingLineYPoint = conf.separatingLineYPoint;
+    let scoreY = conf.scoreY;
+    let scoreX = conf.scoreX;
     let font = conf.font;
     let colors = conf.colors;
     let separatingLineColor = colors.separatingLineColor;
     let scoreMessage = conf.scoreMessage;
+    let gameOverMessage = conf.gameOverMessage;
+    let gameOverX = conf.gameOverX;
+    let gameOverY = conf.gameOverY;
 
     this.clear = () => ctx.clearRect(0, 0, width, height);
     this.drawMatrix = matrix => {
@@ -27,10 +31,13 @@ function Pencil(ctx, conf) {
         ctx.lineTo(width, separatingLineYPoint);
         ctx.stroke();
     };
-    this.drawScore = score => {
+    this.drawScore = score => fillText(scoreMessage + score, scoreX, scoreY);
+    this.drawGameOver = () => fillText(gameOverMessage, gameOverX, gameOverY);
+
+    function fillText(text, x, y) {
         ctx.font = font;
-        ctx.strokeText(scoreMessage + score, 0, scoreYPoint);
-    };
+        ctx.fillText(text, x, y);
+    }
 }
 
 module.exports = Pencil;

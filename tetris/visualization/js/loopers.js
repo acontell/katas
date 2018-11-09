@@ -3,10 +3,10 @@ function CanvasLooper(pencil, converter) {
     let animationId;
     let keepGoing = true;
 
-    this.cancel = () => {
-        console.log('GAME OVER!');
+    this.stop = () => {
         keepGoing = false;
         cancelAnimationFrame(animationId);
+        requestAnimationFrame(pencil.drawGameOver);
     };
 
     this.start = (tickFnc, interval) => {
