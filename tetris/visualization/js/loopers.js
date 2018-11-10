@@ -1,5 +1,8 @@
-function CanvasLooper(pencil, converter) {
+function CanvasLooper(window, pencil, converter) {
     const convert = converter.convert;
+    const cancelAnimationFrame = window.cancelAnimationFrame;
+    const requestAnimationFrame = window.requestAnimationFrame;
+    const setTimeout = window.setTimeout;
     let animationId;
     let keepGoing = true;
 
@@ -11,16 +14,17 @@ function CanvasLooper(pencil, converter) {
 
     this.start = (tickFnc, interval) => {
         function paint(game) {
-            pencil.clear();
-            pencil.drawMatrix(convert(game.getBoard()));
-            pencil.drawSeparatingLine();
-            pencil.drawScore(game.getScore());
+            pencil.drawGame(convert(game.getBoard()), game.getScore());
+        }
+
+        function waitAndLoop() {
+            setTimeout(() => animationId = requestAnimationFrame(mainLoop), interval);
         }
 
         function mainLoop() {
             if (keepGoing) {
                 paint(tickFnc());
-                setTimeout(() => animationId = requestAnimationFrame(mainLoop), interval);
+                waitAndLoop();
             }
         }
 

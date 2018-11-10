@@ -1,6 +1,6 @@
-module.exports = (width, height, canvasId) => {
-    const ctx = document.getElementById(canvasId).getContext('2d');
-    ctx.canvas.width = width;
-    ctx.canvas.height = height;
+module.exports = (document, conf) => {
+    const ctx = document.getElementById(conf.canvasId).getContext('2d');
+    ctx.canvas.width = conf.width;
+    ctx.canvas.height = conf.height;
     return ctx;
 };

@@ -13,7 +13,7 @@ const noRotateMsg = 'no rotation';
 let mockBoardRules;
 let mock;
 
-beforeEach('Setting up things', () => {
+beforeEach('Set up', () => {
     game = fixture.buildGame();
     board = game.getBoard();
     activePiece = pieceFactory.getRandomPiece(initialBlock);

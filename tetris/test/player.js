@@ -9,7 +9,7 @@ let game;
 let board;
 let activePiece;
 
-beforeEach('Setting up things', () => {
+beforeEach('Set up', () => {
     game = fixture.buildGame();
     board = game.getBoard();
     game.init();

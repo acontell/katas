@@ -11,7 +11,7 @@ let board;
 let activePiece;
 let mockBoard;
 
-beforeEach('Setting up things', () => {
+beforeEach('Set up', () => {
     game = fixture.buildGame();
     board = game.getBoard();
     activePiece = board.getActivePiece();

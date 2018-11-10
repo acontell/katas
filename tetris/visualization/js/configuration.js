@@ -35,7 +35,7 @@ module.exports = {
     height: height,
     emptyCellKey: emptyCellKey,
     pencilConf: pencilConf,
-    fps: 10,
+    fps: 200,
     canvasId: 'canvas',
     scoreConf: {
         linePoints: 100,

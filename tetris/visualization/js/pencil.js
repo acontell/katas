@@ -14,8 +14,25 @@ function Pencil(ctx, conf) {
     let gameOverX = conf.gameOverX;
     let gameOverY = conf.gameOverY;
 
-    this.clear = () => ctx.clearRect(0, 0, width, height);
-    this.drawMatrix = matrix => {
+    this.drawGameOver = () => fillText(gameOverMessage, gameOverX, gameOverY);
+
+    function fillText(text, x, y) {
+        ctx.font = font;
+        ctx.fillText(text, x, y);
+    }
+
+    this.drawGame = (matrix, score) => {
+        clear();
+        drawMatrix(matrix);
+        drawSeparatingLine();
+        drawScore(score);
+    };
+
+    function clear() {
+        ctx.clearRect(0, 0, width, height);
+    }
+
+    function drawMatrix(matrix) {
         matrix.forEach((row, rowIdx) =>
             row.forEach((column, columnIdx) => {
                     ctx.fillStyle = colors[matrix[rowIdx][columnIdx]];
@@ -23,20 +40,18 @@ function Pencil(ctx, conf) {
                 }
             )
         );
-    };
-    this.drawSeparatingLine = () => {
+    }
+
+    function drawSeparatingLine() {
         ctx.fillStyle = separatingLineColor;
         ctx.beginPath();
         ctx.moveTo(0, separatingLineYPoint);
         ctx.lineTo(width, separatingLineYPoint);
         ctx.stroke();
-    };
-    this.drawScore = score => fillText(scoreMessage + score, scoreX, scoreY);
-    this.drawGameOver = () => fillText(gameOverMessage, gameOverX, gameOverY);
+    }
 
-    function fillText(text, x, y) {
-        ctx.font = font;
-        ctx.fillText(text, x, y);
+    function drawScore(score) {
+        fillText(scoreMessage + score, scoreX, scoreY);
     }
 }
 
