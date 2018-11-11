@@ -14,4 +14,4 @@ If you want to try it, you'll need to generate the javascript for index.html fir
 
 - npm run-script build
 
-Once you've done it, just open index.html in your favorite browser and enjoy.
+Once you've done it, just open index.html in your favourite browser and enjoy.
