@@ -149,17 +149,17 @@ describe('As the player', () => {
                 }, 250);
             }
 
-            it('should paint game over with font from conf', () => {
+            it('should paint "game over" with font from conf', () => {
                 new Pencil(mockCtx, conf).drawGameOver();
                 expect(mockCtx.font).to.be.equal(conf.font);
             });
 
-            it('should paint game over with font from conf', () => {
+            it('should paint "game over" with font from conf', () => {
                 new Pencil(mockCtx, conf).drawGameOver();
                 expect(mockCtx.font).to.be.equal(conf.font);
             });
 
-            it('should paint game over with fillText in coordinates from conf', () => {
+            it('should paint "game over" with fillText in coordinates from conf', () => {
                 let mock = sinon.mock(mockCtx).expects('fillText').withArgs(conf.gameOverMessage, conf.gameOverX, conf.gameOverY).once();
                 new Pencil(mockCtx, conf).drawGameOver();
                 mock.verify();
