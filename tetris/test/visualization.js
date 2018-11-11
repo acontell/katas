@@ -1,11 +1,11 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const buildContext = require('../visualization/js/context');
-const MatrixConverter = require('../visualization/js/converters');
-const CanvasLooper = require('../visualization/js/loopers');
-const Pencil = require('../visualization/js/pencil');
-const addEvents = require('../visualization/js/events');
+const buildContext = require('../ui/js/context');
+const MatrixConverter = require('../ui/js/matrix_converter');
+const CanvasLooper = require('../ui/js/canvas_looper');
+const Pencil = require('../ui/js/pencil');
+const addEvents = require('../ui/js/events');
 const defaultValue = -1;
 const converter = new MatrixConverter(defaultValue);
 const conf = {
@@ -64,8 +64,7 @@ beforeEach('Set up', () => {
     mockBoard = {
         getNumberOfRows: _.constant(conf.numberOfRows),
         getNumberOfColumns: _.constant(conf.numberOfColumns),
-        getStuckPieces: _.constant([mockStuckPiece]),
-        getActivePiece: _.constant(mockActivePiece)
+        getAllPieces: _.constant([mockStuckPiece, mockActivePiece])
     };
     mockWindow = {
         cancelAnimationFrame: _.noop,

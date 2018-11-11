@@ -1,5 +1,5 @@
 const path = require('path');
-const visualizationPath = './visualization';
+const visualizationPath = './ui';
 
 module.exports = {
     entry: visualizationPath + '/js/main.js',
