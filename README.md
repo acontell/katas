@@ -15,6 +15,7 @@ Curently done Katas:
  7. Alphaber-Cipher (Scala) - my first Scala application
  8. Weather-kata (Java) - Codium team from Barcelona introduced us to this Kata which main purpose was dealing with legacy code
  9. Tetris-kata (Javascript)
+ 10. Conway's game of life, code retreat Mallorca 2018 (Javascript+Haskell)
 
  Not Katas but just for fun and using TDD
 
