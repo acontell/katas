@@ -17,6 +17,18 @@ spec = do
         firstUniverse <- initialUniverse 50
         (all (== 50) (map length firstUniverse)) `shouldBe` True
     it "returns different initial state everytime it's called" $ do
-      firstUniverse <- initialUniverse 50
-      secondUniverse <- initialUniverse 50
-      firstUniverse `shouldNotBe` secondUniverse
+        firstUniverse <- initialUniverse 50
+        secondUniverse <- initialUniverse 50
+        firstUniverse `shouldNotBe` secondUniverse
+--      1. Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
+--      2. Any live cell with more than three live neighbours dies, as if by overcrowding.
+--      3. Any live cell with two or three live neighbours lives on to the next generation.
+--      4. Any dead cell with exactly three live neighbours becomes a live cell.
+--    it "returns dead when alive and less than two alive neighbours" $ do
+--        firstUniverse `shouldBe` secondUniverse
+--    it "returns dead when alive and more than three alive neighbours" $ do
+--        firstUniverse `shouldBe` secondUniverse
+--    it "returns alive when alive and two or three alive neighbours" $ do
+--        firstUniverse `shouldBe` secondUniverse
+--    it "returns alive when dead and exactly three alive neighbours" $ do
+--        firstUniverse `shouldBe` secondUniverse
