@@ -35,33 +35,25 @@ conway size = do
                 return (iterate evolve firstStage)
 
 evolve :: Universe -> Universe
-evolve universe = [buildRow universe row size | row <- [0..size]]
+evolve universe = [[getNewState universe (column,row) | column <- [0..size]] | row <- [0..size]]
   where
     size = (length universe) - 1
 
-buildRow :: Universe -> Int -> Int -> [Cell]
-buildRow universe row size = [newCellState column | column <- [0..size]]
+getNewState :: Universe -> CellPosition -> Cell
+getNewState universe cellPosition
+  | cell == Alive && (aliveNeighbours < 2 || aliveNeighbours > 3) = Dead
+  | cell == Dead && aliveNeighbours == 3 = Alive
+  | otherwise = cell
   where
-    newCellState column = getNewState (getCell universe (row, column)) (getNeighbours universe (row, column))
+    cell = getCell universe cellPosition
+    aliveNeighbours = (length . filter (== Alive)) (getNeighbours universe cellPosition)
 
 getCell :: Universe -> CellPosition -> Cell
 getCell universe (row, column)
-  | isValidPosition = (universe!!row)!!column
+  | betweenBounds row && betweenBounds column = (universe!!row)!!column
   | otherwise = Dead
   where
-    size = length universe
-    isValidPosition = row >= 0 && row < size && column >= 0 && column < size
+    betweenBounds x = x >= 0 && x < length universe
 
 getNeighbours :: Universe -> CellPosition -> Neighbourhood
 getNeighbours universe (row, column) = map (getCell universe) [(row-1, column-1),(row-1, column),(row-1, column+1),(row, column-1),(row, column+1),(row+1, column-1),(row+1, column),(row+1, column+1)]
-
-getNewState :: Cell -> Neighbourhood -> Cell
-getNewState cell neighbours
-  | cell == Alive && (alive < 2 || alive > 3) = Dead
-  | cell == Dead && alive == 3 = Alive
-  | otherwise = cell
-  where
-    alive = numberOfAliveCells neighbours
-
-numberOfAliveCells :: Neighbourhood -> Int
-numberOfAliveCells = length . filter (== Alive)

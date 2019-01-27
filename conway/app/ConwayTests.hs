@@ -25,14 +25,14 @@ spec = do
 --      3. Any live cell with two or three live neighbours lives on to the next generation.
 --      4. Any dead cell with exactly three live neighbours becomes a live cell.
     it "returns dead when alive and less than two alive neighbours" $ do
-        getNewState Alive [Dead,Dead,Alive,Dead,Dead,Dead,Dead,Dead] `shouldBe` Dead
+        getNewState [[Dead, Alive, Dead],[Dead, Alive, Dead],[Dead, Dead, Dead]] (1,1) `shouldBe` Dead
     it "returns dead when alive and more than three alive neighbours" $ do
-        getNewState Alive [Alive,Dead,Alive,Dead,Dead,Alive,Dead,Alive] `shouldBe` Dead
+        getNewState [[Alive, Dead, Alive],[Dead, Alive, Dead],[Alive, Dead, Alive]] (1,1) `shouldBe` Dead
     it "returns alive when alive and exactly two alive neighbours" $ do
-        getNewState Alive [Dead,Dead,Alive,Dead,Dead,Alive,Dead,Dead] `shouldBe` Alive
+        getNewState [[Dead, Dead, Dead],[Dead, Alive, Dead],[Dead, Alive, Alive]] (1,1) `shouldBe` Alive
     it "returns alive when alive and exactly three alive neighbours" $ do
-        getNewState Alive [Dead,Alive,Dead,Alive,Dead,Alive,Dead,Dead] `shouldBe` Alive
+        getNewState [[Dead, Alive, Dead],[Alive, Alive, Alive],[Dead, Dead, Dead]] (1,1) `shouldBe` Alive
     it "returns alive when dead and exactly three alive neighbours" $ do
-        getNewState Dead [Dead,Dead,Alive,Dead,Dead,Alive,Dead,Alive] `shouldBe` Alive
+        getNewState [[Dead, Alive, Dead],[Dead, Dead, Dead],[Alive, Dead, Alive]] (1,1) `shouldBe` Alive
     it "returns an evolved version of the universe" $ do
         evolve [[Dead, Dead, Dead],[Dead, Alive, Dead],[Dead, Dead, Dead]] `shouldBe` [[Dead, Dead, Dead],[Dead, Dead, Dead],[Dead, Dead, Dead]]
