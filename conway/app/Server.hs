@@ -11,8 +11,8 @@ import qualified Network.WebSockets as WS
 import Conway
 
 -- Conway's universe size. Bonus: could be customized by the client sending the size in headers or request params.
-size :: Int
-size = 50
+universeSize :: Int
+universeSize = 50
 
 seconds :: Int -> Int
 seconds = (* 1000000)
@@ -31,7 +31,7 @@ application :: WS.ServerApp
 application pending = do
     conn <- WS.acceptRequest pending
     WS.forkPingThread conn 30
-    universe <- conway size
+    universe <- conway universeSize
     send conn universe
 
 send :: WS.Connection -> [Universe] -> IO ()
