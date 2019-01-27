@@ -3,7 +3,7 @@ module Conway where
 import Control.Monad (replicateM)
 import System.Random (randomRIO)
 
--- DATA STRUCTURES AND TYPES
+-- NEW TYPES AND TYPE ALIASES
 data Cell = Dead | Alive deriving (Show, Eq)
 type Size = Int
 type Universe = [[Cell]]
