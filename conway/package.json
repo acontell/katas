@@ -1,7 +1,7 @@
 {
-  "name": "tetris",
+  "name": "game_of_life",
   "version": "1.0.0",
-  "description": "Tetris kata",
+  "description": "Conway's game of life kata",
   "main": "game.js",
   "directories": {
     "test": "test"
