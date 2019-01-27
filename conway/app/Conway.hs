@@ -5,6 +5,7 @@ import Control.Monad (replicateM)
 
 data Cell = Dead | Alive deriving (Show, Eq)
 type Size = Int
+type CellPosition = (Int, Int)
 type Neighbourhood = [Cell]
 type Universe = [[Cell]]
 
@@ -34,7 +35,25 @@ conway size = do
                 return (iterate evolve firstStage)
 
 evolve :: Universe -> Universe
-evolve = id
+evolve universe = [buildRow universe row size | row <- [0..size]]
+  where
+    size = (length universe) - 1
+
+buildRow :: Universe -> Int -> Int -> [Cell]
+buildRow universe row size = [newCellState column | column <- [0..size]]
+  where
+    newCellState column = getNewState (getCell universe (row, column)) (getNeighbours universe (row, column))
+
+getCell :: Universe -> CellPosition -> Cell
+getCell universe (row, column)
+  | isValidPosition = (universe!!row)!!column
+  | otherwise = Dead
+  where
+    size = length universe
+    isValidPosition = row >= 0 && row < size && column >= 0 && column < size
+
+getNeighbours :: Universe -> CellPosition -> Neighbourhood
+getNeighbours universe (row, column) = map (getCell universe) [(row-1, column-1),(row-1, column),(row-1, column+1),(row, column-1),(row, column+1),(row+1, column-1),(row+1, column),(row+1, column+1)]
 
 getNewState :: Cell -> Neighbourhood -> Cell
 getNewState cell neighbours

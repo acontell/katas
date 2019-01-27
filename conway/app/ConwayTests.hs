@@ -34,3 +34,5 @@ spec = do
         getNewState Alive [Dead,Alive,Dead,Alive,Dead,Alive,Dead,Dead] `shouldBe` Alive
     it "returns alive when dead and exactly three alive neighbours" $ do
         getNewState Dead [Dead,Dead,Alive,Dead,Dead,Alive,Dead,Alive] `shouldBe` Alive
+    it "returns an evolved version of the universe" $ do
+        evolve [[Dead, Dead, Dead],[Dead, Alive, Dead],[Dead, Dead, Dead]] `shouldBe` [[Dead, Dead, Dead],[Dead, Dead, Dead],[Dead, Dead, Dead]]
