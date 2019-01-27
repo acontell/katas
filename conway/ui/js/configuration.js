@@ -6,8 +6,8 @@ module.exports = {
     pencilConf: {
         squareSide: 10,
         colors: {
-            0: '#FFFFFF',
-            1: '#9999FF'
+            'Dead': '#FFFFFF',
+            'Alive': '#9999FF'
         }
     }
 };

@@ -3,16 +3,9 @@ module Conway where
 import System.Random (randomRIO)
 import Control.Monad (replicateM)
 
-data Cell = Dead | Alive
-instance Show Cell where
-    show Dead = show 0
-    show Alive = show 1
-instance Eq Cell where
-    (==) Dead Dead = True
-    (==) Alive Alive = True
-    (==) _ _ = False
-
+data Cell = Dead | Alive deriving (Show, Eq)
 type Size = Int
+type Neighbourhood = [Cell]
 type Universe = [[Cell]]
 
 initialUniverse :: Size -> IO (Universe)
@@ -42,3 +35,14 @@ conway size = do
 
 evolve :: Universe -> Universe
 evolve = id
+
+getNewState :: Cell -> Neighbourhood -> Cell
+getNewState cell neighbours
+  | cell == Alive && (alive < 2 || alive > 3) = Dead
+  | cell == Dead && alive == 3 = Alive
+  | otherwise = cell
+  where
+    alive = numberOfAliveCells neighbours
+
+numberOfAliveCells :: Neighbourhood -> Int
+numberOfAliveCells = length . filter (== Alive)

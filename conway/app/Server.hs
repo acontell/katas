@@ -2,7 +2,7 @@
 
 module Main where
 
-import Data.Text
+import Data.Text hiding (map)
 import Data.Functor
 import Control.Concurrent (threadDelay)
 
@@ -41,4 +41,4 @@ send conn (state:states) = do
     send conn states
 
 toText :: Universe -> Text
-toText = pack . show
+toText = pack . show . (map (map show))

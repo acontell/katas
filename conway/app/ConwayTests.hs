@@ -24,11 +24,13 @@ spec = do
 --      2. Any live cell with more than three live neighbours dies, as if by overcrowding.
 --      3. Any live cell with two or three live neighbours lives on to the next generation.
 --      4. Any dead cell with exactly three live neighbours becomes a live cell.
---    it "returns dead when alive and less than two alive neighbours" $ do
---        firstUniverse `shouldBe` secondUniverse
---    it "returns dead when alive and more than three alive neighbours" $ do
---        firstUniverse `shouldBe` secondUniverse
---    it "returns alive when alive and two or three alive neighbours" $ do
---        firstUniverse `shouldBe` secondUniverse
---    it "returns alive when dead and exactly three alive neighbours" $ do
---        firstUniverse `shouldBe` secondUniverse
+    it "returns dead when alive and less than two alive neighbours" $ do
+        getNewState Alive [Dead,Dead,Alive,Dead,Dead,Dead,Dead,Dead] `shouldBe` Dead
+    it "returns dead when alive and more than three alive neighbours" $ do
+        getNewState Alive [Alive,Dead,Alive,Dead,Dead,Alive,Dead,Alive] `shouldBe` Dead
+    it "returns alive when alive and exactly two alive neighbours" $ do
+        getNewState Alive [Dead,Dead,Alive,Dead,Dead,Alive,Dead,Dead] `shouldBe` Alive
+    it "returns alive when alive and exactly three alive neighbours" $ do
+        getNewState Alive [Dead,Alive,Dead,Alive,Dead,Alive,Dead,Dead] `shouldBe` Alive
+    it "returns alive when dead and exactly three alive neighbours" $ do
+        getNewState Dead [Dead,Dead,Alive,Dead,Dead,Alive,Dead,Alive] `shouldBe` Alive
