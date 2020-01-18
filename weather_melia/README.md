@@ -53,4 +53,4 @@ La solución se puede subir a un repositorio de código público como [github](h
         - Pasar tests
         - Commitear
     - until finish
-    - Como nota decir que tenía pensado enviar un zip y tenía un repo en local. Tras leer el README y ver que se podía pasar un enlace a repo, inicialicé repo en Github subiendo todo el código de golpe, con lo que se perdió histórico de commits. A partir de ahí, no presté mucha atención a los mensajes de los commits que pusheaba (un poco ya por prisas).
+    - Como nota decir que tenía pensado enviar un zip y tenía un repo en local. Tras leer el README y ver que se podía pasar un enlace a repo, inicialicé repo en Github subiendo todo el código de golpe, con lo que se perdió histórico de commits.
