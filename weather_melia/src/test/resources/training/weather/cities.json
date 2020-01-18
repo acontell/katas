@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Madrid",
+    "location_type": "City",
+    "woeid": 766273,
+    "latt_long": "40.420300,-3.705770"
+  },
+  {
+    "title": "Madrid_1",
+    "location_type": "City",
+    "woeid": 766274,
+    "latt_long": "40.420300,-3.705770"
+  }
+]
