@@ -76,4 +76,10 @@ public class WeatherForecastIntegrationTest {
         final String weatherState = this.weatherForecast.getCityWeather(CITY_NAME, DATE_NOT_IN_RANGE);
         assertEquals(weatherState, NO_WEATHER_STATE);
     }
+
+    @Test(expected = IOException.class)
+    public void shouldPropagateIoException() throws IOException {
+        given(this.httpClient.fetch(CITY_URL)).willThrow(new IOException());
+        this.weatherForecast.getCityWeather(CITY_NAME, DATE_IN_RANGE);
+    }
 }
