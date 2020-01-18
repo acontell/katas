@@ -12,14 +12,14 @@ import java.io.IOException;
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static training.weather.WeatherForecastFixture.CITY;
+import static training.weather.WeatherForecastFixture.CITY_1;
+import static training.weather.WeatherForecastFixture.CITY_NAME;
 import static training.weather.services.CityService.URL_TEMPLATE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CityServiceTest {
-    private static final String CITY_NAME = "asdf";
-    private static final String URL = format(URL_TEMPLATE, CITY_NAME);
-    private static final City CITY = new City("123");
-    private static final City CITY_1 = new City("321");
+    private static final String CITY_FETCH_URL = format(URL_TEMPLATE, CITY_NAME);
 
     @Mock
     private RestTemplate restTemplate;
@@ -27,7 +27,7 @@ public class CityServiceTest {
     @Test
     public void shouldReturnInformationFromFirstCity() throws IOException {
         final CityService cityService = new CityService(this.restTemplate);
-        given(this.restTemplate.getForObject(URL, City[].class)).willReturn(new City[]{CITY, CITY_1});
+        given(this.restTemplate.getForObject(CITY_FETCH_URL, City[].class)).willReturn(new City[]{CITY, CITY_1});
         assertEquals(cityService.getCity(CITY_NAME), CITY);
     }
 }

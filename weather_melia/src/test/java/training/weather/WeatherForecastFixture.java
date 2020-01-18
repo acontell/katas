@@ -12,13 +12,23 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import static java.time.ZoneId.systemDefault;
 import static java.util.Collections.singletonList;
 
 public class WeatherForecastFixture {
+    public static final LocalDate LOCAL_DATE_NOW = LocalDate.now();
+    public static final Date DATE_NOW = new Date();
+    public static final LocalDate DATE_NOW_LOCAL_DATE = DATE_NOW.toInstant()
+            .atZone(systemDefault())
+            .toLocalDate();
+    public static final String DATE_STRING = "12-01-2020";
     public static final String FETCH_GET_URL = "http://www.google.es/";
     public static final String FETCH_GET_RESULT = "hola";
     public static final String CITY_WOEID = "123";
+    public static final String CITY_WOEID_1 = "321";
     public static final City CITY = new City(CITY_WOEID);
+    public static final City CITY_1 = new City(CITY_WOEID_1);
+    public static final String CITY_NAME = "Madrid";
     public static final String WEATHER_STATE_NAME = "123";
     public static final LocalDate LOCAL_DATE = LocalDate.now();
     public static final Prediction PREDICTION = new Prediction(WEATHER_STATE_NAME, LOCAL_DATE);
