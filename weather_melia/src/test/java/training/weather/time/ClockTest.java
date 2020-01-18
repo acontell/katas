@@ -15,8 +15,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static training.weather.WeatherForecastFixture.DATE_NOW;
 import static training.weather.WeatherForecastFixture.DATE_NOW_LOCAL_DATE;
-import static training.weather.WeatherForecastFixture.DATE_STRING;
-import static training.weather.WeatherForecastFixture.LOCAL_DATE_NOW;
+import static training.weather.WeatherForecastFixture.DATE_STRING_FROM_TERMINAL;
+import static training.weather.WeatherForecastFixture.LOCAL_DATE;
 import static training.weather.WeatherForecastFixture.getDate;
 import static training.weather.time.Clock.DATE_FORMAT;
 
@@ -27,7 +27,7 @@ public class ClockTest {
     @Before
     public void setUp() {
         this.clock = spy(new Clock());
-        doReturn(LOCAL_DATE_NOW).when(this.clock).now();
+        doReturn(LOCAL_DATE).when(this.clock).now();
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ClockTest {
     @Test
     public void should_return_now_when_date_is_null() {
         final LocalDate actual = this.clock.getLocalDateOrNow(null);
-        assertEquals(LOCAL_DATE_NOW, actual);
+        assertEquals(LOCAL_DATE, actual);
     }
 
     @Test
@@ -50,44 +50,44 @@ public class ClockTest {
 
     @Test
     public void should_return_false_when_date_is_ahead_offset() {
-        final boolean actual = this.clock.isDateBetweenRange(LOCAL_DATE_NOW.plusDays(OFFSET_IN_DAYS + 1), OFFSET_IN_DAYS);
+        final boolean actual = this.clock.isDateBetweenRange(LOCAL_DATE.plusDays(OFFSET_IN_DAYS + 1), OFFSET_IN_DAYS);
         assertFalse(actual);
     }
 
     @Test
     public void should_return_false_when_date_is_equal_to_offset() {
-        final boolean actual = this.clock.isDateBetweenRange(LOCAL_DATE_NOW.plusDays(OFFSET_IN_DAYS), OFFSET_IN_DAYS);
+        final boolean actual = this.clock.isDateBetweenRange(LOCAL_DATE.plusDays(OFFSET_IN_DAYS), OFFSET_IN_DAYS);
         assertFalse(actual);
     }
 
     @Test
     public void should_return_true_when_date_is_before_to_offset() {
-        final boolean actual = this.clock.isDateBetweenRange(LOCAL_DATE_NOW.plusDays(OFFSET_IN_DAYS - 1), OFFSET_IN_DAYS);
+        final boolean actual = this.clock.isDateBetweenRange(LOCAL_DATE.plusDays(OFFSET_IN_DAYS - 1), OFFSET_IN_DAYS);
         assertTrue(actual);
     }
 
     @Test
     public void should_return_true_when_same_date() {
-        final boolean actual = this.clock.isSameDate(LOCAL_DATE_NOW, LOCAL_DATE_NOW);
+        final boolean actual = this.clock.isSameDate(LOCAL_DATE, LOCAL_DATE);
         assertTrue(actual);
     }
 
     @Test
     public void should_return_false_when_date_is_bigger() {
-        final boolean actual = this.clock.isSameDate(LOCAL_DATE_NOW, LOCAL_DATE_NOW.plusDays(1));
+        final boolean actual = this.clock.isSameDate(LOCAL_DATE, LOCAL_DATE.plusDays(1));
         assertFalse(actual);
     }
 
     @Test
     public void should_return_false_when_date_is_smaller() {
-        final boolean actual = this.clock.isSameDate(LOCAL_DATE_NOW, LOCAL_DATE_NOW.minusDays(1));
+        final boolean actual = this.clock.isSameDate(LOCAL_DATE, LOCAL_DATE.minusDays(1));
         assertFalse(actual);
     }
 
     @Test
     public void should_parse_date_from_string() {
-        final Date actual = this.clock.stringToDate(DATE_STRING);
-        assertEquals(getDate(DATE_STRING, DATE_FORMAT), actual);
+        final Date actual = this.clock.stringToDate(DATE_STRING_FROM_TERMINAL);
+        assertEquals(getDate(DATE_STRING_FROM_TERMINAL, DATE_FORMAT), actual);
     }
 
     @Test(expected = IllegalStateException.class)

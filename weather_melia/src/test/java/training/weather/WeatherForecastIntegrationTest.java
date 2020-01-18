@@ -13,17 +13,20 @@ import training.weather.io.HttpClient;
 import training.weather.io.RestTemplate;
 import training.weather.services.CityService;
 import training.weather.services.ConsolidatedWeatherService;
+import training.weather.services.WeatherForecast;
 import training.weather.time.Clock;
 
 import java.io.IOException;
-import java.util.Date;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static training.weather.WeatherForecastFixture.CITY_NAME;
 import static training.weather.WeatherForecastFixture.CITY_WOEID;
-import static training.weather.WeatherForecastFixture.getDate;
+import static training.weather.WeatherForecastFixture.DATE_IN_RANGE;
+import static training.weather.WeatherForecastFixture.DATE_IN_RANGE_NOT_FOUND;
+import static training.weather.WeatherForecastFixture.DATE_NOT_IN_RANGE;
+import static training.weather.WeatherForecastFixture.PREDICTION_FOR_DATE_IN_RANGE;
 import static training.weather.WeatherForecastFixture.getResourceAsString;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,10 +34,6 @@ public class WeatherForecastIntegrationTest {
     private static final String NO_WEATHER_STATE = "";
     private static final String CITY_URL = format("https://www.metaweather.com/api/location/search/?query=%s", CITY_NAME);
     private static final String WEATHER_URL = format("https://www.metaweather.com/api/location/%s", CITY_WOEID);
-    private static final Date DATE_IN_RANGE = getDate("2020-01-20");
-    private static final Date DATE_NOT_IN_RANGE = getDate("2020-02-20");
-    private static final Date DATE_IN_RANGE_NOT_FOUND = getDate("2020-01-21");
-    private static final String PREDICTION_FOR_DATE_IN_RANGE = "Thunder";
     private static final ObjectMapper MAPPER = new ObjectMapper()
             .registerModule(new ParameterNamesModule())
             .registerModule(new Jdk8Module())
@@ -48,7 +47,7 @@ public class WeatherForecastIntegrationTest {
     private WeatherForecast weatherForecast;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
         final RestTemplate restTemplate = new RestTemplate(this.httpClient, MAPPER);
         final CityService cityService = new CityService(restTemplate);
         final ConsolidatedWeatherService consolidatedWeatherService = new ConsolidatedWeatherService(restTemplate);

@@ -15,7 +15,7 @@ public class CityService {
         this.restTemplate = restTemplate;
     }
 
-    public City getCity(final String city) throws IOException {
+    City getCity(final String city) throws IOException {
         return this.restTemplate.getForObject(format(URL_TEMPLATE, city), City[].class)[0];
     }
 }

@@ -1,9 +1,7 @@
-package training.weather;
+package training.weather.services;
 
 import training.weather.models.City;
 import training.weather.models.Prediction;
-import training.weather.services.CityService;
-import training.weather.services.ConsolidatedWeatherService;
 import training.weather.time.Clock;
 
 import java.io.IOException;

@@ -8,6 +8,7 @@ import training.weather.io.HttpClient;
 import training.weather.io.RestTemplate;
 import training.weather.services.CityService;
 import training.weather.services.ConsolidatedWeatherService;
+import training.weather.services.WeatherForecast;
 import training.weather.time.Clock;
 
 import java.io.IOException;

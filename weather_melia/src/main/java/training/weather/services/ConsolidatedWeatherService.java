@@ -16,7 +16,7 @@ public class ConsolidatedWeatherService {
         this.restTemplate = restTemplate;
     }
 
-    public ConsolidatedWeather getConsolidatedWeather(final City city) throws IOException {
+    ConsolidatedWeather getConsolidatedWeather(final City city) throws IOException {
         return this.restTemplate.getForObject(format(URL_TEMPLATE, city.getWoeid()), ConsolidatedWeather.class);
     }
 }
