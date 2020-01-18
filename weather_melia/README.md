@@ -30,10 +30,10 @@ La solución se puede subir a un repositorio de código público como [github](h
 # Mi Solución
 
 - En primer lugar, ya había realizado esta Kata cuando Codium visitó Palma y presentó el ejercicio al grupo Software Crafters de Mallorca. Mi primera solución (lo hice el año pasado) la podeis consultar aquí [Weather kata](https://github.com/acontell/katas/tree/master/weather)
-- Desde raíz, el comando para generar jar y lanzar tests es: ```mvn clean install``` 
-- La ejecución del ejercicio se puede realizar fácilmente a través del test de Integración.
-    - Tener en cuenta que ```HttpClient``` ha sido mockeado para evitar realizar llamadas externas durante la ejecución de tests.
-- También se puede ejecutar a través de terminal: ```java -jar target/MeliaWeather-jar-with-dependencies.jar city_name string_date```
+- **PARA EJECUTAR**: Desde raíz ```mvn clean install``` 
+- Existe un test de integración que permite realizar pruebas rápidas.
+    - Tener en cuenta que ```HttpClient``` ha sido mockeado para evitar realizar llamadas externas en test.
+- Se puede ejecutar a través de terminal: ```java -jar target/MeliaWeather-jar-with-dependencies.jar city_name string_date``` donde:
     - ```city_name``` se corresponde con el nombre de la ciudad
     - ```string_date``` es la fecha de la que se quiere obtener la predicción en formato ```dd-mm-YYY```
     - Ejemplo: ```java -jar target/MeliaWeather-jar-with-dependencies.jar Madrid 18-01-2020```
