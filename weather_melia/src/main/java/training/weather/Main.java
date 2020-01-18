@@ -23,10 +23,9 @@ public class Main {
     private static final CityService CITY_SERVICE = new CityService(REST_TEMPLATE);
     private static final ConsolidatedWeatherService CONSOLIDATED_WEATHER_SERVICE = new ConsolidatedWeatherService(REST_TEMPLATE);
     private static final Clock CLOCK = new Clock();
+    private static final WeatherForecast WEATHER_FORECAST = new WeatherForecast(CITY_SERVICE, CONSOLIDATED_WEATHER_SERVICE, CLOCK);
 
     public static void main(final String[] args) throws IOException {
-        final String cityWeather = new WeatherForecast(CITY_SERVICE, CONSOLIDATED_WEATHER_SERVICE, CLOCK)
-                .getCityWeather(args[0], CLOCK.stringToDate(args[1]));
-        System.out.println(cityWeather);
+        System.out.println(WEATHER_FORECAST.getCityWeather(args[0], CLOCK.stringToDate(args[1])));
     }
 }
