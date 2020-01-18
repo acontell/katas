@@ -29,7 +29,7 @@ La solución se puede subir a un repositorio de código público como [github](h
 
 # Mi Solución
 
-- En primer lugar, ya había realizado esta Kata cuando Codium visitó Palma y presentó el ejercicio al grupo Software Crafters de Mallorca. Mi primera solución (lo hice el año pasado) la podeis consultar aquí [Weather kata](https://github.com/acontell/katas/tree/master/weather)
+- En primer lugar, ya había realizado esta Kata cuando Codium visitó Palma y presentó el ejercicio al grupo Software Crafters de Mallorca. Mi primera solución (la hice el año pasado) la podeis consultar aquí [Weather kata](https://github.com/acontell/katas/tree/master/weather)
 - **PARA EJECUTAR**: Desde raíz ```mvn clean install``` 
 - Existe un test de integración que permite realizar pruebas rápidas.
     - Tener en cuenta que ```HttpClient``` ha sido mockeado para evitar realizar llamadas externas en test.
@@ -37,14 +37,13 @@ La solución se puede subir a un repositorio de código público como [github](h
     - ```city_name``` se corresponde con el nombre de la ciudad
     - ```string_date``` es la fecha de la que se quiere obtener la predicción en formato ```dd-mm-YYY```
     - Ejemplo: ```java -jar target/MeliaWeather-jar-with-dependencies.jar Madrid 18-01-2020```
-- Conforme está montado, sería sencillo hacer una aplicación Web o gráfica que hiciera uso de WeatherForecast, aunque creo que esta fuera del scope de este ejercicio.
-- He tomado la decisión de no manejar la ```IOException``` y propagarla a los consumidores de la clase: la razón es que, de hacerlo, cambiaría la firma del método público de WeatherForecast rompiendo así el contrato. Aparte, considero que es más acertado que sean los propios clientes los que decidan qué hacer cuando se produzca un error de tipo IO.
+- Conforme está montado, sería sencillo hacer una aplicación Web o gráfica que hiciera uso de ```WeatherForecast```.
+- He tomado la decisión de no manejar la ```IOException``` y propagarla a los consumidores de la clase: la razón es que, de hacerlo, cambiaría la firma del método público de ```WeatherForecast``` rompiendo así el contrato. Aparte, considero que es más acertado que sean los propios clientes los que decidan qué hacer cuando se produzca un error de tipo IO.
 - Se podrían realizar varias mejoras:
-    - Añadir Tests a Main.java
     - Actualizar a jUnit5
     - Añadir Logs
     - Añadir Caches a llamadas remotas
-    - Añadir capa Web o gráfica que haga uso de WeatherForecast
+    - Añadir capa Web o gráfica que haga uso de ```WeatherForecast```
     - Seguir puliendo nombres de variables y métodos (tarea realmente infinita en función del nivel de exigencia de cada uno)
 - Metodología de trabajo
     - Hacer tests
