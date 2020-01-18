@@ -39,6 +39,7 @@ La solución se puede subir a un repositorio de código público como [github](h
     - Ejemplo: ```java -jar target/MeliaWeather-jar-with-dependencies.jar Madrid 18-01-2020```
 - Conforme está montado, sería sencillo hacer una aplicación Web o gráfica que hiciera uso de ```WeatherForecast```.
 - He tomado la decisión de no manejar la ```IOException``` y propagarla a los consumidores de la clase: la razón es que, de hacerlo, cambiaría la firma del método público de ```WeatherForecast``` rompiendo así el contrato. Aparte, considero que es más acertado que sean los propios clientes los que decidan qué hacer cuando se produzca un error de tipo IO.
+- Tampoco controlo que el array de ciudades contenga al menos un elemento, por lo que, al igual que sucede con el código Legacy, se lanzará una excepción si esto sucede.
 - Se podrían realizar varias mejoras:
     - Actualizar a jUnit5
     - Añadir Logs

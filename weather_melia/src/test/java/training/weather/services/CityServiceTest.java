@@ -30,4 +30,10 @@ public class CityServiceTest {
         final City actual = new CityService(this.restTemplate).getCity(CITY_NAME);
         assertEquals(CITY, actual);
     }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void should_throw_exception_when_array_returned_is_empty() throws IOException {
+        given(this.restTemplate.getForObject(CITY_FETCH_URL, City[].class)).willReturn(new City[]{});
+        new CityService(this.restTemplate).getCity(CITY_NAME);
+    }
 }
