@@ -25,7 +25,7 @@ public class RestTemplateTest {
 
     @Test
     public void shouldFetchAndConvertObject() throws IOException {
-        given(this.httpClient.fetch(URL)).willReturn(SAMPLE);
+        given(this.httpClient.fetchGet(URL)).willReturn(SAMPLE);
         given(this.objectMapper.readValue(SAMPLE, City.class)).willReturn(CITY);
         assertEquals(new RestTemplate(this.httpClient, this.objectMapper).getForObject(URL, City.class), CITY);
     }

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class HttpClient {
 
-    public String fetch(final String url) throws IOException {
+    public String fetchGet(final String url) throws IOException {
         return getRequest(url)
                 .execute()
                 .returnContent()

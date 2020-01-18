@@ -54,8 +54,8 @@ public class WeatherForecastIntegrationTest {
         final ConsolidatedWeatherService consolidatedWeatherService = new ConsolidatedWeatherService(restTemplate);
         final Clock clock = new Clock();
         this.weatherForecast = new WeatherForecast(cityService, consolidatedWeatherService, clock);
-        given(this.httpClient.fetch(CITY_URL)).willReturn(CITIES);
-        given(this.httpClient.fetch(WEATHER_URL)).willReturn(WEATHER);
+        given(this.httpClient.fetchGet(CITY_URL)).willReturn(CITIES);
+        given(this.httpClient.fetchGet(WEATHER_URL)).willReturn(WEATHER);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class WeatherForecastIntegrationTest {
 
     @Test(expected = IOException.class)
     public void shouldPropagateIoException() throws IOException {
-        given(this.httpClient.fetch(CITY_URL)).willThrow(new IOException());
+        given(this.httpClient.fetchGet(CITY_URL)).willThrow(new IOException());
         this.weatherForecast.getCityWeather(CITY_NAME, DATE_IN_RANGE);
     }
 }

@@ -24,8 +24,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doCallRealMethod;
-import static training.weather.WeatherForecast.DAYS_OFFSET;
 import static training.weather.WeatherForecast.NO_WEATHER_STATE;
+import static training.weather.WeatherForecast.OFFSET_IN_DAYS;
 import static training.weather.WeatherForecastFixture.getDate;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -75,21 +75,21 @@ public class WeatherForecastTest {
 
     @Test
     public void shouldReturnEmptyStringWhenDateIsNotInRange() throws IOException {
-        given(this.clock.isDateBetweenRange(this.dateToLocalDate(DATE_NOT_IN_RANGE), DAYS_OFFSET)).willReturn(false);
+        given(this.clock.isDateBetweenRange(this.dateToLocalDate(DATE_NOT_IN_RANGE), OFFSET_IN_DAYS)).willReturn(false);
         final String forecastToday = weatherForecast.getCityWeather(CITY_NAME, DATE_NOT_IN_RANGE);
         assertEquals(forecastToday, NO_WEATHER_STATE);
     }
 
     @Test
     public void shouldReturnPredictionWhenIsInRange() throws IOException {
-        given(this.clock.isDateBetweenRange(this.dateToLocalDate(DATE), DAYS_OFFSET)).willReturn(true);
+        given(this.clock.isDateBetweenRange(this.dateToLocalDate(DATE), OFFSET_IN_DAYS)).willReturn(true);
         final String forecastToday = this.weatherForecast.getCityWeather(CITY_NAME, DATE);
         assertEquals(forecastToday, PREDICTION_1);
     }
 
     @Test
     public void shouldReturnEmptyStringWhenDateIsInRangeButNotInResponse() throws IOException {
-        given(this.clock.isDateBetweenRange(this.dateToLocalDate(DATE_NOT_IN_RESULTS_BUT_IN_RANGE), DAYS_OFFSET)).willReturn(true);
+        given(this.clock.isDateBetweenRange(this.dateToLocalDate(DATE_NOT_IN_RESULTS_BUT_IN_RANGE), OFFSET_IN_DAYS)).willReturn(true);
         final String forecastToday = weatherForecast.getCityWeather(CITY_NAME, DATE_NOT_IN_RESULTS_BUT_IN_RANGE);
         assertEquals(forecastToday, NO_WEATHER_STATE);
     }

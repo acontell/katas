@@ -14,6 +14,6 @@ public class RestTemplate {
     }
 
     public <T> T getForObject(final String url, final Class<T> clazz) throws IOException {
-        return this.objectMapper.readValue(this.httpClient.fetch(url), clazz);
+        return this.objectMapper.readValue(this.httpClient.fetchGet(url), clazz);
     }
 }

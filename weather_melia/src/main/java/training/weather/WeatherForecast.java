@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class WeatherForecast {
-    static final int DAYS_OFFSET = 6;
+    static final int OFFSET_IN_DAYS = 6;
     static final String NO_WEATHER_STATE = "";
 
     private final CityService cityService;
@@ -33,13 +33,13 @@ public class WeatherForecast {
     }
 
     private String getCityWeather(final String cityName, final LocalDate localDate) throws IOException {
-        return this.clock.isDateBetweenRange(localDate, DAYS_OFFSET)
-                ? getWeatherState(cityName, localDate)
+        return this.clock.isDateBetweenRange(localDate, OFFSET_IN_DAYS)
+                ? getWeatherStateName(this.cityService.getCity(cityName), localDate)
                 : NO_WEATHER_STATE;
     }
 
-    private String getWeatherState(final String cityName, final LocalDate localDate) throws IOException {
-        return this.getPrediction(this.cityService.getCity(cityName), localDate)
+    private String getWeatherStateName(final City city, final LocalDate localDate) throws IOException {
+        return this.getPrediction(city, localDate)
                 .map(Prediction::getWeatherStateName)
                 .orElse(NO_WEATHER_STATE);
     }

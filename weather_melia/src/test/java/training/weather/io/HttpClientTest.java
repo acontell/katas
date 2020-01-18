@@ -32,7 +32,7 @@ public class HttpClientTest {
     @Test
     public void shouldFetchDataFromUrl() throws IOException {
         givenSpiedClientWithMocks();
-        assertEquals(this.httpClient.fetch(URL), FETCH_RESULT);
+        assertEquals(this.httpClient.fetchGet(URL), FETCH_RESULT);
     }
 
     private void givenSpiedClientWithMocks() throws IOException {
