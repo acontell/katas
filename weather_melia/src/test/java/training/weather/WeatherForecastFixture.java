@@ -24,7 +24,7 @@ public class WeatherForecastFixture {
     public static final String DATE_STRING = "12-01-2020";
     public static final String FETCH_GET_URL = "http://www.google.es/";
     public static final String FETCH_GET_RESULT = "hola";
-    public static final String CITY_WOEID = "123";
+    public static final String CITY_WOEID = "766273";
     public static final String CITY_WOEID_1 = "321";
     public static final City CITY = new City(CITY_WOEID);
     public static final City CITY_1 = new City(CITY_WOEID_1);
@@ -34,7 +34,6 @@ public class WeatherForecastFixture {
     public static final Prediction PREDICTION = new Prediction(WEATHER_STATE_NAME, LOCAL_DATE);
     public static final List<Prediction> PREDICTIONS = singletonList(PREDICTION);
     public static final ConsolidatedWeather CONSOLIDATED_WEATHER = new ConsolidatedWeather(PREDICTIONS);
-
     public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public static Date getDate(final String date, final String format) {

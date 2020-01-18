@@ -21,7 +21,7 @@ import static training.weather.WeatherForecastFixture.getDate;
 import static training.weather.time.Clock.DATE_FORMAT;
 
 public class ClockTest {
-    public static final int OFFSET_IN_DAYS = 6;
+    private static final int OFFSET_IN_DAYS = 6;
     private Clock clock;
 
     @Before
