@@ -35,10 +35,10 @@ La solución se puede subir a un repositorio de código público como [github](h
     - Tener en cuenta que ```HttpClient``` ha sido mockeado para evitar realizar llamadas externas durante la ejecución de tests.
 - También se puede ejecutar a través de terminal: ```java -jar target/MeliaWeather-jar-with-dependencies.jar city_name string_date```
     - ```city_name``` se corresponde con el nombre de la ciudad
-    - ```string_date``` con la fecha de la que se quiere obtener la predicción en formato ```dd-mm-YYY```
+    - ```string_date``` es la fecha de la que se quiere obtener la predicción en formato ```dd-mm-YYY```
     - Ejemplo: ```java -jar target/MeliaWeather-jar-with-dependencies.jar Madrid 18-01-2020```
 - Conforme está montado, sería sencillo hacer una aplicación Web o gráfica que hiciera uso de WeatherForecast, aunque creo que esta fuera del scope de este ejercicio.
-- He tomado la decisión de no manejar la IOException y propagarla a los consumidores de la clase: la razón es que, de hacerlo, cambiaría la firma del método público de WeatherForecast rompiendo así el contrato con los clientes. Aparte, considero que es más acertado que sean los propios clientes los que decidan qué hacer cuando se produzca un error de tipo IO.
+- He tomado la decisión de no manejar la IOException y propagarla a los consumidores de la clase: la razón es que, de hacerlo, cambiaría la firma del método público de WeatherForecast rompiendo así el contrato. Aparte, considero que es más acertado que sean los propios clientes los que decidan qué hacer cuando se produzca un error de tipo IO.
 - Se podrían realizar varias mejoras:
     - Actualizar a jUnit5
     - Añadir Logs
