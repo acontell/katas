@@ -29,7 +29,7 @@ La solución se puede subir a un repositorio de código público como [github](h
 
 # Mi Solución
 
-- En primer lugar, ya había realizado esta Kata cuando Codium visitó Palma y presentó el ejercicio al grupo Software Crafters de Mallorca. Mi primera solución al ejercicio (lo hice el año pasado) la podeis consultar aquí [Weather kata Arcadio](https://github.com/acontell/katas/tree/master/weather)
+- En primer lugar, ya había realizado esta Kata cuando Codium visitó Palma y presentó el ejercicio al grupo Software Crafters de Mallorca. Mi primera solución (lo hice el año pasado) la podeis consultar aquí [Weather kata](https://github.com/acontell/katas/tree/master/weather)
 - Desde raíz, el comando para generar jar y lanzar tests es: ```mvn clean install``` 
 - La ejecución del ejercicio se puede realizar fácilmente a través del test de Integración.
     - Tener en cuenta que ```HttpClient``` ha sido mockeado para evitar realizar llamadas externas durante la ejecución de tests.
