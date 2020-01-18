@@ -1,21 +1,20 @@
 package training.weather.models;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 
+import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
 import static org.junit.Assert.assertEquals;
+import static training.weather.WeatherForecastFixture.CITY;
+import static training.weather.WeatherForecastFixture.CITY_WOEID;
 
 public class CityTest {
-    private static final String WOEID = "123";
-
     @Test
     public void beanTest() {
-        final City city = new City(WOEID);
-        assertEquals(city.getWoeid(), WOEID);
+        assertEquals(CITY.getWoeid(), CITY_WOEID);
     }
 
     @Test
     public void equalsVerifierTest() {
-        EqualsVerifier.forClass(City.class).verify();
+        forClass(City.class).verify();
     }
 }

@@ -11,13 +11,12 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static training.weather.WeatherForecastFixture.CITY;
+import static training.weather.WeatherForecastFixture.FETCH_GET_RESULT;
+import static training.weather.WeatherForecastFixture.FETCH_GET_URL;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestTemplateTest {
-    private static final String SAMPLE = "asdf";
-    private static final String URL = "111asdf";
-    private static final City CITY = new City("123");
-
     @Mock
     private ObjectMapper objectMapper;
     @Mock
@@ -25,8 +24,8 @@ public class RestTemplateTest {
 
     @Test
     public void shouldFetchAndConvertObject() throws IOException {
-        given(this.httpClient.fetchGet(URL)).willReturn(SAMPLE);
-        given(this.objectMapper.readValue(SAMPLE, City.class)).willReturn(CITY);
-        assertEquals(new RestTemplate(this.httpClient, this.objectMapper).getForObject(URL, City.class), CITY);
+        given(this.httpClient.fetchGet(FETCH_GET_URL)).willReturn(FETCH_GET_RESULT);
+        given(this.objectMapper.readValue(FETCH_GET_RESULT, City.class)).willReturn(CITY);
+        assertEquals(new RestTemplate(this.httpClient, this.objectMapper).getForObject(FETCH_GET_URL, City.class), CITY);
     }
 }

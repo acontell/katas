@@ -1,25 +1,22 @@
 package training.weather.models;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 
-import java.time.LocalDate;
-
+import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
 import static org.junit.Assert.assertEquals;
+import static training.weather.WeatherForecastFixture.LOCAL_DATE;
+import static training.weather.WeatherForecastFixture.PREDICTION;
+import static training.weather.WeatherForecastFixture.WEATHER_STATE_NAME;
 
 public class PredictionTest {
-    private static final String WEATHER_STATE_NAME = "123";
-    private static final LocalDate LOCAL_DATE = LocalDate.now();
-
     @Test
     public void beanTest() {
-        final Prediction prediction = new Prediction(WEATHER_STATE_NAME, LOCAL_DATE);
-        assertEquals(prediction.getWeatherStateName(), WEATHER_STATE_NAME);
-        assertEquals(prediction.getLocalDate(), LOCAL_DATE);
+        assertEquals(PREDICTION.getWeatherStateName(), WEATHER_STATE_NAME);
+        assertEquals(PREDICTION.getLocalDate(), LOCAL_DATE);
     }
 
     @Test
     public void equalsVerifierTest() {
-        EqualsVerifier.forClass(Prediction.class).verify();
+        forClass(Prediction.class).verify();
     }
 }

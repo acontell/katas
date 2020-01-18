@@ -14,12 +14,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.spy;
+import static training.weather.WeatherForecastFixture.FETCH_GET_RESULT;
+import static training.weather.WeatherForecastFixture.FETCH_GET_URL;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HttpClientTest {
-    private static final String URL = "http://www.google.es/";
-    private static final String FETCH_RESULT = "hola";
-
     @Mock
     private Request request;
     @Mock
@@ -30,21 +29,23 @@ public class HttpClientTest {
     private HttpClient httpClient;
 
     @Test
-    public void shouldFetchDataFromUrl() throws IOException {
-        givenSpiedClientWithMocks();
-        assertEquals(this.httpClient.fetchGet(URL), FETCH_RESULT);
+    public void should_fetch_data_from_url() throws IOException {
+        given_spied_client_with_mocked_methods();
+        final String actual = this.httpClient.fetchGet(FETCH_GET_URL);
+        assertEquals(FETCH_GET_RESULT, actual);
     }
 
-    private void givenSpiedClientWithMocks() throws IOException {
+    private void given_spied_client_with_mocked_methods() throws IOException {
         this.httpClient = spy(new HttpClient());
-        given(this.httpClient.getRequest(URL)).willReturn(this.request);
+        given(this.httpClient.getRequest(FETCH_GET_URL)).willReturn(this.request);
         given(this.request.execute()).willReturn(this.response);
         given(this.response.returnContent()).willReturn(this.content);
-        given(this.content.asString()).willReturn(FETCH_RESULT);
+        given(this.content.asString()).willReturn(FETCH_GET_RESULT);
     }
 
     @Test
-    public void shouldCreateRequest() {
-        assertNotNull(new HttpClient().getRequest(URL));
+    public void should_create_request() {
+        final Request actual = new HttpClient().getRequest(FETCH_GET_URL);
+        assertNotNull(actual);
     }
 }
