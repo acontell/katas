@@ -38,7 +38,7 @@ public class WeatherForecastFixture {
     public static final String CITY_NAME = "Madrid";
     public static final LocalDate LOCAL_DATE = LocalDate.of(2020, 1, 18);
     public static final Prediction PREDICTION = new Prediction(PREDICTION_FOR_DATE_IN_RANGE, LOCAL_DATE);
-    public static final Prediction PREDICTION_1 = new Prediction(PREDICTION_FOR_DATE_IN_RANGE_1, LOCAL_DATE.plusDays(1));
+    private static final Prediction PREDICTION_1 = new Prediction(PREDICTION_FOR_DATE_IN_RANGE_1, LOCAL_DATE.plusDays(1));
     public static final List<Prediction> PREDICTIONS = asList(PREDICTION, PREDICTION_1);
     public static final ConsolidatedWeather CONSOLIDATED_WEATHER = new ConsolidatedWeather(PREDICTIONS);
     private static final String DATE_FORMAT = "yyyy-MM-dd";
