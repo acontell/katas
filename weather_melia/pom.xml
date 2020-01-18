@@ -20,6 +20,7 @@
         <mockito.version>1.8.4</mockito.version>
         <equals.verifier.version>3.1.11</equals.verifier.version>
         <commons.io.version>2.6</commons.io.version>
+        <maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
     </properties>
 
     <dependencies>
@@ -79,4 +80,32 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <finalName>MeliaWeather</finalName>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>training.weather.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

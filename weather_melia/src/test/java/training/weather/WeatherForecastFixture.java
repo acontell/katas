@@ -7,8 +7,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class WeatherForecastFixture {
+public class WeatherForecastFixture {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
+
+    public static Date getDate(final String date, final String format) {
+        try {
+            return new SimpleDateFormat(format).parse(date);
+        } catch (final ParseException e) {
+            throw new IllegalStateException();
+        }
+    }
 
     static Date getDate(final String date) {
         try {

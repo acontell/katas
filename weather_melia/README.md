@@ -26,3 +26,21 @@ Finalmente se debería incluir un fichero README explicando cómo ejecutar el ej
 # Solución
 
 La solución se puede subir a un repositorio de código público como [github](https://github.com/) ó se puede comprimir en un fichero .zip y enviar por email.
+
+# Mi Solución
+
+- En primer lugar, ya había realizado esta Kata cuando Codium visitó Palma y presentó el ejercicio al grupo Software Crafters de Mallorca. Mi primera solución al ejercicio (lo hice el año pasado) la podeis consultar aquí [Weather kata Arcadio](https://github.com/acontell/katas/tree/master/weather)
+- La ejecución del ejercicio se puede realizar fácilmente a través del test de Integración.
+    - Tener en cuenta que ```HttpClient``` ha sido mockeado para evitar realizar llamadas externas durante la ejecución de tests.
+- También se puede ejecutar a través de terminal: ```java -jar target/MeliaWeather-jar-with-dependencies.jar city_name string_date```
+    - ```city_name``` se corresponde con el nombre de la ciudad
+    - ```string_date``` con la fecha de la que se quiere obtener la predicción en formato ```dd-mm-YYY```
+    - Ejemplo: ```java -jar target/MeliaWeather-jar-with-dependencies.jar Madrid 18-01-2020```
+- Conforme está montado, sería sencillo hacer una aplicación Web o gráfica que hiciera uso de WeatherForecast, aunque creo que esta fuera del scope de este ejercicio.
+- He tomado la decisión de no manejar la IOException y propagarla a los consumidores de la clase: la razón es que, de hacerlo, cambiaría la firma del método público de WeatherForecast rompiendo así el contrato con los clientes. Aparte, considero que es más acertado que sean los propios clientes los que decidan qué hacer cuando se produzca un error de tipo IO.
+- Se podrían realizar varias mejoras:
+    - Actualizar a jUnit5
+    - Añadir Logs
+    - Añadir Caches a llamadas remotas
+    - Añadir capa Web o gráfica que haga uso de WeatherForecast
+    - Seguir puliendo nombres de variables y métodos (tarea realmente infinita en función del nivel de exigencia de cada uno)
