@@ -23,9 +23,14 @@ public class RestTemplateTest {
     private HttpClient httpClient;
 
     @Test
-    public void shouldFetchAndConvertObject() throws IOException {
+    public void should_fetch_and_convert_object() throws IOException {
+        given_fetch_returns_string_and_mapper_converts();
+        final City actual = new RestTemplate(this.httpClient, this.objectMapper).getForObject(FETCH_GET_URL, City.class);
+        assertEquals(CITY, actual);
+    }
+
+    private void given_fetch_returns_string_and_mapper_converts() throws IOException {
         given(this.httpClient.fetchGet(FETCH_GET_URL)).willReturn(FETCH_GET_RESULT);
         given(this.objectMapper.readValue(FETCH_GET_RESULT, City.class)).willReturn(CITY);
-        assertEquals(new RestTemplate(this.httpClient, this.objectMapper).getForObject(FETCH_GET_URL, City.class), CITY);
     }
 }

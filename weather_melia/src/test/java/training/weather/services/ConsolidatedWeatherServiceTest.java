@@ -25,9 +25,9 @@ public class ConsolidatedWeatherServiceTest {
     private RestTemplate restTemplate;
 
     @Test
-    public void shouldReturnInformationFromCity() throws IOException {
-        final ConsolidatedWeatherService consolidatedWeatherService = new ConsolidatedWeatherService(this.restTemplate);
+    public void should_return_consolidated_weather_from_city() throws IOException {
         given(this.restTemplate.getForObject(CONSOLIDATED_WEATHER_FETCH_URL, ConsolidatedWeather.class)).willReturn(CONSOLIDATED_WEATHER);
-        assertEquals(consolidatedWeatherService.getConsolidatedWeather(CITY), CONSOLIDATED_WEATHER);
+        final ConsolidatedWeather actual = new ConsolidatedWeatherService(this.restTemplate).getConsolidatedWeather(CITY);
+        assertEquals(CONSOLIDATED_WEATHER, actual);
     }
 }

@@ -25,9 +25,9 @@ public class CityServiceTest {
     private RestTemplate restTemplate;
 
     @Test
-    public void shouldReturnInformationFromFirstCity() throws IOException {
-        final CityService cityService = new CityService(this.restTemplate);
+    public void should_return_information_from_first_city() throws IOException {
         given(this.restTemplate.getForObject(CITY_FETCH_URL, City[].class)).willReturn(new City[]{CITY, CITY_1});
-        assertEquals(cityService.getCity(CITY_NAME), CITY);
+        final City actual = new CityService(this.restTemplate).getCity(CITY_NAME);
+        assertEquals(CITY, actual);
     }
 }

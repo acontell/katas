@@ -10,12 +10,12 @@ import static training.weather.WeatherForecastFixture.PREDICTIONS;
 public class ConsolidatedWeatherTest {
 
     @Test
-    public void beanTest() {
+    public void bean_test() {
         assertEquals(CONSOLIDATED_WEATHER.getPredictions(), PREDICTIONS);
     }
 
     @Test
-    public void equalsVerifierTest() {
+    public void equals_verifier_tests() {
         forClass(ConsolidatedWeather.class).verify();
     }
 }

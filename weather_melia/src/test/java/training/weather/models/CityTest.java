@@ -9,12 +9,12 @@ import static training.weather.WeatherForecastFixture.CITY_WOEID;
 
 public class CityTest {
     @Test
-    public void beanTest() {
+    public void bean_test() {
         assertEquals(CITY.getWoeid(), CITY_WOEID);
     }
 
     @Test
-    public void equalsVerifierTest() {
+    public void equals_verifier_tests() {
         forClass(City.class).verify();
     }
 }

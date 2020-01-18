@@ -10,13 +10,13 @@ import static training.weather.WeatherForecastFixture.WEATHER_STATE_NAME;
 
 public class PredictionTest {
     @Test
-    public void beanTest() {
+    public void bean_test() {
         assertEquals(PREDICTION.getWeatherStateName(), WEATHER_STATE_NAME);
         assertEquals(PREDICTION.getLocalDate(), LOCAL_DATE);
     }
 
     @Test
-    public void equalsVerifierTest() {
+    public void equals_verifier_tests() {
         forClass(Prediction.class).verify();
     }
 }
