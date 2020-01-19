@@ -13,6 +13,7 @@ import training.weather.io.HttpClient;
 import training.weather.io.RestTemplate;
 import training.weather.services.CityService;
 import training.weather.services.ConsolidatedWeatherService;
+import training.weather.services.PredictionService;
 import training.weather.services.WeatherForecast;
 import training.weather.time.Clock;
 
@@ -51,8 +52,9 @@ public class WeatherForecastIntegrationTest {
         final RestTemplate restTemplate = new RestTemplate(this.httpClient, MAPPER);
         final CityService cityService = new CityService(restTemplate);
         final ConsolidatedWeatherService consolidatedWeatherService = new ConsolidatedWeatherService(restTemplate);
+        final PredictionService predictionService = new PredictionService(cityService, consolidatedWeatherService);
         final Clock clock = new Clock();
-        this.weatherForecast = new WeatherForecast(cityService, consolidatedWeatherService, clock);
+        this.weatherForecast = new WeatherForecast(predictionService, clock);
     }
 
     @Test

@@ -67,24 +67,6 @@ public class ClockTest {
     }
 
     @Test
-    public void should_return_true_when_same_date() {
-        final boolean actual = this.clock.isSameDate(LOCAL_DATE, LOCAL_DATE);
-        assertTrue(actual);
-    }
-
-    @Test
-    public void should_return_false_when_date_is_bigger() {
-        final boolean actual = this.clock.isSameDate(LOCAL_DATE, LOCAL_DATE.plusDays(1));
-        assertFalse(actual);
-    }
-
-    @Test
-    public void should_return_false_when_date_is_smaller() {
-        final boolean actual = this.clock.isSameDate(LOCAL_DATE, LOCAL_DATE.minusDays(1));
-        assertFalse(actual);
-    }
-
-    @Test
     public void should_parse_date_from_string() {
         final Date actual = this.clock.stringToDate(DATE_STRING_FROM_TERMINAL);
         assertEquals(getDate(DATE_STRING_FROM_TERMINAL, DATE_FORMAT), actual);

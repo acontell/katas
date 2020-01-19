@@ -21,10 +21,6 @@ public class Clock {
         return LocalDate.now();
     }
 
-    public boolean isSameDate(final LocalDate date, final LocalDate otherDate) {
-        return date.compareTo(otherDate) == 0;
-    }
-
     private LocalDate dateToLocalDate(final Date date) {
         return date.toInstant()
                 .atZone(systemDefault())

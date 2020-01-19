@@ -1,28 +1,22 @@
 package training.weather.services;
 
-import training.weather.models.City;
 import training.weather.models.Prediction;
 import training.weather.time.Clock;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 public class WeatherForecast {
     static final int OFFSET_IN_DAYS = 6;
     static final String NO_WEATHER_STATE = "";
 
-    private final CityService cityService;
-    private final ConsolidatedWeatherService consolidatedWeatherService;
+    private final PredictionService predictionService;
     private final Clock clock;
 
-    public WeatherForecast(final CityService cityService,
-                           final ConsolidatedWeatherService consolidatedWeatherService,
+    public WeatherForecast(final PredictionService predictionService,
                            final Clock clock) {
-        this.cityService = cityService;
-        this.consolidatedWeatherService = consolidatedWeatherService;
+        this.predictionService = predictionService;
         this.clock = clock;
     }
 
@@ -32,24 +26,13 @@ public class WeatherForecast {
 
     private String getCityWeather(final String cityName, final LocalDate localDate) throws IOException {
         return this.clock.isDateBetweenRange(localDate, OFFSET_IN_DAYS)
-                ? getWeatherStateName(this.cityService.getCity(cityName), localDate)
+                ? getPrediction(cityName, localDate)
                 : NO_WEATHER_STATE;
     }
 
-    private String getWeatherStateName(final City city, final LocalDate localDate) throws IOException {
-        return this.getPrediction(city, localDate)
+    private String getPrediction(final String cityName, final LocalDate localDate) throws IOException {
+        return this.predictionService.getPrediction(cityName, localDate)
                 .map(Prediction::getWeatherStateName)
                 .orElse(NO_WEATHER_STATE);
-    }
-
-
-    private Optional<Prediction> getPrediction(final City city, final LocalDate localDate) throws IOException {
-        return getPredictions(city).stream()
-                .filter(prediction -> this.clock.isSameDate(prediction.getLocalDate(), localDate))
-                .findAny();
-    }
-
-    private List<Prediction> getPredictions(final City city) throws IOException {
-        return this.consolidatedWeatherService.getConsolidatedWeather(city).getPredictions();
     }
 }
