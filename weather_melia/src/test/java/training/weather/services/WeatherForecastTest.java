@@ -14,9 +14,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static training.weather.WeatherForecastFixture.CITY_NAME;
 import static training.weather.WeatherForecastFixture.DATE_IN_RANGE;
-import static training.weather.WeatherForecastFixture.DATE_IN_RANGE_TO_LOCAL_DATE;
+import static training.weather.WeatherForecastFixture.DATE_IN_RANGE_LOCAL_DATE;
 import static training.weather.WeatherForecastFixture.DATE_NOT_IN_RANGE;
-import static training.weather.WeatherForecastFixture.DATE_NOT_IN_RANGE_TO_LOCAL_DATE;
+import static training.weather.WeatherForecastFixture.DATE_NOT_IN_RANGE_LOCAL_DATE;
 import static training.weather.WeatherForecastFixture.PREDICTION;
 import static training.weather.WeatherForecastFixture.PREDICTION_FOR_DATE_IN_RANGE;
 import static training.weather.services.WeatherForecast.NO_WEATHER_STATE;
@@ -45,19 +45,19 @@ public class WeatherForecastTest {
     }
 
     private void given_has_prediction() throws IOException {
-        given(this.predictionService.getPrediction(CITY_NAME, DATE_IN_RANGE_TO_LOCAL_DATE)).willReturn(of(PREDICTION));
-        given(this.clock.getLocalDateOrNow(DATE_IN_RANGE)).willReturn(DATE_IN_RANGE_TO_LOCAL_DATE);
-        given(this.clock.isDateBetweenRange(DATE_IN_RANGE_TO_LOCAL_DATE, OFFSET_IN_DAYS)).willReturn(true);
+        given(this.predictionService.getPrediction(CITY_NAME, DATE_IN_RANGE_LOCAL_DATE)).willReturn(of(PREDICTION));
+        given(this.clock.getLocalDateOrNow(DATE_IN_RANGE)).willReturn(DATE_IN_RANGE_LOCAL_DATE);
+        given(this.clock.isDateBetweenRange(DATE_IN_RANGE_LOCAL_DATE, OFFSET_IN_DAYS)).willReturn(true);
     }
 
     private void given_clock_works_with_null() {
-        given(this.clock.getLocalDateOrNow(null)).willReturn(DATE_IN_RANGE_TO_LOCAL_DATE);
-        given(this.clock.isDateBetweenRange(DATE_IN_RANGE_TO_LOCAL_DATE, OFFSET_IN_DAYS)).willReturn(true);
+        given(this.clock.getLocalDateOrNow(null)).willReturn(DATE_IN_RANGE_LOCAL_DATE);
+        given(this.clock.isDateBetweenRange(DATE_IN_RANGE_LOCAL_DATE, OFFSET_IN_DAYS)).willReturn(true);
     }
 
     @Test
     public void should_return_no_results_when_date_is_not_in_range() throws IOException {
-        given(this.clock.isDateBetweenRange(DATE_NOT_IN_RANGE_TO_LOCAL_DATE, OFFSET_IN_DAYS)).willReturn(false);
+        given(this.clock.isDateBetweenRange(DATE_NOT_IN_RANGE_LOCAL_DATE, OFFSET_IN_DAYS)).willReturn(false);
         final String actual = this.weatherForecast.getCityWeather(CITY_NAME, DATE_NOT_IN_RANGE);
         assertEquals(NO_WEATHER_STATE, actual);
     }

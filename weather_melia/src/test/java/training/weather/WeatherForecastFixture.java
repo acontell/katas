@@ -22,9 +22,9 @@ public class WeatherForecastFixture {
             .toLocalDate();
     public static final String DATE_STRING_FROM_TERMINAL = "12-01-2020";
     public static final Date DATE_IN_RANGE = getDate("2020-01-19");
-    public static final LocalDate DATE_IN_RANGE_TO_LOCAL_DATE = toLocalDate(DATE_IN_RANGE);
+    public static final LocalDate DATE_IN_RANGE_LOCAL_DATE = toLocalDate(DATE_IN_RANGE);
     public static final Date DATE_NOT_IN_RANGE = getDate("2020-02-20");
-    public static final LocalDate DATE_NOT_IN_RANGE_TO_LOCAL_DATE = toLocalDate(DATE_NOT_IN_RANGE);
+    public static final LocalDate DATE_NOT_IN_RANGE_LOCAL_DATE = toLocalDate(DATE_NOT_IN_RANGE);
     static final Date DATE_IN_RANGE_NOT_FOUND = getDate("2020-01-21");
     public static final String PREDICTION_FOR_DATE_IN_RANGE = "Light Cloud";
     private static final String PREDICTION_FOR_DATE_IN_RANGE_1 = "Heavy Rain";

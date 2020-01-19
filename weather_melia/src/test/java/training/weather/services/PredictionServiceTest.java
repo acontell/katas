@@ -16,7 +16,7 @@ import static org.mockito.BDDMockito.given;
 import static training.weather.WeatherForecastFixture.CITY;
 import static training.weather.WeatherForecastFixture.CITY_NAME;
 import static training.weather.WeatherForecastFixture.CONSOLIDATED_WEATHER;
-import static training.weather.WeatherForecastFixture.DATE_NOT_IN_RANGE_TO_LOCAL_DATE;
+import static training.weather.WeatherForecastFixture.DATE_NOT_IN_RANGE_LOCAL_DATE;
 import static training.weather.WeatherForecastFixture.LOCAL_DATE;
 import static training.weather.WeatherForecastFixture.PREDICTION;
 
@@ -49,7 +49,7 @@ public class PredictionServiceTest {
     @Test
     public void should_return_empty_when_date_not_in_results() throws IOException {
         given_city_has_consolidated_weather();
-        final Optional<Prediction> actual = this.predictionService.getPrediction(CITY_NAME, DATE_NOT_IN_RANGE_TO_LOCAL_DATE);
+        final Optional<Prediction> actual = this.predictionService.getPrediction(CITY_NAME, DATE_NOT_IN_RANGE_LOCAL_DATE);
         assertFalse(actual.isPresent());
     }
 }
