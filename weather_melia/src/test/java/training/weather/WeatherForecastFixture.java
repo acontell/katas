@@ -25,10 +25,9 @@ public class WeatherForecastFixture {
     public static final LocalDate DATE_IN_RANGE_TO_LOCAL_DATE = toLocalDate(DATE_IN_RANGE);
     public static final Date DATE_NOT_IN_RANGE = getDate("2020-02-20");
     public static final LocalDate DATE_NOT_IN_RANGE_TO_LOCAL_DATE = toLocalDate(DATE_NOT_IN_RANGE);
-    public static final Date DATE_IN_RANGE_NOT_FOUND = getDate("2020-01-21");
-    public static final LocalDate DATE_IN_RANGE_NOT_FOUND_TO_LOCAL_DATE = toLocalDate(DATE_IN_RANGE_NOT_FOUND);
+    static final Date DATE_IN_RANGE_NOT_FOUND = getDate("2020-01-21");
     public static final String PREDICTION_FOR_DATE_IN_RANGE = "Light Cloud";
-    public static final String PREDICTION_FOR_DATE_IN_RANGE_1 = "Heavy Rain";
+    private static final String PREDICTION_FOR_DATE_IN_RANGE_1 = "Heavy Rain";
     public static final String FETCH_GET_URL = "http://www.google.es/";
     public static final String FETCH_GET_RESULT = "hola";
     public static final String CITY_WOEID = "766273";
@@ -57,7 +56,7 @@ public class WeatherForecastFixture {
         }
     }
 
-    static Date getDate(final String date) {
+    private static Date getDate(final String date) {
         try {
             return new SimpleDateFormat(DATE_FORMAT).parse(date);
         } catch (final ParseException e) {
