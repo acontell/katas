@@ -15,7 +15,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <http.components.version>4.5.10</http.components.version>
         <lombok.version>1.18.10</lombok.version>
-        <jackson.version>2.10.1</jackson.version>
+        <jackson.version>2.12.1</jackson.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.8.4</mockito.version>
         <equals.verifier.version>3.1.11</equals.verifier.version>
